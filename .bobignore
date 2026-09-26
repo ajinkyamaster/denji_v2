@@ -1,0 +1,35 @@
+<<<<<<< HEAD
+# Bob context exclusions.
+
+# Sandboxes / scratch space
+bob_session/sandbox/
+bob_session/.scratch/
+bob_session/oracle_scratch/
+bob_session/proposal_cache/
+sandbox/
+tmp/
+.tmp/
+
+# Generated / project-specific artefacts
+bob_session/evidence/coverage_b.json
+submissions/ablation/
+demo/.git/
+demo/var/
+
+# Python caches / compiled files
+__pycache__/
+*.py[cod]
+*.pyc
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+
+# Coverage and measurement scratch
+.coverage
+htmlcov/
+coverage.xml
+
+# Local virtual environments
+.venv/
+venv/

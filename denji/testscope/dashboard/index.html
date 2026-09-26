@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="What this code change did to your test suite: which tests to run, which are lying to you, and which behaviours have no test at all." />
+  <title>TestScope — change-impact report</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="loading" class="loading">
+    <span class="spinner" aria-hidden="true"></span>
+    <p>Reading the report</p>
+  </div>
+
+  <div id="error" class="error" hidden role="alert"></div>
+
+  <main id="app" class="app" hidden>
+
+    <header class="masthead">
+      <div class="brand">
+        <span class="wordmark">TestScope</span>
+        <span class="brand-sub">change-impact report</span>
+      </div>
+      <dl class="run-strip">
+        <div><dt>Generated</dt><dd id="meta-generated">not reported</dd></div>
+        <div><dt>Report source</dt><dd id="meta-source">not reported</dd></div>
+      </dl>
+    </header>
+
+    <div id="banner-void" class="banner banner-error" hidden role="status"></div>
+    <div id="banner-degraded" class="banner banner-warning" hidden role="status"></div>
+
+    <!-- ============================= activity ============================ -->
+    <!--
+      Shows what is happening, and what already happened, without turning the
+      page into a console. Two sources, in order of preference:
+
+        1. ./testscope_progress.json (or ../bob_session/testscope_progress.json)
+           written by a RUNNING session. Shape, all fields optional:
+             { "current": "scout",
+               "current_step": "reading app/workers/report_worker.py",
+               "steps": [ {"id": "scout", "name": "...", "kind": "read",
+                           "status": "running|done|queued|skipped",
+                           "detail": "3 candidate pairs"} ] }
+           Absent or malformed -> the panel falls back to source 2. It is polled
+           only while it is present, so a static report costs no requests.
+
+        2. The report itself. claims.by_role says which of the four checks ran
+           and what each produced, and run_metadata.model_layer says whether the
+           reading step happened at all. Nothing here is inferred or invented.
+    -->
+    <section class="activity" id="activity" aria-labelledby="activity-title">
+      <div class="activity-head">
+        <p class="activity-label" id="activity-title">How this was worked out</p>
+        <p class="activity-now" id="activity-now"></p>
+      </div>
+      <ol class="agents" id="activity-agents"></ol>
+    </section>
+
+    <!-- ============================ the finding ========================== -->
+    <section class="hero" id="hero" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow">What this change did</p>
+        <h1 id="hero-title">A cross-module break that static analysis cannot see.</h1>
+        <p class="lede">
+          This change altered how data is written to the cache.
+          <span id="lede-reachable" class="num-inline">41</span> tests are reachable from
+          the changed code by following imports. <span id="lede-extra">Some</span>
+          depend on the same format with no import path to it at all — and they fail.
+        </p>
+      </div>
+
+      <ol class="facts">
+        <li class="fact">
+          <span class="fact-num" id="fact-total">—</span>
+          <span class="fact-label">tests in the suite</span>
+        </li>
+        <li class="fact">
+          <span class="fact-num" id="fact-reachable">—</span>
+          <span class="fact-label">a tool following imports would run these</span>
+        </li>
+        <li class="fact fact-emphasis">
+          <span class="fact-num" id="fact-extra">+1</span>
+          <span class="fact-label">more, found only by reading the code — it shares
+            the data format but never imports it</span>
+        </li>
+        <li class="fact fact-verdict">
+          <span class="fact-num fact-num-fail">FAILS</span>
+          <span class="fact-label" id="fact-verdict-label">and the extra test is red on the current commit</span>
+        </li>
+      </ol>
+
+      <figure class="codepane hero-code">
+        <figcaption>the test, and what its assertion gets once the cache writes JSON</figcaption>
+        <pre><code><span class="com"># tests/test_report_worker.py, exactly as written</span>
+<span class="kw">def</span> <span class="fn">test_recent_entries_round_trip_totals</span>(case, tmp_path):
+    <span class="com"># "The counts written by the job are the counts the report reads."</span>
+    cache_path = build_cache_file(tmp_path / <span class="str">"recent.cache"</span>)
+    <span class="kw">assert</span> summarise_entries(read_cache_file(cache_path)) == <span class="num">7</span>
+
+<span class="com"># the file now holds  {"count": 2, "key": "k1", "status": "open"}</span>
+<span class="com"># split("|") finds one field, not three, so each record is {"raw": ...}</span>
+<span class="com"># and every count comes back as zero</span>
+<span class="hl-line">    <span class="kw">assert</span> summarise_entries(read_cache_file(cache_path)) == <span class="num">0</span>   <span class="com"># was 7</span></span></code></pre>
+        <p class="codepane-note">
+          The test runs the producer in a child process and reads back what it wrote
+          off disk, so the dependency travels through a <em>file</em>, not through an
+          import. <code>report_worker.py</code> never imports
+          <code>cache_service.py</code> — nothing that follows imports would have run
+          this test.
+        </p>
+      </figure>
+
+      <p class="fact-foot" id="hero-foot">
+        <span id="hero-semantic-count" class="num-inline">6</span> tests in total turned
+        out to depend on the changed behaviour. Run those first.
+      </p>
+    </section>
+
+    <!-- ====================== the dependency, side by side ============== -->
+    <section class="chapter" aria-labelledby="catch-title" id="catch">
+      <div class="chapter-head">
+        <p class="eyebrow">Why it broke</p>
+        <h2 id="catch-title">Two files, one shared format, no connection between them</h2>
+      </div>
+      <div class="chapter-body">
+        <div class="codepair">
+          <figure class="codepane">
+            <figcaption><code>app/services/cache_service.py</code> — the writer, changed in this diff</figcaption>
+            <pre><code><span class="code-title">before</span>CACHE_SCHEMA = <span class="str">"recent-v1"</span>
+
+<span class="kw">def</span> <span class="fn">write_cache_entry</span>(key, status, count, sink=None):
+    payload = <span class="str">f"{key}|{status}|{count}"</span>
+
+<span class="code-title">after</span>CACHE_SCHEMA = <span class="str">"recent-v2"</span>
+
+<span class="kw">def</span> <span class="fn">build_cache_payload</span>(key, status, count):
+    <span class="kw">return</span> <span class="hl-added">json.dumps({...}, sort_keys=True)</span>
+
+<span class="kw">def</span> <span class="fn">write_cache_entry</span>(key, status, count, sink=None):
+    payload = build_cache_payload(key, status, count)</code></pre>
+          </figure>
+          <figure class="codepane">
+            <figcaption><code>app/workers/report_worker.py</code> — the reader, not changed</figcaption>
+            <pre><code><span class="kw">def</span> <span class="fn">parse_recent_cache_entries</span>(entries):
+    <span class="com"># "Parse cache payloads into ``{key, status, count}`` records."</span>
+    parsed = []
+    <span class="kw">for</span> entry <span class="kw">in</span> entries:
+<span class="hl-line">        fields = entry.split(<span class="str">"|"</span>)</span>
+        <span class="kw">if</span> <span class="fn">len</span>(fields) != <span class="num">3</span>:
+            parsed.append({<span class="str">"raw"</span>: entry})
+            <span class="kw">continue</span>
+        key, status, count_text = fields
+        parsed.append({<span class="str">"key"</span>: key, <span class="str">"status"</span>: status,
+                       <span class="str">"count"</span>: <span class="fn">int</span>(count_text)})
+    <span class="kw">return</span> parsed</code></pre>
+          </figure>
+        </div>
+        <dl class="fact-pairs" id="catch-facts">
+          <div><dt>The test</dt><dd id="catch-test">not reported</dd></div>
+          <div><dt>Its module</dt><dd><code id="catch-module">not reported</code></dd></div>
+          <div><dt>Import path</dt><dd>none — it is not in the changed module's import closure at any depth</dd></div>
+          <div><dt>The code's own words</dt><dd>the reader's docstring still says entries are <code>key|status|count</code> records</dd></div>
+          <div><dt>Measured</dt><dd>the whole suite was run on both commits; these tests changed result and nothing else did</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- =========================== tests to run ========================== -->
+    <section class="chapter" aria-labelledby="runlist-title" id="runlist">
+      <div class="chapter-head">
+        <p class="eyebrow">Do this</p>
+        <h2 id="runlist-title">Run these <span class="count" id="runlist-count"></span></h2>
+        <p class="lede">
+          The tests this change can affect. The ones with no import path to the change
+          are at the top, because those are the ones a normal selector misses. Open a
+          row to see why it is on the list.
+        </p>
+      </div>
+      <div class="chapter-body">
+        <div class="table-scroll">
+          <table class="tests">
+            <caption class="sr-only">Tests selected to run against this change</caption>
+            <thead>
+              <tr>
+                <th scope="col">Test ID</th>
+                <th scope="col">Test name</th>
+                <th scope="col">Module</th>
+                <th scope="col">Coupling</th>
+              </tr>
+            </thead>
+            <tbody id="runlist-body"></tbody>
+          </table>
+        </div>
+        <p class="empty-state" id="runlist-empty" hidden></p>
+      </div>
+    </section>
+
+    <!-- ======================= what happened to the rest ================= -->
+    <section class="chapter ledger" aria-labelledby="ledger-title" id="ledger">
+      <div class="chapter-head">
+        <p class="eyebrow">The rest of the suite</p>
+        <h2 id="ledger-title">What this change did to every other test</h2>
+        <p class="lede">
+          Each test ends up in exactly one of five states. The action is different for
+          each one, which is why they are listed separately.
+        </p>
+      </div>
+
+      <div class="chapter-body ledger-stack">
+
+        <article class="verdict" id="verdict-newly-relevant" data-verdict="newly_relevant">
+          <div class="verdict-head">
+            <h3>Depends on it, nothing in common <span class="count" id="count-newly_relevant"></span></h3>
+            <p class="verdict-meaning">
+              No import path to the change, but they use the same data format. They were
+              green before and their result is now in question. Run these first.
+            </p>
+          </div>
+          <div class="verdict-body">
+            <div class="table-scroll">
+              <table class="tests ledger-table">
+                <caption class="sr-only">Tests that depend on the change without an import path</caption>
+                <thead>
+                  <tr>
+                    <th scope="col">Test ID</th>
+                    <th scope="col">Test name</th>
+                    <th scope="col">Module</th>
+                    <th scope="col">What connects them</th>
+                  </tr>
+                </thead>
+                <tbody id="body-newly_relevant"></tbody>
+              </table>
+            </div>
+            <p class="empty-state" id="empty-newly_relevant" hidden></p>
+          </div>
+        </article>
+
+        <article class="verdict" id="verdict-stale" data-verdict="stale">
+          <div class="verdict-head">
+            <h3>Asserting something that no longer exists <span class="count" id="count-stale"></span></h3>
+            <p class="verdict-meaning">
+              These check a rule the change deleted. They will go red whatever the code
+              does, so the red is not a bug to chase — repair the test or delete it.
+            </p>
+          </div>
+          <div class="verdict-body">
+            <div class="table-scroll">
+              <table class="tests ledger-table">
+                <caption class="sr-only">Stale tests</caption>
+                <thead>
+                  <tr>
+                    <th scope="col">Test ID</th>
+                    <th scope="col">Test name</th>
+                    <th scope="col">Module</th>
+                    <th scope="col">The rule that was removed</th>
+                  </tr>
+                </thead>
+                <tbody id="body-stale"></tbody>
+              </table>
+            </div>
+            <p class="empty-state" id="empty-stale" hidden></p>
+          </div>
+        </article>
+
+        <article class="verdict" id="verdict-uncovered" data-verdict="uncovered">
+          <div class="verdict-head">
+            <h3>Changed behaviour with no test <span class="count" id="count-uncovered"></span></h3>
+            <p class="verdict-meaning">
+              Work items, not tests. What changed here is not covered by anything, so
+              nothing would catch it breaking.
+            </p>
+          </div>
+          <div class="verdict-body">
+            <div class="table-scroll">
+              <table class="tests uncovered-table">
+                <caption class="sr-only">Changed behaviour that no test asserts</caption>
+                <thead>
+                  <tr>
+                    <th scope="col">Function</th>
+                    <th scope="col">Situation</th>
+                    <th scope="col">Where</th>
+                    <th scope="col">What to do</th>
+                  </tr>
+                </thead>
+                <tbody id="body-uncovered"></tbody>
+              </table>
+            </div>
+            <p class="empty-state" id="empty-uncovered" hidden></p>
+          </div>
+        </article>
+
+        <article class="verdict" id="verdict-unknown" data-verdict="unknown">
+          <div class="verdict-head">
+            <h3>Could not tell <span class="count" id="count-unknown"></span></h3>
+            <p class="verdict-meaning">
+              Whether these still hold after the change is not decidable from the code,
+              so they were included rather than left out. They are already in the run
+              list above.
+            </p>
+          </div>
+          <div class="verdict-body">
+            <div class="table-scroll">
+              <table class="tests ledger-table">
+                <caption class="sr-only">Tests whose status could not be decided</caption>
+                <thead>
+                  <tr>
+                    <th scope="col">Test ID</th>
+                    <th scope="col">Test name</th>
+                    <th scope="col">Module</th>
+                    <th scope="col">Why it is unclear</th>
+                  </tr>
+                </thead>
+                <tbody id="body-unknown"></tbody>
+              </table>
+            </div>
+            <p class="empty-state" id="empty-unknown" hidden></p>
+          </div>
+        </article>
+
+        <article class="verdict" id="verdict-valid" data-verdict="valid">
+          <div class="verdict-head">
+            <h3>Unaffected <span class="count" id="count-valid"></span></h3>
+            <p class="verdict-meaning">
+              The change left alone whatever these check. Safe to skip on this run.
+            </p>
+          </div>
+          <div class="verdict-body">
+            <details class="disclosure" id="valid-details">
+              <summary id="valid-summary" aria-expanded="false">Show the unaffected tests</summary>
+              <p class="panel-note" id="valid-note"></p>
+              <div class="table-scroll">
+                <table class="tests ledger-table">
+                  <caption class="sr-only">Unaffected tests</caption>
+                  <thead>
+                    <tr>
+                      <th scope="col">Test ID</th>
+                      <th scope="col">Test name</th>
+                      <th scope="col">Module</th>
+                      <th scope="col">Why it is unaffected</th>
+                    </tr>
+                  </thead>
+                  <tbody id="body-valid"></tbody>
+                </table>
+              </div>
+            </details>
+            <p class="empty-state" id="empty-valid" hidden></p>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ============================ accuracy ============================ -->
+    <section class="chapter" aria-labelledby="measurement-title" id="measurement">
+      <div class="chapter-head">
+        <p class="eyebrow">How much you can trust this</p>
+        <h2 id="measurement-title">Checked by running the suite twice</h2>
+        <p class="lede">
+          To find out what this change really breaks, the whole suite was run on the
+          previous commit and on this one, and the results compared. These numbers come
+          from that comparison.
+        </p>
+      </div>
+      <div class="chapter-body">
+        <div class="metrics" id="metrics">
+          <div class="metric"><p class="metric-label">Actually broke</p><p class="metric-value" id="m-truth">not reported</p><p class="metric-note">tests whose result changed between the two commits</p></div>
+          <div class="metric"><p class="metric-label">Selected to run</p><p class="metric-value" id="m-selected">not reported</p><p class="metric-note">from this report</p></div>
+          <div class="metric"><p class="metric-label">Found by imports</p><p class="metric-value" id="m-reachable">not reported</p><p class="metric-note">what a tool following imports alone would pick</p></div>
+          <div class="metric metric-emphasis"><p class="metric-label">Caught by reading</p><p class="metric-value" id="m-price">not reported</p><p class="metric-note">selected beyond the import graph — the extra you pay for safety</p></div>
+          <div class="metric"><p class="metric-label">Broke-and-caught</p><p class="metric-value" id="m-recall">not reported</p><p class="metric-note" id="m-recall-note">share of the real breaks this report caught</p></div>
+        </div>
+        <p class="metric-caveat">
+          This comparison can only show what it caught. A test can be affected by a
+          change and still pass both times, so the real number of affected tests is at
+          least this high — never lower.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================ red triage ========================== -->
+    <section class="chapter" aria-labelledby="triage-title" id="triage">
+      <div class="chapter-head">
+        <p class="eyebrow">When something is red</p>
+        <h2 id="triage-title">What to fix</h2>
+        <p class="lede">
+          A failing test is not always a bug in the code. Each red one is sorted by what
+          actually caused it, and the cause decides what you change.
+        </p>
+      </div>
+      <div class="chapter-body">
+        <div class="triage-grid" id="triage-grid"></div>
+        <p class="empty-state" id="triage-empty" hidden></p>
+      </div>
+    </section>
+
+    <!-- =========================== run order ============================ -->
+    <section class="chapter" aria-labelledby="priority-title" id="priority">
+      <div class="chapter-head">
+        <p class="eyebrow">In what order</p>
+        <h2 id="priority-title">If you want a fast answer, run in this order</h2>
+        <p class="lede">
+          The tests most likely to fail are first, so a broken change shows up in the
+          first minute rather than the last.
+        </p>
+      </div>
+      <div class="chapter-body">
+        <ol class="priority" id="priority-list"></ol>
+        <p class="empty-state" id="priority-empty" hidden></p>
+      </div>
+    </section>
+
+    <!-- ============================ evidence ============================ -->
+    <section class="chapter" aria-labelledby="citations-title" id="citations">
+      <div class="chapter-head">
+        <p class="eyebrow">Check it yourself</p>
+        <h2 id="citations-title">Every selection points at a line of code</h2>
+        <p class="lede">
+          Nothing here is taken on trust. Each conclusion names the file and line it
+          rests on, and those references were opened and confirmed before the
+          conclusion was allowed into this report.
+        </p>
+      </div>
+      <div class="chapter-body">
+        <div class="claims" id="claims-citations"></div>
+        <p class="empty-state" id="citations-empty" hidden></p>
+      </div>
+    </section>
+
+    <!-- ========================= discarded claims ======================== -->
+    <section class="chapter" aria-labelledby="rejections-title" id="rejections">
+      <div class="chapter-head">
+        <p class="eyebrow">What we threw out</p>
+        <h2 id="rejections-title">Candidates that did not survive checking</h2>
+        <p class="lede">
+          Some suggestions for what this change affects could not be confirmed against
+          the code, so they were dropped. They are listed rather than hidden, because a
+          report that only shows what it kept is impossible to trust.
+        </p>
+      </div>
+      <div class="chapter-body">
+        <div class="claim-counts" id="claim-counts">
+          <div class="claim-count"><p class="metric-label">Raised</p><p class="metric-value" id="c-proposed">not reported</p></div>
+          <div class="claim-count"><p class="metric-label">Confirmed</p><p class="metric-value" id="c-accepted">not reported</p></div>
+          <div class="claim-count"><p class="metric-label">Dropped</p><p class="metric-value" id="c-rejected">not reported</p></div>
+          <div class="claim-count"><p class="metric-label">Unresolved</p><p class="metric-value" id="c-unconfirmed">not reported</p></div>
+        </div>
+        <p class="by-role" id="by-role"></p>
+        <div class="rejections" id="rejection-list"></div>
+        <p class="empty-state" id="rejections-empty" hidden></p>
+      </div>
+    </section>
+
+    <!-- ====================== how it compares ========================== -->
+    <section class="chapter" aria-labelledby="landscape-title" id="landscape">
+      <div class="chapter-head">
+        <p class="eyebrow">How this compares</p>
+        <h2 id="landscape-title">Against the tools you already have</h2>
+        <p class="lede">
+          Test selection is a crowded field and most of it is good. These are the
+          differences that matter for this problem, including the places where another
+          tool already does more than this one.
+        </p>
+      </div>
+      <div class="chapter-body">
+        <div class="table-scroll">
+          <table class="compare">
+            <caption class="sr-only">Comparison with existing change-impact tools</caption>
+            <thead>
+              <tr>
+                <th scope="col">Tool</th>
+                <th scope="col">How it picks tests</th>
+                <th scope="col">Finds a dependency with no import path</th>
+                <th scope="col">Re-checks its own conclusions against the code</th>
+                <th scope="col">Reports accuracy measured by running the suite</th>
+                <th scope="col">Points at changed code no test covers</th>
+                <th scope="col">Flags tests that no longer match the code</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="compare-us">
+                <th scope="row">TestScope</th>
+                <td>imports, plus reading the code for shared formats</td>
+                <td><span class="mark mark-yes">yes</span></td>
+                <td><span class="mark mark-yes">yes</span></td>
+                <td><span class="mark mark-yes">yes</span></td>
+                <td><span class="mark mark-yes">yes</span></td>
+                <td><span class="mark mark-yes">yes</span></td>
+              </tr>
+              <tr>
+                <th scope="row">Azure DevOps TIA</th>
+                <td>coverage and call graph</td>
+                <td><span class="mark mark-no">no</span></td>
+                <td><span class="mark mark-no">no</span></td>
+                <td><span class="mark mark-no">no</span></td>
+                <td><span class="mark mark-no">no</span></td>
+                <td><span class="mark mark-no">no</span></td>
+              </tr>
+              <tr>
+                <th scope="row">Datadog / CircleCI</th>
+                <td>coverage matched against changed files</td>
+                <td><span class="mark mark-no">no</span></td>
+                <td><span class="mark mark-no">no</span></td>
+                <td><span class="mark mark-no">no</span></td>
+                <td><span class="mark mark-no">no</span></td>
+                <td><span class="mark mark-no">no</span></td>
+              </tr>
+              <tr>
+                <th scope="row">CloudBees Smart Tests / Launchable</th>
+                <td>past run history, plus coverage per file</td>
+                <td><span class="mark mark-no">no</span></td>
+                <td><span class="mark mark-no">no</span></td>
+                <td><span class="mark mark-no">no</span></td>
+                <td><span class="mark mark-no">no</span></td>
+                <td><span class="mark mark-no">no</span></td>
+              </tr>
+              <tr>
+                <th scope="row">LDRA TBevolve</th>
+                <td>deterministic rules, aimed at embedded code</td>
+                <td><span class="mark mark-no">no</span></td>
+                <td><span class="mark mark-no">no</span></td>
+                <td><span class="mark mark-no">no</span></td>
+                <td><span class="mark mark-yes">yes</span></td>
+                <td><span class="mark mark-no">no</span></td>
+              </tr>
+              <tr>
+                <th scope="row">Facebook predictive selection</th>
+                <td>a model of which tests failed historically</td>
+                <td><span class="mark mark-no">no</span></td>
+                <td><span class="mark mark-no">no</span></td>
+                <td><span class="mark mark-no">no</span></td>
+                <td><span class="mark mark-no">no</span></td>
+                <td><span class="mark mark-no">no</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="compare-note">
+          Two honest caveats. LDRA does point at changed code that no test covers, so
+          that column is not unique here. And newer tooling does rewrite stale tests
+          when a published API schema changes; this report works from the diff itself and
+          needs no schema, which is the difference — not the rewriting.
+        </p>
+
+        <h3 class="subhead">How the report is put together</h3>
+        <p class="pipeline-note">
+          Most of the work needs no guesswork and no reading — it is computed. Only two
+          steps involve interpretation, and one needs a decision from you.
+        </p>
+        <ol class="pipeline">
+          <li class="step step-det"><span class="step-kind">computed</span><span class="step-name">Read the diff and the test inventory</span></li>
+          <li class="step step-det"><span class="step-kind">computed</span><span class="step-name">Run the suite on both commits to get the real breaks</span></li>
+          <li class="step step-det"><span class="step-kind">computed</span><span class="step-name">Follow imports from the changed code</span></li>
+          <li class="step step-ai"><span class="step-kind">read</span><span class="step-name">Look for other code sharing the changed format</span></li>
+          <li class="step step-kernel"><span class="step-kind">checked</span><span class="step-name">Open every cited line and confirm the conclusion holds</span></li>
+          <li class="step step-int"><span class="step-kind">you</span><span class="step-name">Choose which uncovered behaviour to write tests for</span></li>
+          <li class="step step-ai"><span class="step-kind">read</span><span class="step-name">Write those tests, one file per behaviour</span></li>
+          <li class="step step-det"><span class="step-kind">computed</span><span class="step-name">Prove each new test fails before the change and passes after</span></li>
+          <li class="step step-det"><span class="step-kind">computed</span><span class="step-name">Write this report</span></li>
+        </ol>
+      </div>
+    </section>
+
+    <footer class="provenance">
+      <div class="provenance-row">
+        <span class="label">Generated</span><span id="foot-generated">not reported</span>
+      </div>
+      <div class="provenance-row">
+        <span class="label">Change analysed</span><span id="foot-diff">not reported</span>
+      </div>
+      <div class="provenance-row">
+        <span class="label">Report source</span><code id="foot-source">not reported</code>
+      </div>
+      <p class="provenance-note">
+        Built from the diff, the test inventory and the repository itself. A field the
+        report does not carry is shown as <code>not reported</code> rather than guessed.
+      </p>
+    </footer>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,515 @@
+================================================================================
+PERSON D — MEASUREMENT, RELIABILITY, AND SUBMISSION
+SELF-SUFFICIENT: everything you need is inside this file. You do not need any other
+document to do this work.
+================================================================================
+
+  ┌────────────────────────────────────────────────────────────────────────────┐
+  │ READ THIS FIRST (30 seconds)                                               │
+  │                                                                            │
+  │ WHERE TO FOCUS: sections 1-13 are YOUR ASSIGNMENT. That is the work.       │
+  │                                                                            │
+  │ Appendix A1-A2 is REFERENCE. Do NOT summarise it, do NOT rewrite it, and do │
+  │ NOT let your AI produce an essay about it. It exists so a step can say      │
+  │ "see A2" and you can look the thing up.                                    │
+  │                                                                            │
+  │ Your output is: A NUMBER WITH A SOURCE, a SCORECARD WITH FAILING CHECKS,    │
+  │ and SUBMISSION DOCUMENTS. Any claim you cannot source, you delete.         │
+  └────────────────────────────────────────────────────────────────────────────┘
+
+TIME BOX: 24-hour build. Your workstream runs the whole 24 hours with checkpoints at
+hours 8 and 16, and you own the final submission. Section 14 maps it.
+
+================================================================================
+0. THE PRODUCT, IN ONE PARAGRAPH (so your decisions have a reason)
+================================================================================
+TestScope computes what a code change did to a test suite — not just which tests to
+run. Given a diff, a test inventory and a repository, it answers four questions: which
+tests must run, which are now STALE (they assert behaviour the change removed), which
+became NEWLY RELEVANT (hidden behavioural coupling that no import graph shows), and
+what has NO test at all. Every claim it makes is mechanically re-checked against the
+repository before it counts. The measured reduction (about 90%) is the demo; the
+product is the two questions no existing tool answers: which of my tests are now lying
+to me, and which of my new behaviours has no test.
+
+You own the difference between a demo and a product: the numbers, and the HONESTY of
+the numbers. You are the last line of defence against an overclaim — and the first
+person who would benefit from one, which is why you must be the most willing person on
+the team to publish a zero.
+
+================================================================================
+1. YOUR MISSION, DELIVERABLES, AND THE FILES YOU OWN
+================================================================================
+You answer three questions no competitor answers about their own tool:
+  1. How good is the selection, MEASURED against executed ground truth?   (recall)
+  2. What did the AI layer actually contribute, per unit of cost?         (ablation)
+  3. Is the output stable, and can our own checks fail?                   (scorecard)
+And you own everything the judges read that is not code.
+
+DELIVERABLES
+  D1  bob_session/measure.py  ->  submissions/measurement.json
+  D2  bob_session/reliability_check.py extended with gates R1..R9
+  D3  submissions/scorecard.md (or .json) — one row per gate, with the total
+  D4  IBM_BOB_USAGE_STATEMENT.md and PROBLEM_SOLUTION_STATEMENT.md, each <= 500 words
+  D5  README.md updated to the repo, including the competitor comparison table
+  D6  the video outline and storyboard, built on the REAL recorded session
+  D7  the submission checklist, tracked to completion
+
+FILES YOU OWN. Nobody else edits these; do not edit anyone else's.
+  bob_session/measure.py   bob_session/reliability_check.py   submissions/**
+  README.md   VERIFICATION.md (generated; you own its HONESTY, not its bytes)
+
+================================================================================
+2. WHAT IS ALREADY TRUE — your baseline, so you know what you are extending
+================================================================================
+  500 tests -> 47 selected (41 syntactic + 6 semantic) -> 90.6% reduction, ~67ms
+  the verification script prints 16/16 gates PASS; the test suite has 203 tests
+  8 pipeline runs produce ONE distinct SHA-256 (the determinism claim)
+  the hero catch: T-0342, selected as `semantic`
+  the necessity control:   fix the consumer -> the hero vanishes (6 semantic -> 0)
+  the sensitivity control: make the inert edit behavioural -> 75 control tests return
+                           (47 -> 122)
+  the reachability control: reduce the diff to the docs typo -> 0 selected, 100.0%
+Your job is to extend this discipline to the NEW layer, not restate the old one.
+
+================================================================================
+3. THE MEASUREMENT HARNESS — the artifact fields you read, embedded
+================================================================================
+You read two inputs: the final artefact (bob_session/testscope_report.json) and the
+oracle output produced by the revision-comparison tool. The fields you depend on:
+
+FROM THE ARTEFACT
+  run_metadata.total_tests_in_suite     the inventory size
+  run_metadata.model_layer              "enabled" | "disabled"
+  run_metadata.coins_spent              total model spend for the run
+  summary.selected_for_run              |selected|
+  ledger.*                              the four verdict lists (counts feed the UI)
+  uncovered[]                           work items (symbol, path, line, kind)
+  claims.{proposed,accepted,rejected,by_role}
+  rejection_ledger[]                    every refused claim, with its gate
+  measurement.oracle.{collected,inventory_total,complete}
+  measurement.{truth_size,selected,structurally_reachable,recall,missed,
+                price_of_safety,model_layer_recall_delta}
+
+FROM THE ORACLE (the ground truth, produced by comparing two revisions)
+  {"collected":N, "inventory_total":M, "complete":bool,
+   "changed":[node ids],             <-- tests whose outcome differs between revisions
+   "flaky_excluded":[node ids],      <-- flipped; excluded so they cannot inflate recall
+   "outcome":{"<node>":{"a":"passed","b":"failed"}, ...}}
+
+WHAT `measure.py` MUST EMIT (submissions/measurement.json)
+  truth_size              = |changed|
+  selected                = summary.selected_for_run
+  structurally_reachable  = measurement.structurally_reachable
+  recall                  = |selected ∩ changed| / |changed|
+  missed                  = changed \ selected        (ALWAYS emitted, even when empty)
+  price_of_safety         = selected - structurally_reachable
+  oracle                  = carried through VERBATIM from the artefact
+  ablation                = {disabled_recall, enabled_recall, delta,
+                             coins_spent, coins_per_additional_true_positive}
+
+================================================================================
+4. THE FOUR MEASUREMENT RULES (these are not stylistic)
+================================================================================
+  M1  Neither truth_size nor recall may be published unless oracle.complete == true.
+      If the instrument is narrower than the population it measures, the number is
+      VOID. Print the literal string VOID, not a number.
+  M2  recall measures RECALL ONLY. The oracle is a LOWER BOUND on the truly affected
+      set — a test can be affected and still pass twice — so over-selection is
+      INVISIBLE to it. State that limitation in EVERY document that cites recall.
+      Never present it as precision, and never as a completeness guarantee.
+  M3  missed is ALWAYS printed. An empty list is a result; a hidden list is a lie.
+  M4  Every published number must be reproducible by ONE command, and you must have
+      run it yourself within the hour. If you did not run it, you do not publish it.
+
+WHY THIS MAKES US CREDIBLE: published systems report benchmarks on their own datasets.
+We report recall on a change whose ground truth WE EXECUTED, we state the DIRECTION of
+our error, and our instrument reports its own blindness. That is a stronger claim than
+a bigger number. See A1 for why the oracle is a lower bound.
+
+================================================================================
+5. THE ABLATION — does the AI layer earn its cost?
+================================================================================
+The system has a property that makes this trivial to run: a model layer that is
+unavailable, wrong or hostile can only ever ADD tests, never remove them. So with the
+model layer disabled, the selection must equal the deterministic baseline EXACTLY.
+
+  model_layer = disabled -> selection == baseline (41 with the hero excluded)
+  model_layer = enabled  -> selection == baseline ∪ verified additions (47)
+  delta                  = recall(enabled) - recall(disabled)
+  cost                   = coins_spent / max(1, delta_tests)
+
+ASSERT the disabled run equals the baseline BYTE FOR BYTE. That assertion is what makes
+the comparison meaningful; without it you are comparing a number to a bug.
+
+PUBLISH THE RESULT EVEN IF IT IS ZERO. A measured zero is a finding and it is fully
+defensible: "on this change, the semantic layer found nothing the symbolic layer
+missed." If it is non-zero, the semantic catch IS the delta. Either way you have an
+honest number. Write it as "the model layer contributed X additional true positives for
+Y coins on this change" — never as a success rate on a sample of one.
+
+================================================================================
+6. THE RELIABILITY SCORECARD — extend the existing one; add R1..R10
+================================================================================
+The repository already verifies: determinism across 8 runs (one digest); the three
+causal controls for the selectors (necessity, sensitivity, reachability); and that the
+patch reconstructs the target revision. Keep all of it. Add:
+
+  R1  REPLAY DETERMINISM. With the proposal cache WARM, 8 runs produce ONE digest. With
+      the cache COLD and the model layer DISABLED, also ONE digest. Then report the
+      interesting case: warm vs cold with the model layer ENABLED. If the accepted
+      claim set differs, the cache is doing the work — SAY SO, because that is the
+      design, not a bug.
+  R2  MONOTONICITY. model_layer disabled => selection == baseline byte for byte. A hard
+      assertion, not a print.
+  R3  KERNEL SOUNDNESS CONTROL. Inject a claim with a FABRICATED citation and assert
+      the kernel REJECTS it. A verifier that cannot reject is not a verifier.
+  R4  KERNEL NON-VACUITY CONTROL. Inject a VALID claim and assert it is ACCEPTED. A
+      verifier that rejects everything is not a verifier either. R3 + R4 together are
+      what make the kernel believable; either alone is theatre.
+  R5  GATE FALSIFIERS. For EACH of G1..G5, construct an input that MUST fail that gate
+      and assert it does. In particular G3 must REJECT a test that fails against the
+      previous revision by a COLLECTION or IMPORT error rather than an assertion —
+      otherwise it accepts tests that prove nothing.
+  R6  ORACLE BLINDNESS REGRESSION. A run under the demo repo's DEFAULT marker set
+      (which excludes the contract tests) must report complete:false. This pins the
+      defect we already found once: the instrument must be able to report its own
+      blindness. See A2.
+  R7  NO-UNSOURCED-NUMBER. Scan README.md and both statements for numeric figures and
+      fail on any figure that does not appear in submissions/measurement.json or the
+      generated verification evidence. A number with no source is how submissions get
+      caught.
+  R8  RED TRIAGE, all three directions, one test each:
+        (a) a test asserting behaviour the change REMOVED is diagnosed STALE, not
+            regression — the developer must be told to fix the TEST, not bisect code;
+        (b) a failing test with NO coverage of changed code AND no verified link is
+            diagnosed FLAKY — quarantine, do not chase;
+        (c) the SAME failure, once a verified link exists, is NOT written off as flaky.
+      Case (c) is a deliberate improvement on the published differential-coverage
+      flakiness rule, whose hidden premise is that coverage is a COMPLETE dependence
+      proxy — the exact premise A1 refutes. The demo repository contains a live
+      instance of the case it corrects, so this gate is not hypothetical.
+  R9  FLAKINESS EXCLUSION. A test that flips between the two revisions is EXCLUDED from
+      ground truth, and the count of excluded flaky tests is REPORTED. Counting a flaky
+      flip as a discriminating test would inflate the one number we most need to be
+      honest about. Assert the positive form too: a test that passes at BOTH revisions
+      is not counted as discriminating, because the oracle is a lower bound and is
+      silent about tests it cannot make fail.
+
+  R10 DEGRADED-RUN HONESTY. With the model layer unavailable (or every key refused),
+      assert all four: the artefact is STILL EMITTED and schema-valid;
+      model_coverage == 0.0; the selection equals the deterministic baseline BYTE FOR
+      BYTE; and the run reports that the layer was unavailable. This is the
+      monotonicity property seen from the operations side, and it is the claim that
+      survives a demo where the wifi dies mid-sentence.
+
+  THREE ORACLE DEFECTS YOUR HARNESS MUST HANDLE — each one silently corrupts the
+  single number you are publishing:
+    test_id in the inventory but absent from the collected suite
+        -> status MISSING and EXCLUDED from truth_size. It can never be selected, so
+           counting it would depress recall for a reason unrelated to selection
+           quality. Exclusion here is not a convenience; it is the difference
+           between measuring the selector and measuring the inventory.
+    a test that fails at BOTH revisions
+        -> not discriminating: excluded from recall and counted in already_red. It is
+           already red; the change neither caused it nor can it fix it.
+    a test that FLIPS between the revisions
+        -> flaky: excluded from ground truth, and the excluded COUNT IS REPORTED
+           (R9). Counting a flaky flip as a discriminating test inflates the one
+           number we most need to be honest about.
+  And the reverse hazard, stated so nobody "fixes" it into a bug: a test that PASSES
+  at BOTH revisions is NOT counted as discriminating. That is the lower-bound
+  limitation (A1) — the oracle is silent about tests it cannot make fail — and it
+  must never be repaired by inventing an affectedness signal to fill the gap.
+
+  A DEFECT IN GATE MACHINERY, WHICH IS YOUR DOMAIN. An earlier figure-integrity gate
+  in this repository enforced its rule over a hard-coded allow-list of SEVEN files.
+  Two silent consequences: a new document was exempt by default (the gate reported
+  "clean" about a file it never opened), and the gate's own descriptive text contained
+  the pattern it forbade — that text went into the evidence log, and the gate scanned
+  the log, so the failure was STICKY and fixing the source did not clear it. Three
+  rules, binding on every checker you add, including R7:
+     DISCOVER, DON'T ENUMERATE   find files by rule, so a new one is covered by default
+     NEVER ECHO THE LITERAL      report "contains forbidden figure #1" so no log can
+                                 carry the pattern
+     EXCLUDE GENERATED OUTPUT    a generated log is not a claim; scanning it closes a
+       BY RULE                   self-reference loop whose only failure mode is a
+                                 confusing, sticky false positive
+  INVARIANT C26: A SCANNER MUST BE SELF-CLEAN — it must neither emit the pattern it
+  searches for nor consume its own output. Prove it by the three-state test: probe
+  present -> FAIL naming the probe; probe removed -> PASS; evidence line names the
+  discovered scope. A check you have never seen fail is not a check.
+
+SCORECARD FORMAT: one row per gate — key, claim, expectation, observed, pass/fail.
+Print the total. Put the scorecard in the repository and its summary in the statements.
+AND: every gate above must have been OBSERVED TO FAIL at least once, when deliberately
+broken. A check that has never failed is not a check.
+
+================================================================================
+7. THE TWO STATEMENTS (<= 500 words each; the limits are gated)
+================================================================================
+7.1 IBM_BOB_USAGE_STATEMENT.md — how Bob was ACTUALLY used, specifically:
+  - the workflow steps that are DETERMINISTIC vs AI vs INTERACTIVE, and why that split
+    exists: deterministic steps consume no model tokens, and the stated design
+    principle is that anything which can be done deterministically should be;
+  - the four roles (scout, cartographer, author, falsifier) and what each is for;
+  - ONE CONCRETE KERNEL REJECTION: the claim, its citation, and why it failed. One real
+    rejection is worth more than a paragraph about verification;
+  - subagents and context hygiene, with the screenshot that shows it;
+  - the cost accounting: what the run cost, and which steps cost nothing.
+  NO generic AI language. Every sentence must reference something in the repository.
+
+7.2 PROBLEM_SOLUTION_STATEMENT.md — the problem and the solution:
+  - the problem: coverage and import graphs are ONE-SIDED oracles, so absence of
+    coverage cannot exonerate a test. Give the concrete instance at A1;
+  - the four questions we answer, and that existing change-impact products answer one
+    or two of them;
+  - a BUILT vs SPECIFIED table. Never blur the two.
+  - the measured numbers, with their LIMITS stated in the same sentence.
+
+BOTH DOCUMENTS: no "first ever", no "nobody has done this", no unmeasured percentage.
+The competitor table belongs in the README with the columns where we do NOT win
+included. See §9.
+
+================================================================================
+8. THE VIDEO (>= 90 seconds of live demo; it must be a REAL session)
+================================================================================
+Storyboard, built on the session Person B records. Never on a hypothetical run:
+  ~20s  THE PROBLEM. Show the change that breaks a consumer nothing imports. Show that
+        a plain test run is GREEN before and after — the regression is invisible to the
+        default run. That single fact sets up everything.
+  ~90s  THE LIVE DEMO. Run the workflow in Bob. Show the deterministic steps costing
+        nothing. Show one subagent in its own context window. Show the KERNEL REJECT A
+        CLAIM LIVE — this is the money shot. Show the ledger: the semantic catch, the
+        stale list, the uncovered worklist. Show the SELECT ACTION gate and the
+        developer choosing.
+  ~25s  THE NARRATION. The syntactic vs semantic distinction, and that coverage is a
+        one-sided oracle. One sentence: coverage can prove a test ran; it can never
+        prove a test did not need to run.
+  ~10s  THE CLOSE. The measured numbers, with their limits, in one breath.
+RULES: real footage only. If a step misbehaves, KEEP IT and narrate it — a real failure
+plus a real recovery is more convincing than a clean run with no visible mechanism.
+
+================================================================================
+9. THE COMPETITOR TABLE — content you must get right
+================================================================================
+Include all of these, and include the columns where we LOSE:
+  Azure DevOps TIA        coverage-based; managed .NET only; no semantic reasoning
+  Datadog / CircleCI      coverage cross-reference to changed files
+  CloudBees Smart Tests /
+    Launchable            ML on past runs + file-level coverage; up to ~80% reduction.
+                          Its own documentation admits: "TIA only works with existing
+                          tests and can't predict impacts on tests that don't yet
+                          exist."
+  LDRA TBevolve           DOES report untested changed code. So we must NOT claim that
+                          column as unique — claiming it is a checkable falsehood.
+  "Change Advisor" (2026) DOES automate stale-test updates, but from a declared API
+                          SCHEMA. Our difference is the SOURCE OF TRUTH for staleness:
+                          we derive removed behaviour from the DIFF itself, with no
+                          schema required.
+  Facebook predictive
+    selection             ~99.9% of faults and ~95% of failing tests with a large
+                          reduction — but purely statistical, no explanation, no gap
+                          detection, and no mechanism for missing tests.
+  Agentic testing, 2026   a crowded category. "We use AI agents" is NOT a
+                          differentiator; agents are table stakes now.
+WHAT THOSE REJECTIONS LEAVE US, and this is the submission:
+  1. a behavioural dependency with NO structural edge;
+  2. every claim mechanically re-derived from the repository before it counts;
+  3. recall measured against EXECUTED ground truth, with the direction of error stated;
+  4. determinism proved by construction while still using four models;
+  5. all four answers in one artefact where competitors answer one.
+Not the reduction percentage. Do not lead with it.
+
+================================================================================
+10. SUBMISSION CHECKLIST — you own tracking; everyone else owns hitting it
+================================================================================
+  [ ] Public repository; every handoff file present for transparency
+  [ ] Bob IDE demonstrated as a CORE component (eligibility, not decoration)
+  [ ] Bob task session-summary screenshots in bob_session/session_screenshots/
+  [ ] IBM_BOB_USAGE_STATEMENT.md <= 500 words        (gated)
+  [ ] PROBLEM_SOLUTION_STATEMENT.md <= 500 words      (gated)
+  [ ] README accurate to the repository, competitor table included, no contradictory
+      figure anywhere
+  [ ] Video >= 90s live demo + problem framing + subagent narration
+  [ ] submissions/measurement.json with recall, missed, price_of_safety and ablation
+  [ ] the scorecard present with R1..R10
+  [ ] bob_session/coins.md present and within budget
+  [ ] the verification script PASS, the test suite green, both handoff checkers PASS
+  [ ] no "first ever" / "nobody has" claims anywhere (grep for them as a gate)
+  [ ] submitted WITH MARGIN, not at the deadline
+
+================================================================================
+11. EXACT PROMPTS TO PASTE INTO YOUR AI (in this order, one at a time)
+================================================================================
+PROMPT D1 — orientation
+    Read PERSON D sections 1 to 6 of the text I am pasting. Then list every claim we
+    intend to make in the submission, and for each one name the file that PROVES it.
+    Flag every claim with no proof file. Do not write documents yet, and do not
+    restate the appendix.
+
+PROMPT D2 — the measurement harness
+    Write bob_session/measure.py per section 3. It reads the artefact and the oracle
+    output and emits submissions/measurement.json with truth_size, selected,
+    structurally_reachable, recall, missed, price_of_safety, oracle and ablation.
+    Enforce M1 (emit the literal VOID when the oracle is incomplete) and ALWAYS emit
+    missed. Then run it on the real artefacts and show me the output.
+
+PROMPT D3 — the ablation
+    Add the ablation of section 5: run with the model layer disabled and ASSERT the
+    selection equals the deterministic baseline byte for byte; then run enabled and
+    compute the delta and coins per additional true positive. Report the result even if
+    the delta is zero. Show me both runs and the assertion result.
+
+PROMPT D4 — the scorecard
+    Extend bob_session/reliability_check.py with gates R1..R10 from section 6. For R3 and
+    R4, inject a fabricated-citation claim and a valid claim and assert REJECT and
+    ACCEPT. For R5, build one input per gate G1..G5 that must fail, including a test
+    that fails at the previous revision by an IMPORT error rather than an assertion. For
+    R6, prove the oracle reports incomplete under the default marker set. For R8, cover
+    all three triage directions. For R10, run with the model layer unavailable and
+    assert the artefact is still valid and the selection equals the baseline. Then run
+    the scorecard and paste the summary.
+
+PROMPT D5 — the no-unsourced-number gate
+    Implement R7: scan README.md and both statements for numeric figures and fail on any
+    figure that does not appear in submissions/measurement.json or the generated
+    verification evidence. Then run it and show me every figure sourced.
+
+PROMPT D6 — the statements
+    Write IBM_BOB_USAGE_STATEMENT.md and PROBLEM_SOLUTION_STATEMENT.md, each <= 500
+    words, using ONLY facts that appear in the evidence files. Structure per section 7.
+    Requirements: one concrete kernel rejection with its reason; the four questions; a
+    BUILT vs SPECIFIED table; recall stated WITH its lower-bound limitation in the same
+    sentence; no generic AI language; no "first ever" claims. Then count the words and
+    show me both counts.
+
+PROMPT D7 — README, competitor table, and the storyboard
+    Update README.md so every number matches the artefacts; add the competitor
+    comparison table from section 9 INCLUDING the columns where we do not win; add the
+    pipeline diagram; then write the video outline from section 8 so it can be shot
+    against the real recorded session.
+
+PROMPT D8 — close out
+    Run every item in section 10 and produce a single PASS/FAIL table. For each FAIL,
+    state whether it is a CODE DEFECT or an HONEST GAP. Do not mark an honest gap as
+    PASS — gaps go in the video and the statements.
+
+================================================================================
+12. ACCEPTANCE CRITERIA
+================================================================================
+  [ ] measurement.json exists with recall, missed, price_of_safety and the ablation
+  [ ] recall renders as VOID, not as a number, when the oracle is incomplete
+  [ ] the ablation ran both ways and is published, including a zero if it is zero
+  [ ] the disabled run equals the baseline byte for byte (asserted in code)
+  [ ] scorecard gates R1..R10 ALL pass
+  [ ] each of R1..R10 has been OBSERVED TO FAIL at least once, when deliberately broken
+  [ ] the three oracle defects (MISSING, already-red, flaky) are each handled and the
+      flaky-exclusion count is reported
+  [ ] R10 confirmed: with the model layer unavailable the artefact is still valid and
+      the selection equals the deterministic baseline byte for byte
+  [ ] both statements <= 500 words, enforced by a gate
+  [ ] R7 finds every published number sourced
+  [ ] README contains the competitor table with our losing columns included
+  [ ] grep -ri "first ever\|nobody has\|no one has" returns nothing in submission files
+  [ ] screenshots present and named after what they PROVE, not after their order
+  [ ] checklist complete with margin before the deadline
+
+================================================================================
+13. DO NOTS
+================================================================================
+  - Do not publish recall from an incomplete oracle. Print VOID.
+  - Do not present recall as precision, or as a completeness guarantee. It is a
+    lower-bound measurement in one direction and nothing more.
+  - Do not hide missed, even when empty, and especially when not.
+  - Do not publish a number you did not reproduce yourself within the hour.
+  - Do not describe a generated test as CORRECT. It is PINNED, and SPECIFIES only when
+    anchored to an intent artefact. See A2 — conflating the two is the dishonest signal
+    the field warns about.
+  - Do not claim "first ever" for anything a competitor already does, including
+    untested-code reporting (LDRA) and AI test generation (a 2023 runner-up did it).
+  - Do not lead with the reduction percentage. Lead with the catch.
+  - Do not film a fabricated session, and do not re-run until it "looks clean" while
+    presenting it as a single live take.
+  - Do not mark an honest gap as PASS. Gaps belong in the video and the statements.
+  - Do not edit another owner's files. Raise it, get the contract updated, then change.
+  - Do not delete a number because it is inconvenient. An unexplained zero is a
+    finding; a hidden one is misconduct.
+
+================================================================================
+14. YOUR TIMELINE
+================================================================================
+  h0-2   harness skeleton against the known artefact shape; point it at the mock.
+  h2-6   measurement.py + the R1..R9 scorecard, working on whatever exists.
+  h6-8   CHECKPOINT: the recall number EXISTS, or say on the call that it does not yet.
+  h8-14  the ablation, statements drafted, competitor table sourced.
+  h14-16 CHECKPOINT: end-to-end measurement; every gate observed to fail once.
+  h16-20 capture evidence, then RECORD THE VIDEO against the real session.
+  h20-22 CHECKPOINT: feature freeze. Finish the statements and README.
+  h22-24 final checklist, repo check, SUBMIT WITH MARGIN.
+
+================================================================================
+================================================================================
+APPENDIX — REFERENCE ONLY. DO NOT SUMMARISE, DO NOT REWRITE, DO NOT BUILD FROM
+THESE SECTIONS. Look a thing up here when a step above tells you to.
+================================================================================
+================================================================================
+
+================================================================================
+A1. WHY THE ORACLE IS A LOWER BOUND, AND WHAT THAT COSTS US
+================================================================================
+The oracle decides that a test was affected if its OUTCOME CHANGED between the two
+revisions. That is a sound way to detect a difference and it is cheap, but it has a
+one-directional limitation: a test can be genuinely affected and still pass under both
+revisions (for example, if it asserts a superset of the changed behaviour, or if the
+changed path is not exercised by the inputs it happens to use). Therefore:
+    the oracle's changed set  ⊆  the truly affected set
+It is a LOWER BOUND. Consequences you must state wherever recall appears:
+    - recall is measured in ONE direction only; over-selection is invisible to it, so a
+      high recall does NOT mean we are tight, only that we did not miss what we could
+      observe;
+    - we never report precision from it, and never a completeness guarantee;
+    - an empty `missed` list means "we missed nothing the instrument could see", which is
+      a weaker and more honest sentence than "we missed nothing".
+Underlying this is a theorem, not an implementation detail: deciding whether a change
+alters the behaviour of a specific test is undecidable in general (Rice's theorem). So
+NO tool — and no model — can guarantee completeness. What we can offer instead is
+monotone soundness (the model layer can only ADD to the selection, never remove from
+it, so its failure degrades to the baseline) plus a measured recall with its direction
+disclosed. Both are checkable; the guarantee is not.
+
+================================================================================
+A2. PINS vs SPECIFIES, AND WHY CORRECTNESS IS NOT OURS TO CLAIM
+================================================================================
+Determining the EXPECTED output of a test is the oracle problem, and tooling does not
+solve it. So the system separates two guarantees and never blurs them:
+    PINS       the test will detect FUTURE changes to this behaviour. Mechanical, and
+               proved by the G3 gate: an assertion must fire against the previous
+               revision and the test must pass repeatedly against the current one.
+               This says NOTHING about whether the CURRENT change was correct.
+    SPECIFIES  the assertion encodes INTENDED behaviour, anchored to a specification
+               artefact (a docstring, README, PR or issue text, a reproducer). Only as
+               good as that artefact, and it exists only when the repository actually
+               wrote its intent down.
+Where no intent artefact exists, the honest sentence is "this behaviour is now pinned",
+never "this behaviour is correct". Blurring the two manufactures exactly the dishonest
+signal the field warns about: a suite that looks like it proves something it does not.
+There is a second reason to be strict here. Generated tests frequently encode the ACTUAL
+behaviour of the new code rather than the INTENDED behaviour, which converts bugs into
+passing tests. That is why the acceptance criterion is "an assertion fires before the
+change and passes after", not "coverage increased" — and why the authoring role is
+deliberately denied sight of the post-change implementation.
+
+================================================================================
+PROVENANCE — where this file came from (you do NOT need it to do the work)
+================================================================================
+This file is a SELF-SUFFICIENT distillation. The measurement fields, the rules M1-M4,
+the ablation, the scorecard gates R1-R9, the limits of the oracle, the competitor
+content and the submission checklist are all embedded above, because those are exactly
+the things your AI will otherwise invent.
+The normative design of record on disk is ARCHITECTURE_V2.md in the repository root.
+The team's distribution index — who owns which file, and the frozen interfaces between
+them — is MASTER_PROMPT.txt. Both live in the repository for transparency and for the
+judges. Neither is required reading for you. If a sentence here ever disagrees with
+ARCHITECTURE_V2.md, the spec is authoritative: raise it, get the interface contract
+updated, then change the harness.

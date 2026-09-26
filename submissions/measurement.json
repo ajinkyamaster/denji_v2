@@ -1,0 +1,2093 @@
+{
+  "ablation": {
+    "additional_true_positives": 1,
+    "assertions": [
+      {
+        "assertion": "the disabled run equals the deterministic baseline byte for byte",
+        "passed": true
+      },
+      {
+        "assertion": "the enabled selection contains every disabled selection entry (monotonicity)",
+        "passed": true
+      },
+      {
+        "assertion": "the disabled selection is exactly structural closure + representation coupling",
+        "passed": true
+      }
+    ],
+    "coins_per_additional_true_positive": 23.0,
+    "coins_spent": 23,
+    "delta": 0.333333,
+    "disabled_recall": 0.666667,
+    "enabled_recall": 1.0,
+    "model_layer": "enabled",
+    "model_status": "warm-cache-replay",
+    "statement": "the model layer contributed 1 additional true positive(s) for 23 coins on this change",
+    "zero_is_published": true
+  },
+  "artefact": "bob_session/testscope_report.json",
+  "artefact_digest": "5c2333a164018b7b59850ffbbf5b0029ac20df99724cd687b0773fcd69b3c572",
+  "diff": "diffs/change_b.patch",
+  "generated_by": "bob_session/measure.py",
+  "limits": {
+    "no_completeness_guarantee": "by Rice's theorem, deciding whether a change affects a test is undecidable",
+    "no_precision_claim": true,
+    "oracle_definition": "outcome_A(t) != outcome_B(t) over the full inventory at both revisions",
+    "recall_direction": "lower bound",
+    "what_it_cannot_see": "a test can be affected and still pass twice, so over-selection is invisible: a high recall does NOT mean the selection is tight, and an empty missed list means 'we missed nothing the instrument could see', not 'we missed nothing'"
+  },
+  "missed": [],
+  "oracle": {
+    "already_red": [
+      "tests/test_metrics_dashboard.py::test_histogram_buckets_match_expected"
+    ],
+    "changed": [
+      "tests/test_report_worker.py::test_amount_totals_contract",
+      "tests/test_report_worker.py::test_cache_roundtrip_contract",
+      "tests/test_report_worker.py::test_summary_counts_contract"
+    ],
+    "collected": 501,
+    "complete": true,
+    "deselected": 0,
+    "flaky_excluded": [],
+    "flaky_excluded_count": 0,
+    "inventory_total": 500,
+    "markers": "-m ''",
+    "missing": [
+      "tests/test_receipt_service.py::test_receipt_number_is_unique"
+    ],
+    "outcome": {
+      "tests/test_audit_service.py::test_audit_service_case_00_describes_item": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_audit_service.py::test_audit_service_case_01_describe_is_text": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_audit_service.py::test_audit_service_case_02_describe_is_prefixed": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_audit_service.py::test_audit_service_case_03_describe_is_distinct": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_audit_service.py::test_audit_service_case_04_describe_has_length": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_audit_service.py::test_audit_service_case_05_counts_items": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_audit_service.py::test_audit_service_case_06_count_is_integer": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_audit_service.py::test_audit_service_case_07_revision_is_marked": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_backends.py::test_delete_reports_removal": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_backends.py::test_set_get_roundtrip": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_batch_worker.py::test_batch_worker_case_00_describes_item": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_batch_worker.py::test_batch_worker_case_01_describe_is_text": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_batch_worker.py::test_batch_worker_case_02_describe_is_prefixed": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_batch_worker.py::test_batch_worker_case_03_describe_is_distinct": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_batch_worker.py::test_batch_worker_case_04_describe_has_length": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_batch_worker.py::test_batch_worker_case_05_counts_items": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_batch_worker.py::test_batch_worker_case_06_count_is_integer": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_batch_worker.py::test_batch_worker_case_07_revision_is_marked": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_batch_worker.py::test_batch_worker_case_08_describes_item": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_batch_worker.py::test_batch_worker_case_09_describe_is_text": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_batch_worker.py::test_batch_worker_case_10_describe_is_prefixed": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_batch_worker.py::test_batch_worker_case_11_describe_is_distinct": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_batch_worker.py::test_batch_worker_case_12_describe_has_length": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_batch_worker.py::test_batch_worker_case_13_counts_items": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_batch_worker.py::test_batch_worker_case_14_count_is_integer": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_batch_worker.py::test_batch_worker_case_15_revision_is_marked": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_batch_worker.py::test_batch_worker_case_16_describes_item": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_batch_worker.py::test_batch_worker_case_17_describe_is_text": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_batch_worker.py::test_batch_worker_case_18_describe_is_prefixed": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_batch_worker.py::test_batch_worker_case_19_describe_is_distinct": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_batch_worker.py::test_batch_worker_case_20_describe_has_length": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_batch_worker.py::test_batch_worker_case_21_counts_items": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_billing_service.py::test_currencies_are_declared": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_billing_service.py::test_net_amount_can_go_negative": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_billing_service.py::test_net_amount_default_fee_is_zero": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_billing_service.py::test_net_amount_requires_mapping": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_billing_service.py::test_net_amount_subtracts_fee": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_billing_service.py::test_refund_does_not_mutate_receipt": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_billing_service.py::test_refund_keeps_amount_and_currency": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_billing_service.py::test_refund_records_a_counter": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_billing_service.py::test_refund_rejects_non_mapping": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_billing_service.py::test_refund_rejects_unsettled_receipt": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_billing_service.py::test_refund_returns_flag": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_billing_service.py::test_settle_accepts_inr": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_billing_service.py::test_settle_accepts_usd": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_billing_service.py::test_settle_allows_zero": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_billing_service.py::test_settle_defaults_to_eur": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_billing_service.py::test_settle_is_deterministic": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_billing_service.py::test_settle_records_a_counter": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_billing_service.py::test_settle_rejects_negative_amount": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_billing_service.py::test_settle_rejects_unknown_currency": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_billing_service.py::test_settle_returns_receipt_fields": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_cache_service.py::test_evict_expired_keeps_live_entries": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_cache_service.py::test_evict_expired_removes_overdue_entries": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_cache_service.py::test_read_missing_key_returns_none": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_cache_service.py::test_read_returns_the_written_mapping": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_cache_service.py::test_storage_path_is_configurable": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_cache_service.py::test_write_returns_serialised_text": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_cleanup_worker.py::test_cleanup_worker_case_00_describes_item": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_cleanup_worker.py::test_cleanup_worker_case_01_describe_is_text": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_cleanup_worker.py::test_cleanup_worker_case_02_describe_is_prefixed": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_cleanup_worker.py::test_cleanup_worker_case_03_describe_is_distinct": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_cleanup_worker.py::test_cleanup_worker_case_04_describe_has_length": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_cleanup_worker.py::test_cleanup_worker_case_05_counts_items": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_cleanup_worker.py::test_cleanup_worker_case_06_count_is_integer": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_cleanup_worker.py::test_cleanup_worker_case_07_revision_is_marked": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_config.py::test_default_cache_path_is_relative": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_config.py::test_service_name_uses_the_app_name": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_cron.py::test_cron_case_00_describes_item": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_cron.py::test_cron_case_01_describe_is_text": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_cron.py::test_cron_case_02_describe_is_prefixed": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_cron.py::test_cron_case_03_describe_is_distinct": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_cron.py::test_cron_case_04_describe_has_length": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_cron.py::test_cron_case_05_counts_items": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_cron.py::test_cron_case_06_count_is_integer": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_cron.py::test_cron_case_07_revision_is_marked": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_cron.py::test_cron_case_08_describes_item": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_cron.py::test_cron_case_09_describe_is_text": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_currency_service.py::test_currency_service_case_00_describes_item": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_currency_service.py::test_currency_service_case_01_describe_is_text": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_currency_service.py::test_currency_service_case_02_describe_is_prefixed": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_currency_service.py::test_currency_service_case_03_describe_is_distinct": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_currency_service.py::test_currency_service_case_04_describe_has_length": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_currency_service.py::test_currency_service_case_05_counts_items": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_currency_service.py::test_currency_service_case_06_count_is_integer": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_currency_service.py::test_currency_service_case_07_revision_is_marked": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_currency_service.py::test_currency_service_case_08_describes_item": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_currency_service.py::test_currency_service_case_09_describe_is_text": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_db_client.py::test_db_client_case_00_describes_item": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_db_client.py::test_db_client_case_01_describe_is_text": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_db_client.py::test_db_client_case_02_describe_is_prefixed": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_db_client.py::test_db_client_case_03_describe_is_distinct": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_db_client.py::test_db_client_case_04_describe_has_length": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_db_client.py::test_db_client_case_05_counts_items": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_db_client.py::test_db_client_case_06_count_is_integer": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_db_client.py::test_db_client_case_07_revision_is_marked": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_db_client.py::test_db_client_case_08_describes_item": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_db_client.py::test_db_client_case_09_describe_is_text": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_digest_worker.py::test_digest_worker_case_00_describes_item": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_digest_worker.py::test_digest_worker_case_01_describe_is_text": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_digest_worker.py::test_digest_worker_case_02_describe_is_prefixed": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_digest_worker.py::test_digest_worker_case_03_describe_is_distinct": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_digest_worker.py::test_digest_worker_case_04_describe_has_length": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_digest_worker.py::test_digest_worker_case_05_counts_items": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_digest_worker.py::test_digest_worker_case_06_count_is_integer": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_digest_worker.py::test_digest_worker_case_07_revision_is_marked": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_digest_worker.py::test_digest_worker_case_08_describes_item": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_digest_worker.py::test_digest_worker_case_09_describe_is_text": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_digest_worker.py::test_digest_worker_case_10_describe_is_prefixed": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_encoding.py::test_binary_payload_roundtrip": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_encoding.py::test_corrupt_blob_is_rejected": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_encoding.py::test_empty_payload_roundtrip": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_encoding.py::test_encode_decode_roundtrip": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_encoding.py::test_encode_is_deterministic": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_encoding.py::test_encode_returns_text": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_encoding.py::test_encoded_form_has_hash_prefix": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_encoding.py::test_encoded_is_ascii": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_encoding.py::test_encoded_length_grows_with_payload": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_encoding.py::test_manually_built_blob_decodes": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_encoding.py::test_partition_ignores_extra_colons": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_encoding.py::test_prefix_is_64_hex_chars": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_encoding.py::test_two_payloads_have_distinct_encodings": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_encoding.py::test_unchecked_decode_of_empty_text": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_encoding.py::test_unchecked_decode_skips_hash_check": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_formatting.py::test_formatting_case_00_describes_item": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_formatting.py::test_formatting_case_01_describe_is_text": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_formatting.py::test_formatting_case_02_describe_is_prefixed": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_formatting.py::test_formatting_case_03_describe_is_distinct": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_formatting.py::test_formatting_case_04_describe_has_length": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_formatting.py::test_formatting_case_05_counts_items": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_formatting.py::test_formatting_case_06_count_is_integer": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_formatting.py::test_formatting_case_07_revision_is_marked": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_formatting.py::test_formatting_case_08_describes_item": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_formatting.py::test_formatting_case_09_describe_is_text": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_formatting.py::test_formatting_case_10_describe_is_prefixed": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_formatting.py::test_formatting_case_11_describe_is_distinct": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_formatting.py::test_formatting_case_12_describe_has_length": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_formatting.py::test_formatting_case_13_counts_items": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_formatting.py::test_formatting_case_14_count_is_integer": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_formatting.py::test_formatting_case_15_revision_is_marked": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_formatting.py::test_formatting_case_16_describes_item": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_formatting.py::test_formatting_case_17_describe_is_text": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_formatting.py::test_formatting_case_18_describe_is_prefixed": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_formatting.py::test_formatting_case_19_describe_is_distinct": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_formatting.py::test_formatting_case_20_describe_has_length": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_formatting.py::test_formatting_case_21_counts_items": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_handlers.py::test_handlers_case_00_describes_item": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_handlers.py::test_handlers_case_01_describe_is_text": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_handlers.py::test_handlers_case_02_describe_is_prefixed": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_handlers.py::test_handlers_case_03_describe_is_distinct": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_handlers.py::test_handlers_case_04_describe_has_length": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_handlers.py::test_handlers_case_05_counts_items": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_handlers.py::test_handlers_case_06_count_is_integer": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_handlers.py::test_handlers_case_07_revision_is_marked": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_handlers.py::test_handlers_case_08_describes_item": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_handlers.py::test_handlers_case_09_describe_is_text": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_handlers.py::test_handlers_case_10_describe_is_prefixed": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_handlers.py::test_handlers_case_11_describe_is_distinct": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_handlers.py::test_handlers_case_12_describe_has_length": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_handlers.py::test_handlers_case_13_counts_items": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_handlers.py::test_handlers_case_14_count_is_integer": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_handlers.py::test_handlers_case_15_revision_is_marked": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_handlers.py::test_handlers_case_16_describes_item": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_handlers.py::test_handlers_case_17_describe_is_text": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_hashing.py::test_hash_text_encodes_utf8": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_hashing.py::test_sha256_is_stable_across_calls": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_hashing.py::test_sha256_matches_known_digest": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_hashing.py::test_short_hash_default_length": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_hashing.py::test_short_hash_is_prefix_of_sha256": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_hashing.py::test_short_hash_length": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_hashing.py::test_short_hash_rejects_negative_length": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_hashing.py::test_short_hash_rejects_zero_length": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_http_client.py::test_http_client_case_00_describes_item": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_http_client.py::test_http_client_case_01_describe_is_text": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_http_client.py::test_http_client_case_02_describe_is_prefixed": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_http_client.py::test_http_client_case_03_describe_is_distinct": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_http_client.py::test_http_client_case_04_describe_has_length": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_http_client.py::test_http_client_case_05_counts_items": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_http_client.py::test_http_client_case_06_count_is_integer": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_http_client.py::test_http_client_case_07_revision_is_marked": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_http_client.py::test_http_client_case_08_describes_item": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_http_client.py::test_http_client_case_09_describe_is_text": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_ingest_worker.py::test_ingest_worker_case_00_describes_item": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_ingest_worker.py::test_ingest_worker_case_01_describe_is_text": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_ingest_worker.py::test_ingest_worker_case_02_describe_is_prefixed": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_ingest_worker.py::test_ingest_worker_case_03_describe_is_distinct": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_ingest_worker.py::test_ingest_worker_case_04_describe_has_length": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_ingest_worker.py::test_ingest_worker_case_05_counts_items": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_ingest_worker.py::test_ingest_worker_case_06_count_is_integer": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_ingest_worker.py::test_ingest_worker_case_07_revision_is_marked": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_ingest_worker.py::test_ingest_worker_case_08_describes_item": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_ingest_worker.py::test_ingest_worker_case_09_describe_is_text": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_ingest_worker.py::test_ingest_worker_case_10_describe_is_prefixed": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_ingest_worker.py::test_ingest_worker_case_11_describe_is_distinct": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_ingest_worker.py::test_ingest_worker_case_12_describe_has_length": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_ingest_worker.py::test_ingest_worker_case_13_counts_items": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_ingest_worker.py::test_ingest_worker_case_14_count_is_integer": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_ingest_worker.py::test_ingest_worker_case_15_revision_is_marked": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_ingest_worker.py::test_ingest_worker_case_16_describes_item": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_ingest_worker.py::test_ingest_worker_case_17_describe_is_text": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_ingest_worker.py::test_ingest_worker_case_18_describe_is_prefixed": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_ingest_worker.py::test_ingest_worker_case_19_describe_is_distinct": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_inventory_service.py::test_inventory_service_case_00_describes_item": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_inventory_service.py::test_inventory_service_case_01_describe_is_text": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_inventory_service.py::test_inventory_service_case_02_describe_is_prefixed": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_inventory_service.py::test_inventory_service_case_03_describe_is_distinct": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_inventory_service.py::test_inventory_service_case_04_describe_has_length": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_inventory_service.py::test_inventory_service_case_05_counts_items": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_inventory_service.py::test_inventory_service_case_06_count_is_integer": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_inventory_service.py::test_inventory_service_case_07_revision_is_marked": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_inventory_service.py::test_inventory_service_case_08_describes_item": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_inventory_service.py::test_inventory_service_case_09_describe_is_text": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_inventory_service.py::test_inventory_service_case_10_describe_is_prefixed": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_inventory_service.py::test_inventory_service_case_11_describe_is_distinct": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_inventory_service.py::test_inventory_service_case_12_describe_has_length": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_inventory_service.py::test_inventory_service_case_13_counts_items": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_inventory_service.py::test_inventory_service_case_14_count_is_integer": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_inventory_service.py::test_inventory_service_case_15_revision_is_marked": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_inventory_service.py::test_inventory_service_case_16_describes_item": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_inventory_service.py::test_inventory_service_case_17_describe_is_text": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_inventory_service.py::test_inventory_service_case_18_describe_is_prefixed": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_inventory_service.py::test_inventory_service_case_19_describe_is_distinct": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_legacy_adapter.py::test_legacy_adapter_case_00_describes_item": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_legacy_adapter.py::test_legacy_adapter_case_01_describe_is_text": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_legacy_adapter.py::test_legacy_adapter_case_02_describe_is_prefixed": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_legacy_adapter.py::test_legacy_adapter_case_03_describe_is_distinct": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_legacy_adapter.py::test_legacy_adapter_case_04_describe_has_length": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_legacy_adapter.py::test_legacy_adapter_case_05_counts_items": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_legacy_adapter.py::test_legacy_adapter_case_06_count_is_integer": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_legacy_adapter.py::test_legacy_adapter_case_07_revision_is_marked": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_legacy_adapter.py::test_legacy_adapter_case_08_describes_item": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_legacy_adapter.py::test_legacy_adapter_case_09_describe_is_text": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_legacy_adapter.py::test_legacy_adapter_case_10_describe_is_prefixed": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_legacy_adapter.py::test_legacy_adapter_case_11_describe_is_distinct": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_legacy_adapter.py::test_legacy_adapter_case_12_describe_has_length": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_legacy_adapter.py::test_legacy_adapter_case_13_counts_items": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_logging_setup.py::test_get_logger_returns_a_logger": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_logging_setup.py::test_log_level_name_is_canonical": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_metrics.py::test_metrics_case_00_describes_item": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_metrics.py::test_metrics_case_01_describe_is_text": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_metrics.py::test_metrics_case_02_describe_is_prefixed": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_metrics.py::test_metrics_case_03_describe_is_distinct": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_metrics.py::test_metrics_case_04_describe_has_length": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_metrics.py::test_metrics_case_05_counts_items": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_metrics.py::test_metrics_case_06_count_is_integer": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_metrics.py::test_metrics_case_07_revision_is_marked": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_metrics.py::test_metrics_case_08_describes_item": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_metrics.py::test_metrics_case_09_describe_is_text": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_metrics.py::test_metrics_case_10_describe_is_prefixed": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_metrics.py::test_metrics_case_11_describe_is_distinct": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_metrics.py::test_metrics_case_12_describe_has_length": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_metrics.py::test_metrics_case_13_counts_items": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_metrics.py::test_metrics_case_14_count_is_integer": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_metrics.py::test_metrics_case_15_revision_is_marked": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_metrics.py::test_metrics_case_16_describes_item": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_metrics.py::test_metrics_case_17_describe_is_text": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_metrics.py::test_metrics_case_18_describe_is_prefixed": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_metrics_dashboard.py::test_histogram_buckets_match_expected": {
+        "a": "failed",
+        "b": "failed"
+      },
+      "tests/test_models.py::test_entry_expiry_flag": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_models.py::test_report_add_folds_entries": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_notification_service.py::test_notification_service_case_00_describes_item": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_notification_service.py::test_notification_service_case_01_describe_is_text": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_notification_service.py::test_notification_service_case_02_describe_is_prefixed": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_notification_service.py::test_notification_service_case_03_describe_is_distinct": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_notification_service.py::test_notification_service_case_04_describe_has_length": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_notification_service.py::test_notification_service_case_05_counts_items": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_notification_service.py::test_notification_service_case_06_count_is_integer": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_notification_service.py::test_notification_service_case_07_revision_is_marked": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_notification_service.py::test_notification_service_case_08_describes_item": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_notification_service.py::test_notification_service_case_09_describe_is_text": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_notification_service.py::test_notification_service_case_10_describe_is_prefixed": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_notification_service.py::test_notification_service_case_11_describe_is_distinct": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_notification_service.py::test_notification_service_case_12_describe_has_length": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_notification_service.py::test_notification_service_case_13_counts_items": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_notification_service.py::test_notification_service_case_14_count_is_integer": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_notification_service.py::test_notification_service_case_15_revision_is_marked": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_notification_service.py::test_notification_service_case_16_describes_item": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_notification_service.py::test_notification_service_case_17_describe_is_text": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_notification_service.py::test_notification_service_case_18_describe_is_prefixed": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_notification_service.py::test_notification_service_case_19_describe_is_distinct": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_ops_smoke.py::test_ops_smoke_parses_cache_dump": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_order_service.py::test_order_service_case_00_describes_item": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_order_service.py::test_order_service_case_01_describe_is_text": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_order_service.py::test_order_service_case_02_describe_is_prefixed": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_order_service.py::test_order_service_case_03_describe_is_distinct": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_order_service.py::test_order_service_case_04_describe_has_length": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_order_service.py::test_order_service_case_05_counts_items": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_order_service.py::test_order_service_case_06_count_is_integer": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_order_service.py::test_order_service_case_07_revision_is_marked": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_order_service.py::test_order_service_case_08_describes_item": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_order_service.py::test_order_service_case_09_describe_is_text": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_order_service.py::test_order_service_case_10_describe_is_prefixed": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_order_service.py::test_order_service_case_11_describe_is_distinct": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_order_service.py::test_order_service_case_12_describe_has_length": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_order_service.py::test_order_service_case_13_counts_items": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_order_service.py::test_order_service_case_14_count_is_integer": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_order_service.py::test_order_service_case_15_revision_is_marked": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_order_service.py::test_order_service_case_16_describes_item": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_order_service.py::test_order_service_case_17_describe_is_text": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_order_service.py::test_order_service_case_18_describe_is_prefixed": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_order_service.py::test_order_service_case_19_describe_is_distinct": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_order_service.py::test_order_service_case_20_describe_has_length": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_order_service.py::test_order_service_case_21_counts_items": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_order_service.py::test_order_service_case_22_count_is_integer": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_order_service.py::test_order_service_case_23_revision_is_marked": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_order_service.py::test_order_service_case_24_describes_item": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_order_service.py::test_order_service_case_25_describe_is_text": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_order_service.py::test_order_service_case_26_describe_is_prefixed": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_order_service.py::test_order_service_case_27_describe_is_distinct": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_order_service.py::test_order_service_case_28_describe_has_length": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_order_service.py::test_order_service_case_29_counts_items": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_order_service.py::test_order_service_case_30_count_is_integer": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_order_service.py::test_order_service_case_31_revision_is_marked": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_order_service.py::test_order_service_case_32_describes_item": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_order_service.py::test_order_service_case_33_describe_is_text": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_order_service.py::test_order_service_case_34_describe_is_prefixed": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_order_service.py::test_order_service_case_35_describe_is_distinct": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_order_service.py::test_order_service_case_36_describe_has_length": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_order_service.py::test_order_service_case_37_counts_items": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_order_service.py::test_order_service_case_38_count_is_integer": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_order_service.py::test_order_service_case_39_revision_is_marked": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_order_service.py::test_order_service_case_40_describes_item": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_order_service.py::test_order_service_case_41_describe_is_text": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_order_service.py::test_order_service_case_42_describe_is_prefixed": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_order_service.py::test_order_service_case_43_describe_is_distinct": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_order_service.py::test_order_service_case_44_describe_has_length": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_order_service.py::test_order_service_case_45_counts_items": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_order_service.py::test_order_service_case_46_count_is_integer": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_order_service.py::test_order_service_case_47_revision_is_marked": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_order_service.py::test_order_service_case_48_describes_item": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_order_service.py::test_order_service_case_49_describe_is_text": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_order_service.py::test_order_service_case_50_describe_is_prefixed": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_order_service.py::test_order_service_case_51_describe_is_distinct": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_order_service.py::test_order_service_case_52_describe_has_length": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_order_service.py::test_order_service_case_53_counts_items": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_order_service.py::test_order_service_case_54_count_is_integer": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_order_service.py::test_order_service_case_55_revision_is_marked": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_order_service.py::test_order_service_case_56_describes_item": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_order_service.py::test_order_service_case_57_describe_is_text": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_order_service.py::test_order_service_case_58_describe_is_prefixed": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_order_service.py::test_order_service_case_59_describe_is_distinct": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_order_service.py::test_order_service_case_60_describe_has_length": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_order_service.py::test_order_service_case_61_counts_items": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_order_service.py::test_order_service_case_62_count_is_integer": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_order_service.py::test_order_service_case_63_revision_is_marked": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_order_service.py::test_order_service_case_64_describes_item": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_order_service.py::test_order_service_case_65_describe_is_text": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_order_service.py::test_order_service_case_66_describe_is_prefixed": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_order_service.py::test_order_service_case_67_describe_is_distinct": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_order_service.py::test_order_service_case_68_describe_has_length": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_order_service.py::test_order_service_case_69_counts_items": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_paginate.py::test_paginate_case_00_describes_item": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_paginate.py::test_paginate_case_01_describe_is_text": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_paginate.py::test_paginate_case_02_describe_is_prefixed": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_paginate.py::test_paginate_case_03_describe_is_distinct": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_paginate.py::test_paginate_case_04_describe_has_length": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_paginate.py::test_paginate_case_05_counts_items": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_paginate.py::test_paginate_case_06_count_is_integer": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_paginate.py::test_paginate_case_07_revision_is_marked": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_paginate.py::test_paginate_case_08_describes_item": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_paginate.py::test_paginate_case_09_describe_is_text": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_paginate.py::test_paginate_case_10_describe_is_prefixed": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_paginate.py::test_paginate_case_11_describe_is_distinct": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_paginate.py::test_paginate_case_12_describe_has_length": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_paginate.py::test_paginate_case_13_counts_items": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_paginate.py::test_paginate_case_14_count_is_integer": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_paginate.py::test_paginate_case_15_revision_is_marked": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_paginate.py::test_paginate_case_16_describes_item": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_paginate.py::test_paginate_case_17_describe_is_text": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_paginate.py::test_paginate_case_18_describe_is_prefixed": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_paginate.py::test_paginate_case_19_describe_is_distinct": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_pricing_service.py::test_pricing_service_case_00_describes_item": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_pricing_service.py::test_pricing_service_case_01_describe_is_text": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_pricing_service.py::test_pricing_service_case_02_describe_is_prefixed": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_pricing_service.py::test_pricing_service_case_03_describe_is_distinct": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_pricing_service.py::test_pricing_service_case_04_describe_has_length": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_pricing_service.py::test_pricing_service_case_05_counts_items": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_pricing_service.py::test_pricing_service_case_06_count_is_integer": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_pricing_service.py::test_pricing_service_case_07_revision_is_marked": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_pricing_service.py::test_pricing_service_case_08_describes_item": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_pricing_service.py::test_pricing_service_case_09_describe_is_text": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_pricing_service.py::test_pricing_service_case_10_describe_is_prefixed": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_pricing_service.py::test_pricing_service_case_11_describe_is_distinct": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_pricing_service.py::test_pricing_service_case_12_describe_has_length": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_pricing_service.py::test_pricing_service_case_13_counts_items": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_pricing_service.py::test_pricing_service_case_14_count_is_integer": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_pricing_service.py::test_pricing_service_case_15_revision_is_marked": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_pricing_service.py::test_pricing_service_case_16_describes_item": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_pricing_service.py::test_pricing_service_case_17_describe_is_text": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_pricing_service.py::test_pricing_service_case_18_describe_is_prefixed": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_pricing_service.py::test_pricing_service_case_19_describe_is_distinct": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_pricing_service.py::test_pricing_service_case_20_describe_has_length": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_pricing_service.py::test_pricing_service_case_21_counts_items": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_pricing_service.py::test_pricing_service_case_22_count_is_integer": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_pricing_service.py::test_pricing_service_case_23_revision_is_marked": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_pricing_service.py::test_pricing_service_case_24_describes_item": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_receipt_service.py::test_receipt_service_case_00_describes_item": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_receipt_service.py::test_receipt_service_case_01_describe_is_text": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_receipt_service.py::test_receipt_service_case_02_describe_is_prefixed": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_receipt_service.py::test_receipt_service_case_03_describe_is_distinct": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_receipt_service.py::test_receipt_service_case_04_describe_has_length": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_receipt_service.py::test_receipt_service_case_05_counts_items": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_receipt_service.py::test_receipt_service_case_06_count_is_integer": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_receipt_service.py::test_receipt_service_case_07_revision_is_marked": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_receipt_service.py::test_receipt_service_case_08_describes_item": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_receipt_service.py::test_receipt_service_case_09_describe_is_text": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_redaction.py::test_redaction_case_00_describes_item": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_redaction.py::test_redaction_case_01_describe_is_text": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_redaction.py::test_redaction_case_02_describe_is_prefixed": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_redaction.py::test_redaction_case_03_describe_is_distinct": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_redaction.py::test_redaction_case_04_describe_has_length": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_redaction.py::test_redaction_case_05_counts_items": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_report_worker.py::test_amount_totals_contract": {
+        "a": "passed",
+        "b": "failed"
+      },
+      "tests/test_report_worker.py::test_cache_roundtrip_contract": {
+        "a": "passed",
+        "b": "failed"
+      },
+      "tests/test_report_worker.py::test_legacy_field_order": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_report_worker.py::test_parses_legacy_pipe_payload": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_report_worker.py::test_skips_blank_lines": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_report_worker.py::test_summary_counts_contract": {
+        "a": "passed",
+        "b": "failed"
+      },
+      "tests/test_routes.py::test_routes_case_00_describes_item": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_routes.py::test_routes_case_01_describe_is_text": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_routes.py::test_routes_case_02_describe_is_prefixed": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_routes.py::test_routes_case_03_describe_is_distinct": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_routes.py::test_routes_case_04_describe_has_length": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_routes.py::test_routes_case_05_counts_items": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_routes.py::test_routes_case_06_count_is_integer": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_routes.py::test_routes_case_07_revision_is_marked": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_routes.py::test_routes_case_08_describes_item": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_routes.py::test_routes_case_09_describe_is_text": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_routes.py::test_routes_case_10_describe_is_prefixed": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_routes.py::test_routes_case_11_describe_is_distinct": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_serializers.py::test_serializers_case_00_describes_item": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_serializers.py::test_serializers_case_01_describe_is_text": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_serializers.py::test_serializers_case_02_describe_is_prefixed": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_serializers.py::test_serializers_case_03_describe_is_distinct": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_serializers.py::test_serializers_case_04_describe_has_length": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_serializers.py::test_serializers_case_05_counts_items": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_serializers.py::test_serializers_case_06_count_is_integer": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_serializers.py::test_serializers_case_07_revision_is_marked": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_serializers.py::test_serializers_case_08_describes_item": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_serializers.py::test_serializers_case_09_describe_is_text": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_sync_worker.py::test_sync_worker_case_00_describes_item": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_sync_worker.py::test_sync_worker_case_01_describe_is_text": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_sync_worker.py::test_sync_worker_case_02_describe_is_prefixed": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_sync_worker.py::test_sync_worker_case_03_describe_is_distinct": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_sync_worker.py::test_sync_worker_case_04_describe_has_length": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_sync_worker.py::test_sync_worker_case_05_counts_items": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_sync_worker.py::test_sync_worker_case_06_count_is_integer": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_sync_worker.py::test_sync_worker_case_07_revision_is_marked": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_sync_worker.py::test_sync_worker_case_08_describes_item": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_sync_worker.py::test_sync_worker_case_09_describe_is_text": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_sync_worker.py::test_sync_worker_case_10_describe_is_prefixed": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_sync_worker.py::test_sync_worker_case_11_describe_is_distinct": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_sync_worker.py::test_sync_worker_case_12_describe_has_length": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_sync_worker.py::test_sync_worker_case_13_counts_items": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_sync_worker.py::test_sync_worker_case_14_count_is_integer": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_sync_worker.py::test_sync_worker_case_15_revision_is_marked": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_sync_worker.py::test_sync_worker_case_16_describes_item": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_sync_worker.py::test_sync_worker_case_17_describe_is_text": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_sync_worker.py::test_sync_worker_case_18_describe_is_prefixed": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_sync_worker.py::test_sync_worker_case_19_describe_is_distinct": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_sync_worker.py::test_sync_worker_case_20_describe_has_length": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_sync_worker.py::test_sync_worker_case_21_counts_items": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_tax_service.py::test_tax_service_case_00_describes_item": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_tax_service.py::test_tax_service_case_01_describe_is_text": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_tax_service.py::test_tax_service_case_02_describe_is_prefixed": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_tax_service.py::test_tax_service_case_03_describe_is_distinct": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_tax_service.py::test_tax_service_case_04_describe_has_length": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_tax_service.py::test_tax_service_case_05_counts_items": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_tax_service.py::test_tax_service_case_06_count_is_integer": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_tax_service.py::test_tax_service_case_07_revision_is_marked": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_tax_service.py::test_tax_service_case_08_describes_item": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_tax_service.py::test_tax_service_case_09_describe_is_text": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_telemetry.py::test_record_increments_counters": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_text.py::test_slugify_collapses_separators": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_timeutil.py::test_expiry_semantics": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_user_service.py::test_user_service_case_00_describes_item": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_user_service.py::test_user_service_case_01_describe_is_text": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_user_service.py::test_user_service_case_02_describe_is_prefixed": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_user_service.py::test_user_service_case_03_describe_is_distinct": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_user_service.py::test_user_service_case_04_describe_has_length": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_user_service.py::test_user_service_case_05_counts_items": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_user_service.py::test_user_service_case_06_count_is_integer": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_user_service.py::test_user_service_case_07_revision_is_marked": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_user_service.py::test_user_service_case_08_describes_item": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_user_service.py::test_user_service_case_09_describe_is_text": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_user_service.py::test_user_service_case_10_describe_is_prefixed": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_user_service.py::test_user_service_case_11_describe_is_distinct": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_user_service.py::test_user_service_case_12_describe_has_length": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_user_service.py::test_user_service_case_13_counts_items": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_user_service.py::test_user_service_case_14_count_is_integer": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_user_service.py::test_user_service_case_15_revision_is_marked": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_user_service.py::test_user_service_case_16_describes_item": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_user_service.py::test_user_service_case_17_describe_is_text": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_user_service.py::test_user_service_case_18_describe_is_prefixed": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_user_service.py::test_user_service_case_19_describe_is_distinct": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_user_service.py::test_user_service_case_20_describe_has_length": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_user_service.py::test_user_service_case_21_counts_items": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_user_service.py::test_user_service_case_22_count_is_integer": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_user_service.py::test_user_service_case_23_revision_is_marked": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_user_service.py::test_user_service_case_24_describes_item": {
+        "a": "passed",
+        "b": "passed"
+      },
+      "tests/test_validators.py::test_require_and_identifier": {
+        "a": "passed",
+        "b": "passed"
+      }
+    },
+    "repeats": 2,
+    "revisions": {
+      "rev_a": "d3fbc8483200714c4e6f96049b0bc64d6162c0d6",
+      "rev_b": "62ad0ccccc7d5064839c512b20d184bf58e62cac"
+    },
+    "strategy": "dual-revision outcome discriminant",
+    "unmapped": [
+      "tests/test_metrics_dashboard.py::test_histogram_buckets_match_expected",
+      "tests/test_receipt_service.py::test_receipt_service_case_09_describe_is_text"
+    ]
+  },
+  "oracle_input": "bob_session/evidence/oracle.json",
+  "price_of_safety": 7,
+  "recall": 1.0,
+  "recall_cross_check": "agree",
+  "recall_note": null,
+  "repo": "demo",
+  "selected": 48,
+  "structurally_reachable": 41,
+  "summary": {
+    "newly_relevant_count": 4,
+    "reduction_pct": 90.4,
+    "selected_for_run": 48,
+    "stale_count": 3,
+    "total_tests_in_suite": 500,
+    "uncovered_count": 2
+  },
+  "truth_size": 3
+}

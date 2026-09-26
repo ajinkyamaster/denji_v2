@@ -1,0 +1,2023 @@
+{
+  "already_red": [],
+  "changed": [
+    "tests.test_report_worker::test_recent_entries_round_trip_contract[T-0340]",
+    "tests.test_report_worker::test_recent_entries_round_trip_statuses[T-0341]",
+    "tests.test_report_worker::test_recent_entries_round_trip_totals[T-0342]"
+  ],
+  "collected": 500,
+  "collected_a": 500,
+  "collected_b": 500,
+  "complete": true,
+  "default_marker_collected": 497,
+  "flaky_excluded": [],
+  "inventory_total": 500,
+  "mode": "patch",
+  "note": "flakiness detection requires repeat>1; flaky_excluded is empty by construction",
+  "outcome": {
+    "tests.test_account_service::test_account_summary_counts_cached_entries[T-0463]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_account_service::test_open_account[T-0462]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_audit_service::test_is_sensitive[T-0477]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_auth::test_hash_token[T-0286]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_auth::test_hash_token[T-0287]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_auth::test_hash_token[T-0288]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_auth::test_hash_token[T-0289]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_auth::test_hash_token[T-0290]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_auth::test_is_allowed[T-0301]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_auth::test_is_allowed[T-0302]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_auth::test_is_allowed[T-0303]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_auth::test_is_allowed[T-0304]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_auth::test_is_allowed[T-0305]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_auth::test_scopes_for[T-0296]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_auth::test_scopes_for[T-0297]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_auth::test_scopes_for[T-0298]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_auth::test_scopes_for[T-0299]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_auth::test_scopes_for[T-0300]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_auth::test_verify_token[T-0291]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_auth::test_verify_token[T-0292]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_auth::test_verify_token[T-0293]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_auth::test_verify_token[T-0294]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_auth::test_verify_token[T-0295]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_billing_service::test_apply_fee[T-0071]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_billing_service::test_apply_fee[T-0072]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_billing_service::test_apply_fee[T-0073]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_billing_service::test_apply_fee[T-0074]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_billing_service::test_apply_fee[T-0075]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_billing_service::test_apply_fee[T-0076]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_billing_service::test_apply_fee[T-0077]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_billing_service::test_apply_fee[T-0078]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_billing_service::test_apply_fee[T-0079]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_billing_service::test_apply_fee[T-0080]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_billing_service::test_apply_fee[T-0081]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_billing_service::test_apply_fee[T-0082]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_billing_service::test_apply_fee[T-0083]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_billing_service::test_apply_fee[T-0084]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_billing_service::test_apply_fee[T-0085]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_billing_service::test_apply_fee[T-0086]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_billing_service::test_apply_fee[T-0087]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_billing_service::test_apply_fee[T-0088]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_billing_service::test_apply_fee[T-0089]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_billing_service::test_apply_fee[T-0090]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_billing_service::test_apply_fee[T-0091]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_billing_service::test_apply_fee[T-0092]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_billing_service::test_apply_fee[T-0093]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_billing_service::test_apply_fee[T-0094]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_billing_service::test_apply_fee[T-0095]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_billing_service::test_build_receipt[T-0096]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_billing_service::test_build_receipt[T-0097]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_billing_service::test_build_receipt[T-0098]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_billing_service::test_build_receipt[T-0099]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_billing_service::test_build_receipt[T-0100]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_billing_service::test_build_receipt[T-0101]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_billing_service::test_build_receipt[T-0102]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_billing_service::test_build_receipt[T-0103]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_billing_service::test_build_receipt[T-0104]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_billing_service::test_build_receipt[T-0105]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_billing_service::test_build_receipt[T-0106]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_billing_service::test_build_receipt[T-0107]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_billing_service::test_build_receipt[T-0108]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_billing_service::test_build_receipt[T-0109]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_billing_service::test_build_receipt[T-0110]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_billing_service::test_build_receipt[T-0111]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_billing_service::test_build_receipt[T-0112]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_billing_service::test_build_receipt[T-0113]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_billing_service::test_build_receipt[T-0114]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_billing_service::test_build_receipt[T-0115]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_billing_service::test_build_receipt[T-0116]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_billing_service::test_build_receipt[T-0117]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_billing_service::test_build_receipt[T-0118]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_billing_service::test_build_receipt[T-0119]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_billing_service::test_build_receipt[T-0120]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_billing_service::test_settle[T-0121]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_billing_service::test_settle[T-0122]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_billing_service::test_settle[T-0123]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_billing_service::test_settle[T-0124]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_billing_service::test_settle[T-0125]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_billing_service::test_settle[T-0126]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_billing_service::test_settle[T-0127]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_billing_service::test_settle[T-0128]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_billing_service::test_settle[T-0129]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_billing_service::test_settle[T-0130]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_billing_service::test_settle[T-0131]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_billing_service::test_settle[T-0132]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_billing_service::test_settle[T-0133]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_billing_service::test_settle[T-0134]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_billing_service::test_settle[T-0135]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_billing_service::test_settle[T-0136]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_billing_service::test_settle[T-0137]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_billing_service::test_settle[T-0138]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_billing_service::test_settle[T-0139]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_billing_service::test_settle[T-0140]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_billing_service::test_settle[T-0141]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_billing_service::test_settle[T-0142]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_billing_service::test_settle[T-0143]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_billing_service::test_settle[T-0144]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_billing_service::test_settle[T-0145]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_cache_service::test_read_cache_entries[T-0461]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_cache_service::test_write_cache_entry_returns_a_payload[T-0460]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_cleanup_worker::test_clean_cache[T-0476]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_cleanup_worker::test_trim[T-0475]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_config::test_describe[T-0019]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_config::test_describe[T-0020]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_config::test_describe[T-0021]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_config::test_describe[T-0022]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_config::test_describe[T-0023]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_config::test_describe[T-0024]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_config::test_describe[T-0025]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_config::test_describe[T-0026]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_config::test_is_valid_key[T-0009]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_config::test_is_valid_key[T-0010]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_config::test_is_valid_key[T-0011]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_config::test_is_valid_key[T-0012]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_config::test_is_valid_key[T-0013]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_config::test_is_valid_key[T-0014]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_config::test_is_valid_key[T-0015]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_config::test_is_valid_key[T-0016]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_config::test_is_valid_key[T-0017]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_config::test_is_valid_key[T-0018]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_config::test_load_config_rejects_bad_overrides[T-0027]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_config::test_load_config_rejects_bad_overrides[T-0028]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_config::test_load_config_rejects_bad_overrides[T-0029]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_config::test_load_config_rejects_bad_overrides[T-0030]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_config::test_merge_defaults[T-0001]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_config::test_merge_defaults[T-0002]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_config::test_merge_defaults[T-0003]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_config::test_merge_defaults[T-0004]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_config::test_merge_defaults[T-0005]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_config::test_merge_defaults[T-0006]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_config::test_merge_defaults[T-0007]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_config::test_merge_defaults[T-0008]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_discount_service::test_apply[T-0420]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_discount_service::test_apply[T-0421]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_discount_service::test_apply[T-0422]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_discount_service::test_apply[T-0423]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_discount_service::test_apply[T-0424]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_discount_service::test_apply[T-0425]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_discount_service::test_apply[T-0426]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_discount_service::test_apply[T-0427]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_discount_service::test_apply[T-0428]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_discount_service::test_apply[T-0429]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_discount_service::test_discount_for[T-0410]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_discount_service::test_discount_for[T-0411]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_discount_service::test_discount_for[T-0412]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_discount_service::test_discount_for[T-0413]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_discount_service::test_discount_for[T-0414]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_discount_service::test_discount_for[T-0415]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_discount_service::test_discount_for[T-0416]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_discount_service::test_discount_for[T-0417]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_discount_service::test_discount_for[T-0418]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_discount_service::test_discount_for[T-0419]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_discount_service::test_is_valid_code[T-0400]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_discount_service::test_is_valid_code[T-0401]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_discount_service::test_is_valid_code[T-0402]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_discount_service::test_is_valid_code[T-0403]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_discount_service::test_is_valid_code[T-0404]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_discount_service::test_is_valid_code[T-0405]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_discount_service::test_is_valid_code[T-0406]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_discount_service::test_is_valid_code[T-0407]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_discount_service::test_is_valid_code[T-0408]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_discount_service::test_is_valid_code[T-0409]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_export_service::test_export_filename[T-0467]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_export_service::test_export_rows[T-0466]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_export_worker::test_batch[T-0430]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_export_worker::test_batch[T-0431]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_export_worker::test_batch[T-0432]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_export_worker::test_batch[T-0433]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_export_worker::test_batch[T-0434]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_export_worker::test_batch[T-0435]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_export_worker::test_batch[T-0436]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_export_worker::test_batch[T-0437]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_export_worker::test_batch[T-0438]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_export_worker::test_batch[T-0439]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_export_worker::test_batch_count[T-0440]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_export_worker::test_batch_count[T-0441]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_export_worker::test_batch_count[T-0442]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_export_worker::test_batch_count[T-0443]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_export_worker::test_batch_count[T-0444]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_export_worker::test_batch_count[T-0445]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_export_worker::test_batch_count[T-0446]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_export_worker::test_batch_count[T-0447]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_export_worker::test_batch_count[T-0448]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_export_worker::test_batch_count[T-0449]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_export_worker::test_flatten[T-0450]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_export_worker::test_flatten[T-0451]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_export_worker::test_flatten[T-0452]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_export_worker::test_flatten[T-0453]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_export_worker::test_flatten[T-0454]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_export_worker::test_flatten[T-0455]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_export_worker::test_flatten[T-0456]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_export_worker::test_flatten[T-0457]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_export_worker::test_flatten[T-0458]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_export_worker::test_flatten[T-0459]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_ingest_worker::test_ingest_batch[T-0473]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_ingest_worker::test_normalise_status[T-0472]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_ingest_worker::test_summarise_batch[T-0474]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_invoice_service::test_due_date[T-0499]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_invoice_service::test_is_overdue[T-0500]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_invoice_service::test_issue[T-0498]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_models::test_invoice_total[T-0061]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_models::test_invoice_total[T-0062]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_models::test_invoice_total[T-0063]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_models::test_invoice_total[T-0064]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_models::test_invoice_total[T-0065]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_models::test_invoice_total[T-0066]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_models::test_invoice_total[T-0067]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_models::test_invoice_total[T-0068]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_models::test_invoice_total[T-0069]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_models::test_invoice_total[T-0070]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_models::test_line_total[T-0041]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_models::test_line_total[T-0042]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_models::test_line_total[T-0043]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_models::test_line_total[T-0044]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_models::test_line_total[T-0045]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_models::test_line_total[T-0046]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_models::test_line_total[T-0047]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_models::test_line_total[T-0048]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_models::test_line_total[T-0049]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_models::test_line_total[T-0050]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_models::test_make_account[T-0031]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_models::test_make_account[T-0032]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_models::test_make_account[T-0033]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_models::test_make_account[T-0034]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_models::test_make_account[T-0035]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_models::test_make_account[T-0036]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_models::test_make_account[T-0037]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_models::test_make_account[T-0038]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_models::test_make_account[T-0039]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_models::test_make_account[T-0040]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_models::test_make_invoice[T-0051]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_models::test_make_invoice[T-0052]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_models::test_make_invoice[T-0053]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_models::test_make_invoice[T-0054]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_models::test_make_invoice[T-0055]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_models::test_make_invoice[T-0056]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_models::test_make_invoice[T-0057]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_models::test_make_invoice[T-0058]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_models::test_make_invoice[T-0059]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_models::test_make_invoice[T-0060]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_notification_service::test_body_length[T-0493]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_notification_service::test_body_length[T-0494]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_notification_service::test_body_length[T-0495]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_notification_service::test_body_length[T-0496]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_notification_service::test_body_length[T-0497]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_notification_service::test_channels_for[T-0478]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_notification_service::test_channels_for[T-0479]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_notification_service::test_channels_for[T-0480]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_notification_service::test_channels_for[T-0481]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_notification_service::test_channels_for[T-0482]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_notification_service::test_render_message[T-0483]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_notification_service::test_render_message[T-0484]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_notification_service::test_render_message[T-0485]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_notification_service::test_render_message[T-0486]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_notification_service::test_render_message[T-0487]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_notification_service::test_should_notify[T-0488]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_notification_service::test_should_notify[T-0489]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_notification_service::test_should_notify[T-0490]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_notification_service::test_should_notify[T-0491]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_notification_service::test_should_notify[T-0492]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_pricing_service::test_base_price[T-0344]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_pricing_service::test_base_price[T-0345]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_pricing_service::test_base_price[T-0346]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_pricing_service::test_base_price[T-0347]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_pricing_service::test_base_price[T-0348]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_pricing_service::test_base_price[T-0349]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_pricing_service::test_base_price[T-0350]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_pricing_service::test_base_price[T-0351]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_pricing_service::test_base_price[T-0352]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_pricing_service::test_base_price[T-0353]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_pricing_service::test_base_price[T-0354]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_pricing_service::test_base_price[T-0355]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_pricing_service::test_base_price[T-0356]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_pricing_service::test_base_price[T-0357]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_pricing_service::test_discounted[T-0358]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_pricing_service::test_discounted[T-0359]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_pricing_service::test_discounted[T-0360]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_pricing_service::test_discounted[T-0361]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_pricing_service::test_discounted[T-0362]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_pricing_service::test_discounted[T-0363]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_pricing_service::test_discounted[T-0364]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_pricing_service::test_discounted[T-0365]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_pricing_service::test_discounted[T-0366]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_pricing_service::test_discounted[T-0367]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_pricing_service::test_discounted[T-0368]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_pricing_service::test_discounted[T-0369]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_pricing_service::test_discounted[T-0370]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_pricing_service::test_discounted[T-0371]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_pricing_service::test_tier_for[T-0372]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_pricing_service::test_tier_for[T-0373]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_pricing_service::test_tier_for[T-0374]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_pricing_service::test_tier_for[T-0375]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_pricing_service::test_tier_for[T-0376]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_pricing_service::test_tier_for[T-0377]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_pricing_service::test_tier_for[T-0378]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_pricing_service::test_tier_for[T-0379]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_pricing_service::test_tier_for[T-0380]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_pricing_service::test_tier_for[T-0381]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_pricing_service::test_tier_for[T-0382]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_pricing_service::test_tier_for[T-0383]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_pricing_service::test_tier_for[T-0384]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_pricing_service::test_tier_for[T-0385]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_pricing_service::test_total_for[T-0386]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_pricing_service::test_total_for[T-0387]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_pricing_service::test_total_for[T-0388]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_pricing_service::test_total_for[T-0389]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_pricing_service::test_total_for[T-0390]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_pricing_service::test_total_for[T-0391]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_pricing_service::test_total_for[T-0392]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_pricing_service::test_total_for[T-0393]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_pricing_service::test_total_for[T-0394]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_pricing_service::test_total_for[T-0395]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_pricing_service::test_total_for[T-0396]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_pricing_service::test_total_for[T-0397]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_pricing_service::test_total_for[T-0398]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_pricing_service::test_total_for[T-0399]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_report_worker::test_parse_keeps_unknown_payloads[T-0338]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_report_worker::test_parse_pipe_records[T-0339]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_report_worker::test_recent_entries_round_trip_contract[T-0340]": {
+      "a": "passed",
+      "b": "failed"
+    },
+    "tests.test_report_worker::test_recent_entries_round_trip_statuses[T-0341]": {
+      "a": "passed",
+      "b": "failed"
+    },
+    "tests.test_report_worker::test_recent_entries_round_trip_totals[T-0342]": {
+      "a": "passed",
+      "b": "failed"
+    },
+    "tests.test_report_worker::test_summarise_entries_totals_counts[T-0343]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_routes::test_is_known[T-0469]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_routes::test_resolve[T-0468]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_search_service::test_match_accounts[T-0464]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_search_service::test_rank[T-0465]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_serializers::test_serialise_account[T-0470]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_serializers::test_serialise_error[T-0471]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_ids::test_account_id[T-0246]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_ids::test_account_id[T-0247]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_ids::test_account_id[T-0248]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_ids::test_account_id[T-0249]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_ids::test_account_id[T-0250]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_ids::test_account_id[T-0251]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_ids::test_account_id[T-0252]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_ids::test_account_id[T-0253]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_ids::test_account_id[T-0254]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_ids::test_account_id[T-0255]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_ids::test_invoice_id[T-0256]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_ids::test_invoice_id[T-0257]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_ids::test_invoice_id[T-0258]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_ids::test_invoice_id[T-0259]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_ids::test_invoice_id[T-0260]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_ids::test_invoice_id[T-0261]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_ids::test_invoice_id[T-0262]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_ids::test_invoice_id[T-0263]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_ids::test_invoice_id[T-0264]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_ids::test_invoice_id[T-0265]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_ids::test_is_valid_id[T-0266]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_ids::test_is_valid_id[T-0267]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_ids::test_is_valid_id[T-0268]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_ids::test_is_valid_id[T-0269]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_ids::test_is_valid_id[T-0270]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_ids::test_is_valid_id[T-0271]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_ids::test_is_valid_id[T-0272]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_ids::test_is_valid_id[T-0273]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_ids::test_is_valid_id[T-0274]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_ids::test_is_valid_id[T-0275]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_ids::test_next_sequence[T-0276]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_ids::test_next_sequence[T-0277]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_ids::test_next_sequence[T-0278]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_ids::test_next_sequence[T-0279]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_ids::test_next_sequence[T-0280]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_ids::test_next_sequence[T-0281]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_ids::test_next_sequence[T-0282]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_ids::test_next_sequence[T-0283]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_ids::test_next_sequence[T-0284]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_ids::test_next_sequence[T-0285]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_money::test_apply_rate[T-0322]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_money::test_apply_rate[T-0323]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_money::test_apply_rate[T-0324]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_money::test_apply_rate[T-0325]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_money::test_apply_rate[T-0326]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_money::test_apply_rate[T-0327]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_money::test_apply_rate[T-0328]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_money::test_apply_rate[T-0329]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_money::test_format_amount[T-0314]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_money::test_format_amount[T-0315]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_money::test_format_amount[T-0316]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_money::test_format_amount[T-0317]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_money::test_format_amount[T-0318]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_money::test_format_amount[T-0319]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_money::test_format_amount[T-0320]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_money::test_format_amount[T-0321]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_money::test_split_amount[T-0330]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_money::test_split_amount[T-0331]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_money::test_split_amount[T-0332]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_money::test_split_amount[T-0333]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_money::test_split_amount[T-0334]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_money::test_split_amount[T-0335]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_money::test_split_amount[T-0336]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_money::test_split_amount[T-0337]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_money::test_to_cents[T-0306]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_money::test_to_cents[T-0307]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_money::test_to_cents[T-0308]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_money::test_to_cents[T-0309]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_money::test_to_cents[T-0310]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_money::test_to_cents[T-0311]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_money::test_to_cents[T-0312]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_money::test_to_cents[T-0313]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_text::test_normalise_slug[T-0146]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_text::test_normalise_slug[T-0147]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_text::test_normalise_slug[T-0148]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_text::test_normalise_slug[T-0149]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_text::test_normalise_slug[T-0150]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_text::test_normalise_slug[T-0151]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_text::test_normalise_slug[T-0152]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_text::test_normalise_slug[T-0153]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_text::test_normalise_slug[T-0154]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_text::test_normalise_slug[T-0155]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_text::test_normalise_slug[T-0156]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_text::test_normalise_slug[T-0157]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_text::test_normalise_slug[T-0158]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_text::test_normalise_slug[T-0159]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_text::test_normalise_slug[T-0160]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_text::test_normalise_slug[T-0161]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_text::test_normalise_slug[T-0162]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_text::test_normalise_slug[T-0163]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_text::test_normalise_slug[T-0164]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_text::test_normalise_slug[T-0165]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_text::test_truncate[T-0186]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_text::test_truncate[T-0187]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_text::test_truncate[T-0188]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_text::test_truncate[T-0189]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_text::test_truncate[T-0190]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_text::test_truncate[T-0191]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_text::test_truncate[T-0192]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_text::test_truncate[T-0193]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_text::test_truncate[T-0194]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_text::test_truncate[T-0195]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_text::test_truncate[T-0196]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_text::test_truncate[T-0197]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_text::test_truncate[T-0198]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_text::test_truncate[T-0199]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_text::test_truncate[T-0200]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_text::test_truncate[T-0201]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_text::test_truncate[T-0202]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_text::test_truncate[T-0203]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_text::test_truncate[T-0204]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_text::test_truncate[T-0205]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_text::test_word_count[T-0166]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_text::test_word_count[T-0167]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_text::test_word_count[T-0168]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_text::test_word_count[T-0169]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_text::test_word_count[T-0170]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_text::test_word_count[T-0171]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_text::test_word_count[T-0172]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_text::test_word_count[T-0173]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_text::test_word_count[T-0174]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_text::test_word_count[T-0175]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_text::test_word_count[T-0176]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_text::test_word_count[T-0177]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_text::test_word_count[T-0178]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_text::test_word_count[T-0179]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_text::test_word_count[T-0180]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_text::test_word_count[T-0181]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_text::test_word_count[T-0182]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_text::test_word_count[T-0183]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_text::test_word_count[T-0184]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_text::test_word_count[T-0185]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_timeutil::test_add_seconds[T-0226]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_timeutil::test_add_seconds[T-0227]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_timeutil::test_add_seconds[T-0228]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_timeutil::test_add_seconds[T-0229]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_timeutil::test_add_seconds[T-0230]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_timeutil::test_add_seconds[T-0231]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_timeutil::test_add_seconds[T-0232]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_timeutil::test_add_seconds[T-0233]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_timeutil::test_add_seconds[T-0234]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_timeutil::test_add_seconds[T-0235]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_timeutil::test_format_duration[T-0216]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_timeutil::test_format_duration[T-0217]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_timeutil::test_format_duration[T-0218]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_timeutil::test_format_duration[T-0219]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_timeutil::test_format_duration[T-0220]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_timeutil::test_format_duration[T-0221]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_timeutil::test_format_duration[T-0222]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_timeutil::test_format_duration[T-0223]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_timeutil::test_format_duration[T-0224]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_timeutil::test_format_duration[T-0225]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_timeutil::test_is_business_day[T-0236]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_timeutil::test_is_business_day[T-0237]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_timeutil::test_is_business_day[T-0238]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_timeutil::test_is_business_day[T-0239]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_timeutil::test_is_business_day[T-0240]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_timeutil::test_is_business_day[T-0241]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_timeutil::test_is_business_day[T-0242]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_timeutil::test_is_business_day[T-0243]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_timeutil::test_is_business_day[T-0244]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_timeutil::test_is_business_day[T-0245]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_timeutil::test_parse_duration_ms[T-0206]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_timeutil::test_parse_duration_ms[T-0207]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_timeutil::test_parse_duration_ms[T-0208]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_timeutil::test_parse_duration_ms[T-0209]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_timeutil::test_parse_duration_ms[T-0210]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_timeutil::test_parse_duration_ms[T-0211]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_timeutil::test_parse_duration_ms[T-0212]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_timeutil::test_parse_duration_ms[T-0213]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_timeutil::test_parse_duration_ms[T-0214]": {
+      "a": "passed",
+      "b": "passed"
+    },
+    "tests.test_utils_timeutil::test_parse_duration_ms[T-0215]": {
+      "a": "passed",
+      "b": "passed"
+    }
+  },
+  "repeat": 1,
+  "rev_a": null,
+  "rev_b": null,
+  "run_cmd": "python -m pytest -q -p no:cacheprovider -m "
+}

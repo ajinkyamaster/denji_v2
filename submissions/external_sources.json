@@ -1,0 +1,17 @@
+{
+  "note": "Figures cited from outside this repository. The no-unsourced-number gate (R7) treats a registered figure as sourced, and the registry itself is a claim about provenance: every entry names where the figure comes from.",
+  "figures": {
+    "80": "CloudBees Smart Tests / Launchable documentation: up to ~80% test-suite reduction",
+    "99.9": "Facebook predictive test selection: share of faults detected",
+    "95": "same paper: share of failing tests captured",
+    "2012": "Yoo & Harman, STVS 2012: the survey that names the regression-testing triad",
+    "2014": "Inozemtseva & Holmes, ICSE 2014 (ACM Distinguished Paper): coverage weakly correlates with effectiveness",
+    "2015": "Barr et al., IEEE TSE 41(5), 2015 (the oracle problem); Zhang et al., FSE 2015 (assertions correlate with effectiveness)",
+    "2018": "Bell et al., ICSE 2018 (DeFlaker); Szabo et al., OOPSLA 2018 (IncA)",
+    "2021": "Szabo et al., PLDI 2021 (IncA incremental static analysis)",
+    "2023": "Liu et al. 2023 (reasoning about semantics-modifying changes); Chen et al. 2023 (FrugalGPT); the 2023 hackathon runner-up that generated tests",
+    "2024": "Alshahwan et al., FSE 2024 (Assured LLMSE: filtration discipline); JcgEks, ASE 2024",
+    "2025": "Shi et al. 2025 (position bias in LLM judges); Liu et al. 2025 (Cleverest)",
+    "2026": "the 2026 tooling landscape named in the problem statement: agentic testing products and Change Advisor"
+  }
+}
