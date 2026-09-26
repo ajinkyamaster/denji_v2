@@ -1,316 +1,311 @@
 #!/usr/bin/env python3
-"""testscope_oracle: executed ground truth (MCP tool 3).
+"""The oracle: executed ground truth, with its own blindness reported.
 
-Runs the FULL suite at both revisions, with every marker, and computes the
-outcome discriminant:
+It computes the outcome discriminant
 
     Delta(t) = [ outcome_A(t) != outcome_B(t) ]
 
-That is a LOWER BOUND on the truly affected set (a test can be affected and
-still pass twice), so it measures recall and can never measure precision.
-The oracle therefore reports its own blindness rather than hiding it:
+by running the **full** suite at both revisions. Delta is a LOWER BOUND on the
+affected set - a test can be affected and still pass twice - so it can measure
+recall and can never measure precision. That is stated rather than hidden.
 
-  missing        inventory rows whose node was never collected
-  unmapped       collected nodes with no inventory row
-  already_red    tests that fail at BOTH revisions (not caused by the change)
-  flaky          tests whose outcome is not stable across repeats
-  deselected     tests pytest reported as "N deselected" (a marker filter ran)
-  complete       (collected - unmapped) + missing >= inventory_total
-                 AND nothing was deselected: a marker filter makes the run
-                 narrower than the population, so the instrument reports its
-                 own blindness instead of counting deselected rows as "missing"
+Invariant O1: the oracle must select the full population and must assert that it
+did. This is not defensive programming, it is a bug that already happened: the
+demo repository's ``pytest.ini`` carries ``addopts = -m "not contract"``, so a
+default run silently drops the three contract tests - the only tests that
+discriminate the change - and the first version of this instrument reported
+"no regression" with complete confidence. A recall measurement from a partial
+instrument is worse than no measurement, because it looks like evidence.
 
-Nothing here touches the input repository: each revision is exported into
-its own temporary tree.
+So the run uses ``-m ""``, asserts ``collected >= inventory_total``, and also
+records what a *default* run would have collected, so the blind spot itself is
+visible in the output.
+
+Safety properties:
+  * the input repository is never mutated: both revisions are materialised into a
+    temp directory (``git clone`` for SHAs, a copy plus reverse-applied patch
+    otherwise);
+  * JUnit XML is parsed rather than stdout, because stdout formats drift between
+    pytest versions and a parsing change would silently change ground truth;
+  * the XML file size is capped before parsing, and parsing uses the standard
+    library only.
 """
-from __future__ import annotations
 
 import argparse
-import dataclasses
 import json
-import pathlib
-import re
-import shlex
+import shutil
 import subprocess
 import sys
-import tarfile
 import tempfile
-import xml.etree.ElementTree as ET
-from typing import Dict, List, Optional, Sequence, Tuple
+import xml.etree.ElementTree as ElementTree
+from pathlib import Path
 
-sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1]))
+if __package__ in (None, ""):
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from bob_session.pipeline import inventory as inventory_mod
-
-DEFAULT_MARKERS_ALL = "-m ''"
-DEFAULT_MARKERS_DEFAULT = ""  # let pytest.ini's addopts apply: the blind run
-
-
-def export_revision(repo: str, rev: str, target: pathlib.Path) -> None:
-    """Export one git revision into a fresh directory (input repo untouched)."""
-    target.mkdir(parents=True, exist_ok=True)
-    archive = subprocess.run(
-        ["git", "-C", repo, "archive", rev],
-        check=True,
-        stdout=subprocess.PIPE,
-    ).stdout
-    with tempfile.NamedTemporaryFile(suffix=".tar") as handle:
-        handle.write(archive)
-        handle.flush()
-        with tarfile.open(handle.name) as tar:
-            tar.extractall(target)
+MAX_XML_BYTES = 64 * 1024 * 1024
+SKIP_COPY = ("revisions", "__pycache__", ".pytest_cache", ".git", ".mypy_cache")
+DEFAULT_RUN_CMD = ["-m", "pytest", "-q", "-p", "no:cacheprovider", "-m", ""]
 
 
-def _node_from_xml(classname: str, name: str) -> Optional[str]:
-    if not classname:
-        return None
-    path = classname.replace(".", "/") + ".py"
-    return f"{path}::{name}"
-
-
-def run_suite(
-    tree: pathlib.Path,
-    *,
-    python: str,
-    extra_args: Sequence[str],
-    junit_path: pathlib.Path,
-    timeout: int = 600,
-) -> Tuple[Dict[str, str], int]:
-    """Run pytest in a tree; returns ({node: outcome}, deselected_count)."""
-    command = [python, "-m", "pytest", "-q", "-p", "no:cacheprovider", f"--junitxml={junit_path.name}"] + list(extra_args)
-    result = subprocess.run(
-        command,
-        cwd=tree,
-        check=False,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.STDOUT,
-        timeout=timeout,
+def _copy_repo(source, destination):
+    shutil.copytree(
+        source,
+        destination,
+        ignore=shutil.ignore_patterns(*SKIP_COPY),
+        symlinks=False,
     )
-    summary = result.stdout.decode("utf-8", "replace")
-    match = re.search(r"(\d+) deselected", summary)
-    deselected = int(match.group(1)) if match else 0
-    outcomes: Dict[str, str] = {}
-    if not junit_path.exists():
-        return outcomes, deselected
-    root = ET.parse(junit_path).getroot()
-    for case in root.iter("testcase"):
-        node = _node_from_xml(case.get("classname", ""), case.get("name", ""))
-        if node is None:
-            continue
+
+
+def _run(command, cwd, timeout):
+    """Run a command list (never a shell string) with a hard timeout."""
+    return subprocess.run(
+        command,
+        cwd=str(cwd),
+        capture_output=True,
+        text=True,
+        timeout=timeout,
+        env=_clean_environment(),
+    )
+
+
+def _clean_environment():
+    """A minimal environment: no secrets, no proxy configuration, no network hints.
+
+    The oracle executes the analysed repository's test suite, so it must not
+    inherit the operator's API keys or credentials.
+    """
+    import os
+
+    environment = {
+        "PATH": os.environ.get("PATH", "/usr/bin:/bin"),
+        "HOME": os.environ.get("HOME", "/tmp"),
+        "LANG": "C.UTF-8",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "PYTHONHASHSEED": "0",
+    }
+    return environment
+
+
+def _parse_junit(path):
+    """Parse a JUnit XML report into ``{node_id: outcome}`` (sorted by node id)."""
+    size = path.stat().st_size
+    if size > MAX_XML_BYTES:
+        raise RuntimeError(f"junit xml too large to parse safely: {size} bytes")
+    tree = ElementTree.parse(str(path))
+    outcomes = {}
+    for case in tree.iter("testcase"):
+        classname = case.get("classname") or ""
+        name = case.get("name") or ""
+        node = f"{classname}::{name}" if classname else name
         outcome = "passed"
         for child in case:
-            if child.tag in ("failure", "error"):
+            tag = child.tag
+            if tag == "failure":
                 outcome = "failed"
-                break
-            if child.tag == "skipped":
+            elif tag == "error":
+                outcome = "error"
+            elif tag == "skipped":
                 outcome = "skipped"
-                break
         outcomes[node] = outcome
-    return outcomes, deselected
+    return {node: outcomes[node] for node in sorted(outcomes)}
 
 
-def run_revision(
-    repo: str,
-    rev: str,
-    *,
-    python: str,
-    markers: str,
-    repeats: int,
-    workdir: pathlib.Path,
-    timeout: int = 600,
-) -> Tuple[List[Dict[str, str]], int]:
-    """Export a revision and run its suite `repeats` times.
-
-    Returns (runs, deselected): the highest deselected count observed across
-    the repeats — any marker filter at all makes the run a blind one.
-    """
-    tree = workdir / rev[:12]
-    export_revision(repo, rev, tree)
-    runs: List[Dict[str, str]] = []
-    deselected = 0
-    for index in range(repeats):
-        junit = tree / f"junit_{index}.xml"
-        extra = shlex.split(markers) if markers else []
-        outcomes, blind = run_suite(tree, python=python, extra_args=extra, junit_path=junit, timeout=timeout)
-        runs.append(outcomes)
-        deselected = max(deselected, blind)
-    return runs, deselected
+def _collect_only_count(workdir, timeout):
+    """How many tests a *default* run would collect (the blind-spot control)."""
+    try:
+        completed = _run([sys.executable, "-m", "pytest", "--collect-only", "-q"], workdir, timeout)
+    except subprocess.TimeoutExpired:
+        return None
+    text = completed.stdout
+    for line in reversed(text.splitlines()):
+        stripped = line.strip()
+        if "test" in stripped and ("collected" in stripped or "selected" in stripped):
+            digits = "".join(char if char.isdigit() else " " for char in stripped).split()
+            if digits:
+                return int(digits[0])
+    return len([line for line in text.splitlines() if "::" in line])
 
 
-def analyse(
-    *,
-    rows: Sequence[inventory_mod.Row],
-    runs_a: Sequence[Dict[str, str]],
-    runs_b: Sequence[Dict[str, str]],
-    strategy: str,
-    deselected: int = 0,
-) -> dict:
-    """Compare two revisions' repeated runs into the oracle evidence."""
-    nodes = sorted(set().union(*[set(run) for run in runs_a], *[set(run) for run in runs_b]))
-    stable_a, stable_b = {}, {}
-    flaky: List[str] = []
-    for node in nodes:
-        outcomes_a = {run.get(node) for run in runs_a if node in run}
-        outcomes_b = {run.get(node) for run in runs_b if node in run}
-        if len(outcomes_a) == 1 and len(outcomes_b) == 1:
-            stable_a[node] = outcomes_a.pop()
-            stable_b[node] = outcomes_b.pop()
-        else:
-            flaky.append(node)
-    changed = sorted(node for node in stable_a if stable_a[node] != stable_b[node])
-    already_red = sorted(node for node in stable_a if stable_a[node] == stable_b[node] == "failed")
-    # collected = what the instrument saw at least once at revision B. Nodes
-    # seen in only one of the repeats are unstable and are excluded from the
-    # discriminant anyway, but they must still be counted as collected, or the
-    # completeness arithmetic compares the inventory against a subset of runs.
-    collected_b = sorted(set().union(*[set(run) for run in runs_b])) if runs_b else []
-    collected_a = sorted(set().union(*[set(run) for run in runs_a])) if runs_a else []
-    collected_ids = {row.node_id for row in rows}
-    missing = sorted(row.node_id for row in rows if row.node_id not in set(collected_a) | set(collected_b))
-    unmapped = sorted(node for node in collected_b if node not in collected_ids)
-    collected = len(collected_b)
-    inventory_total = len(rows)
-    arithmetic = (collected - len(unmapped)) + len(missing) >= inventory_total
-    complete = arithmetic and deselected == 0
-    return {
-        "strategy": strategy,
-        "collected": collected,
-        "inventory_total": inventory_total,
-        "complete": complete,
-        "deselected": deselected,
-        "missing": missing,
-        "unmapped": unmapped,
-        "already_red": already_red,
-        "flaky_excluded": sorted(flaky),
-        "flaky_excluded_count": len(flaky),
-        "changed": changed,
-        "outcome": {
-            node: {"a": stable_a[node], "b": stable_b[node]}
-            for node in sorted(set(stable_a) & set(stable_b))
-        },
-    }
-
-
-def coverage_map(
-    *,
-    repo: str,
-    rev: str,
-    rows: Sequence[inventory_mod.Row],
-    workdir: pathlib.Path,
-    python: str,
-    run_cmd: Sequence[str],
-    timeout: int = 900,
-) -> dict:
-    """Per-test executed lines at one revision, as a positive-witness map.
-
-    Coverage is the admissible witness in one direction only: if a test
-    executed a line, it executed it. Nothing here is used to *exclude* a
-    test from the run list.
-    """
-    tree = workdir / f"cov-{rev[:12]}"
-    export_revision(repo, rev, tree)
-    (tree / ".coveragerc").write_text(
-        "[run]\ndynamic_context = test_function\n\n[report]\ninclude = app/*\n", encoding="utf-8"
+def _materialise_revisions(repo, *, patch, rev_a, rev_b, temporary):
+    """Return ``(dir_a, dir_b)`` for the two revisions, inside ``temporary``."""
+    repo = Path(repo).resolve()
+    dir_b = Path(temporary) / "rev_b"
+    dir_a = Path(temporary) / "rev_a"
+    if rev_a and rev_b:
+        for target, revision in ((dir_b, rev_b), (dir_a, rev_a)):
+            completed = subprocess.run(
+                ["git", "clone", "--quiet", "--no-hardlinks", str(repo), str(target)],
+                capture_output=True,
+                text=True,
+            )
+            if completed.returncode != 0:
+                raise RuntimeError(f"git clone failed: {completed.stderr.strip()[:200]}")
+            checked = subprocess.run(
+                ["git", "-C", str(target), "checkout", "--quiet", revision],
+                capture_output=True,
+                text=True,
+            )
+            if checked.returncode != 0:
+                raise RuntimeError(f"git checkout {revision} failed: {checked.stderr.strip()[:200]}")
+        return dir_a, dir_b, "git-shas"
+    if not patch:
+        raise RuntimeError("either rev_a/rev_b or a patch is required to reconstruct the previous revision")
+    _copy_repo(repo, dir_b)
+    _copy_repo(repo, dir_a)
+    completed = subprocess.run(
+        ["git", "apply", "-R", str(Path(patch).resolve())],
+        cwd=str(dir_a),
+        capture_output=True,
+        text=True,
     )
-    data_file = tree / ".coverage"
-    command = [python, "-m", "coverage", "run", "--data-file", str(data_file), "-m", "pytest", "-q", "-p", "no:cacheprovider"] + list(run_cmd)
-    subprocess.run(command, cwd=tree, check=False, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, timeout=timeout)
-    json_out = tree / "coverage.json"
-    subprocess.run(
-        [python, "-m", "coverage", "json", "--data-file", str(data_file), "-o", str(json_out), "--show-contexts"],
-        cwd=tree,
-        check=False,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.STDOUT,
-        timeout=120,
-    )
-    # coverage names a test context ``<module>.<function>``; the inventory's
-    # node ids are ``tests/<module>.py::<function>``. Both spellings resolve.
-    context_to_id: Dict[str, str] = {}
-    for row in rows:
-        rel_path, _, name = row.node_id.partition("::")
-        context_to_id[f"{pathlib.Path(rel_path).stem}.{name}"] = row.test_id
-        context_to_id[row.node_id] = row.test_id
-    tests: Dict[str, dict] = {}
-    if json_out.exists():
-        report = json.loads(json_out.read_text(encoding="utf-8"))
-        for path, payload in report.get("files", {}).items():
-            for line_text, names in (payload.get("contexts") or {}).items():
-                for name in names:
-                    test_id = context_to_id.get(name)
-                    if test_id is None:
-                        continue
-                    entry = tests.setdefault(test_id, {"node": None, "lines": {}})
-                    entry["lines"].setdefault(path, []).append(int(line_text))
-        for row in rows:
-            if row.test_id in tests:
-                tests[row.test_id]["node"] = row.node_id
-        for entry in tests.values():
-            for path in entry["lines"]:
-                entry["lines"][path] = sorted(set(entry["lines"][path]))
-    return {"revision": rev, "tests": tests}
+    if completed.returncode != 0:
+        raise RuntimeError(
+            "could not reconstruct the pre-change revision: the patch does not reverse-apply "
+            f"({completed.stderr.strip()[:200]})"
+        )
+    return dir_a, dir_b, "patch"
 
 
-def main(argv: Optional[Sequence[str]] = None) -> int:
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--repo", default="demo")
-    parser.add_argument("--inventory", default="demo/inventory.csv")
-    parser.add_argument("--rev-a", default=None)
-    parser.add_argument("--rev-b", default=None)
-    parser.add_argument("--revisions", default="bob_session/evidence/revisions.json")
-    parser.add_argument("--out", default="bob_session/evidence/oracle.json")
-    parser.add_argument("--repeats", type=int, default=2)
-    parser.add_argument("--markers", default=DEFAULT_MARKERS_ALL, help="pytest -m argument; '' means: use pytest.ini's addopts")
-    parser.add_argument("--python", default=sys.executable)
-    parser.add_argument("--coverage-out", default="bob_session/evidence/coverage_b.json")
-    parser.add_argument("--no-coverage", action="store_true")
-    parser.add_argument("--label", default="dual-revision outcome discriminant")
+def run_oracle(
+    *,
+    repo,
+    patch=None,
+    rev_a=None,
+    rev_b=None,
+    inventory_total=None,
+    run_cmd=None,
+    timeout=900,
+    repeat=1,
+):
+    """Execute the suite at both revisions and return the oracle result dict."""
+    command = list(run_cmd) if run_cmd else list(DEFAULT_RUN_CMD)
+    if isinstance(command, str):
+        command = command.split()
+    temporary = tempfile.mkdtemp(prefix="testscope-oracle-")
+    try:
+        dir_a, dir_b, mode = _materialise_revisions(
+            repo, patch=patch, rev_a=rev_a, rev_b=rev_b, temporary=temporary
+        )
+        results = {}
+        for label, workdir in (("a", dir_a), ("b", dir_b)):
+            runs = []
+            for attempt in range(max(1, repeat)):
+                xml_path = Path(temporary) / f"{label}-{attempt}.xml"
+                completed = _run(
+                    [sys.executable, *command, f"--junitxml={xml_path}"],
+                    workdir,
+                    timeout,
+                )
+                if not xml_path.exists():
+                    raise RuntimeError(
+                        f"revision {label}: pytest produced no junit xml (rc={completed.returncode}): "
+                        f"{completed.stderr.strip()[:300]}"
+                    )
+                runs.append(_parse_junit(xml_path))
+            results[label] = runs
+
+        runs_a, runs_b = results["a"], results["b"]
+        collected_a = len(runs_a[0])
+        collected_b = len(runs_b[0])
+        flaky = set()
+        if repeat > 1:
+            for runs in (runs_a, runs_b):
+                for node in runs[0]:
+                    outcomes = {run.get(node) for run in runs}
+                    if len(outcomes) > 1:
+                        flaky.add(node)
+        outcome = {}
+        changed = []
+        already_red = []
+        for node in sorted(set(runs_a[0]) | set(runs_b[0])):
+            first_a = runs_a[0].get(node, "missing")
+            first_b = runs_b[0].get(node, "missing")
+            outcome[node] = {"a": first_a, "b": first_b}
+            if node in flaky:
+                continue
+            if first_a == "passed" and first_b in ("failed", "error"):
+                changed.append(node)
+            elif first_a in ("failed", "error") and first_b in ("failed", "error"):
+                already_red.append(node)
+        complete = bool(collected_a == collected_b and inventory_total is not None and collected_a >= inventory_total)
+        note_parts = []
+        if inventory_total is None:
+            note_parts.append("inventory_total not supplied: completeness cannot be asserted (invariant O1)")
+        elif collected_a < inventory_total:
+            note_parts.append(
+                f"VOID: collected {collected_a} < inventory {inventory_total}: the instrument is narrower "
+                "than the population it measures"
+            )
+        if collected_a != collected_b:
+            note_parts.append(f"collected differs between revisions ({collected_a} vs {collected_b})")
+        if repeat == 1:
+            note_parts.append("flakiness detection requires repeat>1; flaky_excluded is empty by construction")
+        default_collected = None
+        try:
+            default_collected = _collect_only_count(dir_b, timeout)
+        except Exception as error:  # pragma: no cover - control only
+            note_parts.append(f"default-marker collect-only failed: {type(error).__name__}")
+        return {
+            "collected": collected_a,
+            "collected_a": collected_a,
+            "collected_b": collected_b,
+            "inventory_total": inventory_total,
+            "complete": complete,
+            "changed": sorted(changed),
+            "flaky_excluded": sorted(flaky),
+            "already_red": sorted(already_red),
+            "outcome": outcome,
+            "run_cmd": " ".join(["python", *command]),
+            "rev_a": rev_a,
+            "rev_b": rev_b,
+            "mode": mode,
+            "repeat": repeat,
+            "default_marker_collected": default_collected,
+            "note": "; ".join(note_parts) if note_parts else "full-marker run collected the full inventory",
+        }
+    finally:
+        shutil.rmtree(temporary, ignore_errors=True)
+
+
+def main(argv=None):
+    parser = argparse.ArgumentParser(description="TestScope oracle: executed ground truth")
+    parser.add_argument("--repo", required=True)
+    parser.add_argument("--patch", default=None, help="diff (A -> B) reverse-applied in a temp copy to get A")
+    parser.add_argument("--rev-a", default=None, help="git SHA of the pre-change revision")
+    parser.add_argument("--rev-b", default=None, help="git SHA of the post-change revision")
+    parser.add_argument("--inventory", default=None, help="inventory file, for the completeness assertion")
+    parser.add_argument("--inventory-total", type=int, default=None)
+    parser.add_argument("--run-cmd", default=None, help='pytest command, e.g. \'-q -m ""\'')
+    parser.add_argument("--timeout", type=int, default=900)
+    parser.add_argument("--repeat", type=int, default=1, help="runs per revision; >1 enables flakiness detection")
+    parser.add_argument("--out", default=None)
+    parser.add_argument("--compact", action="store_true", help="omit the per-node outcome map")
     args = parser.parse_args(argv)
 
-    revisions = json.loads(pathlib.Path(args.revisions).read_text(encoding="utf-8"))
-    rev_a = args.rev_a or revisions["rev_a"]
-    rev_b = args.rev_b or revisions["rev_b"]
-    rows = inventory_mod.load(args.inventory)
+    total = args.inventory_total
+    if total is None and args.inventory:
+        from bob_session.pipeline.inventory import load_inventory
 
-    with tempfile.TemporaryDirectory(prefix="testscope-oracle-") as tmp:
-        workdir = pathlib.Path(tmp)
-        runs_a, deselected_a = run_revision(args.repo, rev_a, python=args.python, markers=args.markers, repeats=args.repeats, workdir=workdir)
-        runs_b, deselected_b = run_revision(args.repo, rev_b, python=args.python, markers=args.markers, repeats=args.repeats, workdir=workdir)
-        if not args.no_coverage:
-            run_cmd = shlex.split(args.markers) if args.markers else []
-            coverage = coverage_map(
-                repo=args.repo,
-                rev=rev_b,
-                rows=rows,
-                workdir=workdir,
-                python=args.python,
-                run_cmd=run_cmd,
-            )
-            out = pathlib.Path(args.coverage_out)
-            out.parent.mkdir(parents=True, exist_ok=True)
-            out.write_text(json.dumps(coverage, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+        total = len(load_inventory(Path(args.inventory)))
 
-    evidence = analyse(
-        rows=rows,
-        runs_a=runs_a,
-        runs_b=runs_b,
-        strategy=args.label,
-        deselected=max(deselected_a, deselected_b),
+    result = run_oracle(
+        repo=args.repo,
+        patch=args.patch,
+        rev_a=args.rev_a,
+        rev_b=args.rev_b,
+        inventory_total=total,
+        run_cmd=args.run_cmd.split() if args.run_cmd else None,
+        timeout=args.timeout,
+        repeat=args.repeat,
     )
-    evidence["revisions"] = {"rev_a": rev_a, "rev_b": rev_b}
-    evidence["repeats"] = args.repeats
-    evidence["markers"] = args.markers or "pytest.ini default"
-    out = pathlib.Path(args.out)
-    out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(json.dumps(evidence, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"oracle: collected {evidence['collected']}/{evidence['inventory_total']} "
-          f"(complete={evidence['complete']}, deselected={evidence['deselected']}) -> {out}")
-    print(f"  changed {len(evidence['changed'])}, already_red {len(evidence['already_red'])}, "
-          f"flaky_excluded {evidence['flaky_excluded_count']}, missing {len(evidence['missing'])}, "
-          f"unmapped {len(evidence['unmapped'])}")
-    for node in evidence["changed"]:
-        print(f"  changed: {node}")
-    return 0
+    if args.compact:
+        result = {key: value for key, value in result.items() if key != "outcome"}
+    text = json.dumps(result, indent=2, sort_keys=True) + "\n"
+    if args.out:
+        Path(args.out).write_text(text, encoding="utf-8")
+    sys.stdout.write(text)
+    return 0 if result["complete"] else 1
 
 
 if __name__ == "__main__":

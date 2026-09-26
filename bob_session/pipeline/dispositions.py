@@ -1,300 +1,286 @@
-"""Verdict computation: the four answers, from one link relation.
+"""Dispositions: what the change did to the suite, and what has no test.
 
-  classification   v1's three buckets (definitely / semantically / not affected)
-  ledger           the disposition view: valid / stale / newly_relevant / unknown
-  uncovered        changed symbols with no test link at all (work items)
-  triage           why a failing test is red: regression / stale / flaky
-  priority_order   a deterministic total order over the run list
+The ledger partitions **every** inventory row into exactly one of
+``valid`` / ``stale`` / ``newly_relevant`` / ``unknown``. The partition is the
+point: a test is never both "stale, delete it" and "newly relevant, run it".
+
+STALE is deliberately hard to earn, and the hard part is where the evidence has
+to be:
+
+  S1 ORPHAN          the module the test exercises is not in the repository.
+                     Definitionally obsolete, and free.
+  S2 ASSERTED REMOVED BEHAVIOUR
+                     the *test file itself* contains an expression whose skeleton
+                     the change removed, or parses a representation the change
+                     stopped producing.
+
+The second clause is the one to argue about, so state the refusal plainly: the
+*consumer's* parse site is NOT evidence for STALE, because a test that observes a
+broken consumer is catching a **regression**, and calling it stale would tell the
+developer to delete the test that caught the bug. In the demo repository the
+consumer ``report_worker`` still splits on ``|`` while the producer now writes
+JSON; the three tests that observe it are NEWLY_RELEVANT (run it, the red is
+real), not STALE (repair the test). Mislabeling them would be the single most
+damaging thing this artefact could do.
+
+UNCOVERED is about symbols, not tests, and the two kinds imply different work:
+``UNCOVERED_NEW`` is "write a test from nothing", ``UNCOVERED_BY_STALENESS`` is
+"the tests that used to assert this are now stale: repair one". They are never
+merged.
 """
-from __future__ import annotations
 
-import ast
-import dataclasses
-from typing import Dict, Iterable, List, Optional, Sequence, Set, Tuple
+from dataclasses import dataclass, field
 
-from bob_session.pipeline.coupling import CouplingLink, SEPARATOR_RE
-from bob_session.pipeline.diffparse import SymbolChange
-from bob_session.pipeline.index import RepoIndex
-from bob_session.pipeline.inventory import Row
-
-LEDGER_BUCKETS = ("valid", "stale", "newly_relevant", "unknown")
-CLASS_BUCKETS = ("definitely_affected", "semantically_affected", "not_affected")
+from .diff_parser import representations, skeleton
 
 
-@dataclasses.dataclass
-class Selection:
-    """The run list, with the provenance of every addition."""
+@dataclass
+class Ledger:
+    valid: list = field(default_factory=list)
+    stale: list = field(default_factory=list)
+    newly_relevant: list = field(default_factory=list)
+    unknown: list = field(default_factory=list)
 
-    selected: Set[str]
-    structural: Set[str]
-    coupling: Set[str]
-    model: Set[str]
-    unconfirmed: Set[str]
-    reason: Dict[str, str]
-    explanation: Dict[str, str]
-    evidence: Dict[str, List[str]]
+    def as_artifact(self):
+        return {
+            "valid": self.valid,
+            "stale": self.stale,
+            "newly_relevant": self.newly_relevant,
+            "unknown": self.unknown,
+        }
 
+    def counts(self):
+        return {
+            "valid_count": len(self.valid),
+            "stale_count": len(self.stale),
+            "newly_relevant_count": len(self.newly_relevant),
+            "unknown_count": len(self.unknown),
+        }
 
-def document_symbol(module: str, symbol: str) -> str:
-    return f"{module}.{symbol}" if symbol != "<module>" else module
-
-
-def select(
-    rows: Sequence[Row],
-    changes: Sequence[SymbolChange],
-    closure: Dict[str, int],
-    links: Sequence[CouplingLink],
-    accepted_tests: Dict[str, str],
-    unconfirmed_tests: Dict[str, str],
-) -> Selection:
-    """Structural closure, representation coupling and kernel-accepted claims."""
-    changed_modules = {change.module for change in changes}
-    consumers = {link.consumer_module: link for link in links}
-    structural: Set[str] = set()
-    coupling: Set[str] = set()
-    model: Set[str] = set()
-    unconfirmed: Set[str] = set()
-    reason: Dict[str, str] = {}
-    explanation: Dict[str, str] = {}
-    evidence: Dict[str, List[str]] = {}
-
-    for row in rows:
-        if row.module in changed_modules:
-            structural.add(row.test_id)
-            reason[row.test_id] = "structural_modification"
-            explanation[row.test_id] = (
-                f"{row.module} is modified by the change, so its own tests must run"
-            )
-        elif row.module in closure:
-            depth = closure[row.module]
-            structural.add(row.test_id)
-            reason[row.test_id] = "structural_closure"
-            explanation[row.test_id] = (
-                f"{row.module} is in the import closure of the changed module "
-                f"{sorted(changed_modules)[0]} (depth {depth})"
-            )
-        if row.module in consumers:
-            link = consumers[row.module]
-            coupling.add(row.test_id)
-            reason[row.test_id] = "representation_coupling"
-            explanation[row.test_id] = link.evidence()
-            evidence[row.test_id] = [link.evidence()]
-
-    for test_id, why in sorted(accepted_tests.items()):
-        model.add(test_id)
-        reason[test_id] = "kernel_accepted_claim"
-        explanation[test_id] = why
-        evidence.setdefault(test_id, []).append(why)
-
-    for test_id, why in sorted(unconfirmed_tests.items()):
-        unconfirmed.add(test_id)
-        reason.setdefault(test_id, "unconfirmed_claim")
-        explanation.setdefault(test_id, why)
-        evidence.setdefault(test_id, []).append(f"unconfirmed (safe direction): {why}")
-
-    return Selection(
-        selected=structural | coupling | model | unconfirmed,
-        structural=structural,
-        coupling=coupling,
-        model=model,
-        unconfirmed=unconfirmed,
-        reason=reason,
-        explanation=explanation,
-        evidence=evidence,
-    )
+    def total(self):
+        return len(self.valid) + len(self.stale) + len(self.newly_relevant) + len(self.unknown)
 
 
-# ---------------------------------------------------------------------------
-# STALE: a test that asserts behaviour the change removed
-# ---------------------------------------------------------------------------
-def _test_function_source(index: RepoIndex, node_id: str) -> Optional[Tuple[str, List[str]]]:
-    rel_path, _, name = node_id.partition("::")
-    text = index.text_by_path.get(rel_path)
-    if text is None:
-        return None
-    try:
-        tree = ast.parse(text)
-    except SyntaxError:
-        return None
-    for node in ast.walk(tree):
-        if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)) and node.name == name:
-            start = node.lineno - 1
-            end = getattr(node, "end_lineno", node.lineno)
-            return rel_path, text.splitlines()[start:end]
-    return None
-
-
-def stale_tests(
-    rows: Sequence[Row],
-    index: RepoIndex,
-    links: Sequence[CouplingLink],
-    removed_behaviour: str,
-) -> Dict[str, Tuple[str, str]]:
-    """test_id -> (why, evidence line) for tests asserting a removed format."""
-    separators = {
-        link.shared_tag.split("sep:", 1)[1]
-        for link in links
-        if link.shared_tag.startswith("sep:") and link.shared_tag.split("sep:", 1)[1].strip()
-    }
-    if not separators:
-        return {}
-    found: Dict[str, Tuple[str, str]] = {}
-    for row in rows:
-        located = _test_function_source(index, row.node_id)
-        if located is None:
-            continue
-        rel_path, lines = located
-        for line in lines:
-            stripped = line.strip()
-            if stripped.startswith("#"):
-                continue
-            for literal in _string_literals(line):
-                if any(separator in literal for separator in separators):
-                    found[row.test_id] = (
-                        f"asserts the removed wire format ({removed_behaviour}); "
-                        f"the assertion still passes, so its green is false assurance",
-                        f"{rel_path}: {stripped}",
-                    )
-                    break
-            if row.test_id in found:
-                break
-    return found
-
-
-def _string_literals(line: str) -> List[str]:
-    text = line.strip()
-    if not text:
+def _test_file_lines(index, test_module):
+    if test_module is None:
         return []
-    tree = None
-    for mode in ("eval", "exec"):
-        try:
-            tree = ast.parse(text, mode=mode)
-            break
-        except SyntaxError:
+    return [(number, line) for number, line in enumerate(test_module.source.splitlines(), start=1)]
+
+
+def _stale_by_assertion(index, test_module, rho):
+    """Evidence that the test file itself asserts removed behaviour."""
+    evidence = []
+    removed_skeletons = set(rho.get("removed_skeletons", ()))
+    removed_separators = set()
+    removed_serializers = set()
+    for descriptor in rho.get("removed_representations", ()):
+        if descriptor.startswith("separator "):
+            removed_separators.add(descriptor[len("separator ") :].strip('"'))
+        elif descriptor.startswith("serializer "):
+            removed_serializers.add(descriptor[len("serializer ") :].split("(")[0])
+    for number, line in _test_file_lines(index, test_module):
+        if line.strip() in ("", "import pytest"):
             continue
-    if tree is None:
-        return []
-    found: List[str] = []
-    for node in ast.walk(tree):
-        if isinstance(node, ast.Constant) and isinstance(node.value, str):
-            found.append(node.value)
-        elif isinstance(node, ast.JoinedStr):
-            for part in node.values:
-                if isinstance(part, ast.Constant) and isinstance(part.value, str):
-                    found.append(part.value)
-    return found
-
-
-# ---------------------------------------------------------------------------
-# UNCOVERED: changed symbols with no test link at all
-# ---------------------------------------------------------------------------
-def uncovered_items(
-    changes: Sequence[SymbolChange],
-    rows: Sequence[Row],
-    index: RepoIndex,
-) -> List[dict]:
-    """One work item per changed symbol no test reaches."""
-    items: List[dict] = []
-    test_files = sorted({row.node_id.partition("::")[0] for row in rows})
-    for change in changes:
-        if not change.semantic or change.kind == "removed":
+        if skeleton(line) in removed_skeletons and line.strip():
+            evidence.append((number, line.strip(), "removed_expression"))
             continue
-        reached = any(index.references(rel_path, change.symbol) for rel_path in test_files)
-        if reached:
+        separators, serializers = representations(line)
+        if separators & removed_separators:
+            evidence.append((number, line.strip(), "removed_representation"))
+        elif serializers & removed_serializers:
+            evidence.append((number, line.strip(), "removed_serializer"))
+    return evidence
+
+
+def build_ledger(index, inventory, diff, classification, couplings, *, oracle=None):
+    """Compute the disposition ledger. Pure function of its inputs."""
+    rho = diff.rho()
+    ledger = Ledger()
+    coupling_by_consumer = {}
+    for coupling in couplings:
+        coupling_by_consumer.setdefault(coupling.consumer_module, []).append(coupling)
+    oracle_failures = set()
+    if oracle and oracle.get("complete"):
+        for node, outcome in sorted((oracle.get("outcome") or {}).items()):
+            if outcome.get("b") not in (None, "passed"):
+                oracle_failures.add(node)
+
+    for row in inventory:
+        verdict = classification.verdicts.get(row.test_id)
+        if verdict is None:  # pragma: no cover - classification covers every row
             continue
-        items.append(
-            {
-                "symbol": document_symbol(change.module, change.symbol),
-                "path": change.path,
-                "line": change.line,
-                "changed_lines": change.changed_lines,
-                "has_any_test": False,
-                "kind": change.kind,
-                "reason": "changed symbol with no test referencing it",
-            }
-        )
-    return sorted(items, key=lambda item: (item["path"], item["line"], item["symbol"]))
+        test_module = index.module_named(verdict.test_module) if verdict.test_module else None
+        effective_module = verdict.module
 
-
-# ---------------------------------------------------------------------------
-# TRIAGE: why is a failing test red?
-# ---------------------------------------------------------------------------
-def triage_rows(
-    failing: Sequence[str],
-    stale: Dict[str, Tuple[str, str]],
-    selected: Set[str],
-    covered_changed: Dict[str, bool],
-) -> List[dict]:
-    """Classify each failing test as regression, stale or flaky."""
-    out: List[dict] = []
-    for test_id in sorted(set(failing)):
-        if test_id in stale:
-            why, signal = stale[test_id]
-            out.append({"test_id": test_id, "diagnosis": "stale", "signal": signal})
-        elif test_id in selected or covered_changed.get(test_id):
-            out.append(
+        if effective_module and index.module_named(effective_module) is None and verdict.derived_module is None:
+            ledger.stale.append(
                 {
-                    "test_id": test_id,
-                    "diagnosis": "regression",
-                    "signal": "fails at the new revision and is linked to the changed code",
+                    "test_id": row.test_id,
+                    "why": (
+                        f"orphan: the inventory points at module {effective_module!r}, which does not exist in "
+                        "the repository. A test for a deleted module is definitionally obsolete."
+                    ),
+                    "removed_behaviour": f"module {effective_module} no longer exists",
+                    "evidence": [f"inventory:{row.test_id} declares module {effective_module}",
+                                 f"{effective_module.replace('.', '/')}.py is absent from the index"],
                 }
             )
-        else:
-            out.append(
+            continue
+
+        if test_module is not None and verdict.bucket in ("definitely_affected", "semantically_affected"):
+            evidence = _stale_by_assertion(index, test_module, rho)
+            if evidence:
+                ledger.stale.append(
+                    {
+                        "test_id": row.test_id,
+                        "why": (
+                            "this test file asserts behaviour the change removed; its assertion encodes a "
+                            "contract that was deliberately redefined, so its red is noise: repair or delete "
+                            "the test rather than reverting the code."
+                        ),
+                        "removed_behaviour": "; ".join(rho.get("removed_representations", ())[:4]) or "removed expression",
+                        "evidence": [f"{test_module.path}:{number} {text[:90]}" for number, text, _ in evidence[:5]],
+                    }
+                )
+                continue
+
+        if verdict.bucket == "semantically_affected":
+            consumer = coupling_by_consumer.get(effective_module, [])
+            link_evidence = []
+            for coupling in consumer:
+                link_evidence.extend(coupling.evidence)
+            if not link_evidence:
+                link_evidence = [f"kernel-verified model claim for {row.test_id}"]
+            ledger.newly_relevant.append(
                 {
-                    "test_id": test_id,
-                    "diagnosis": "flaky",
-                    "signal": (
-                        "fails while executing none of the changed code and with no kernel-verified link; "
-                        "quarantine rather than chase"
+                    "test_id": row.test_id,
+                    "why": (
+                        "hidden behavioural coupling: this test observes a module that consumes a format the "
+                        "changed module produces, and there is no import path between them. Nobody would have "
+                        "run it; its green was false assurance."
+                    ),
+                    "link_evidence": sorted(dict.fromkeys(link_evidence))[:6],
+                }
+            )
+            continue
+
+        if verdict.reason == "unparseable_module" or verdict.reason == "test_not_found_in_repository":
+            ledger.unknown.append(
+                {
+                    "test_id": row.test_id,
+                    "why": (
+                        f"cannot be decided from the available evidence ({verdict.reason}); when in doubt the "
+                        "safe direction is to run the test, never to exclude it."
                     ),
                 }
             )
-    return out
+            continue
 
-
-# ---------------------------------------------------------------------------
-# PRIORITY: a deterministic total order over the run list
-# ---------------------------------------------------------------------------
-SOURCE_RANK = {
-    "kernel_accepted_claim": 0,
-    "representation_coupling": 1,
-    "structural_modification": 2,
-    "structural_closure": 3,
-    "unconfirmed_claim": 4,
-}
-
-
-def priority_order(
-    selected: Sequence[str],
-    ledger: Dict[str, List[dict]],
-    reasons: Dict[str, str],
-    rows_by_id: Dict[str, Row],
-    closure: Dict[str, int],
-    changed_modules: Set[str],
-) -> List[str]:
-    """Tier 0 newly-relevant, 1 unknown, 2 covers changed code, 3 the rest."""
-    newly_relevant = {entry["test_id"] for entry in ledger["newly_relevant"]}
-    unknown = {entry["test_id"] for entry in ledger["unknown"]}
-
-    def tier(test_id: str) -> int:
-        if test_id in newly_relevant:
-            return 0
-        if test_id in unknown:
-            return 1
-        if rows_by_id[test_id].module in changed_modules or rows_by_id[test_id].module in closure:
-            return 2
-        return 3
-
-    def sort_key(test_id: str) -> Tuple[int, int, int, int, str]:
-        row = rows_by_id[test_id]
-        depth = closure.get(row.module, 0)
-        return (
-            tier(test_id),
-            SOURCE_RANK.get(reasons.get(test_id, ""), 9),
-            -depth,
-            row.avg_runtime_ms,
-            test_id,
+        ledger.valid.append(
+            {
+                "test_id": row.test_id,
+                "why": (
+                    "the change preserves this test's contracts; run it, a green here means something"
+                    if verdict.bucket != "not_affected"
+                    else "no link to the change: the test's contracts are untouched"
+                ),
+            }
         )
+    return ledger
 
-    return sorted(selected, key=sort_key)
+
+def _private(name):
+    tail = name.split(".")[-1]
+    return tail.startswith("_")
+
+
+def build_uncovered(index, inventory, diff, classification, *, max_changed_lines=200):
+    """Find changed or added symbols with no linking test.
+
+    Restriction (recorded, never silent): only symbols in a module that carries
+    inventory rows, or that a test module reaches, are considered. Without it
+    every private helper in the repository would be reported and the signal would
+    drown. Excluded counts are returned so the restriction is visible.
+    """
+    in_scope = set()
+    for row in inventory:
+        verdict = classification.verdicts.get(row.test_id)
+        if verdict and verdict.module:
+            in_scope.add(verdict.module)
+    for module in index.test_modules().values():
+        for imported in index.forward_closure(module.name):
+            candidate = index.module_named(imported)
+            if candidate is not None and not candidate.is_test:
+                in_scope.add(candidate.name)
+
+    referenced_by_tests = {}
+    for module in index.test_modules().values():
+        from .repo_index import references
+
+        import ast
+
+        try:
+            tree = ast.parse(module.source)
+        except SyntaxError:  # pragma: no cover
+            continue
+        for name in references(tree):
+            referenced_by_tests.setdefault(name, set()).add(module.name)
+
+    items = []
+    counters = {"uncovered_symbols_excluded": 0, "private_symbols_excluded": 0, "changed_symbols_considered": 0}
+    for parsed in diff.active_files:
+        module_name = _module_name(parsed.path)
+        module = index.module_named(module_name)
+        if module is None:
+            counters["uncovered_symbols_excluded"] += 0
+            continue
+        changed_new = set(parsed.changed_new_lines)
+        changed_old = set(parsed.changed_old_lines)
+        added_names = set(parsed.added_symbols)
+        for symbol in module.symbols:
+            body_changed = [number for number in sorted(changed_new) if symbol.line <= number <= symbol.end_line]
+            touched = bool(body_changed) or symbol.line in changed_old or symbol.name in added_names
+            if not touched:
+                continue
+            if module_name not in in_scope:
+                counters["uncovered_symbols_excluded"] += 1
+                continue
+            if _private(symbol.name):
+                counters["private_symbols_excluded"] += 1
+                continue
+            counters["changed_symbols_considered"] += 1
+            short = symbol.name.split(".")[-1]
+            linked = short in referenced_by_tests
+            if not linked:
+                # A symbol a tested caller reaches is exercised by that test, even
+                # though no test names it directly. Without this, every extracted
+                # helper would be reported as uncovered the moment it is created.
+                for referenced in referenced_by_tests:
+                    if referenced not in module.calls:
+                        continue
+                    if short in index.intra_module_closure(module_name, referenced, depth=2):
+                        linked = True
+                        break
+            if linked:
+                continue
+            kind = "UNCOVERED_NEW" if symbol.name in added_names else "UNCOVERED_BY_STALENESS"
+            items.append(
+                {
+                    "symbol": f"{module_name}.{symbol.name}",
+                    "path": module.path,
+                    "line": symbol.line,
+                    "changed_lines": sorted(set(body_changed) | ({symbol.line} if symbol.name in added_names else set()))[
+                        :max_changed_lines
+                    ],
+                    "kind": kind,
+                    "has_any_test": False,
+                    "docstring": symbol.docstring,
+                }
+            )
+    items.sort(key=lambda item: (item["path"], item["line"], item["symbol"]))
+    return items, counters
+
+
+def _module_name(path):
+    text = str(path).replace("\\", "/")
+    return text[:-3].replace("/", ".") if text.endswith(".py") else text

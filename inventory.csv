@@ -1,0 +1,501 @@
+test_id,test_name,module,description,avg_runtime_ms,status,owner
+T-0001,test_merge_defaults,app.config,"test_merge_defaults with {}, {'region': 'eu-west', 'retries': 3, 'timeout_s': 30, 'verbose",12,active,qa-team
+T-0002,test_merge_defaults,app.config,"test_merge_defaults with {'region': 'us-east'}, {'region': 'us-east', 'retries': 3, 'timeo",19,active,qa-team
+T-0003,test_merge_defaults,app.config,"test_merge_defaults with {'retries': 0}, {'region': 'eu-west', 'retries': 0, 'timeout_s': ",26,active,qa-team
+T-0004,test_merge_defaults,app.config,"test_merge_defaults with {'timeout_s': 1}, {'region': 'eu-west', 'retries': 3, 'timeout_s'",33,active,qa-team
+T-0005,test_merge_defaults,app.config,"test_merge_defaults with {'verbose': True}, {'region': 'eu-west', 'retries': 3, 'timeout_s",40,active,qa-team
+T-0006,test_merge_defaults,app.config,"test_merge_defaults with {'region': 'ap-south', 'retries': 5}, {'region': 'ap-south', 'ret",47,active,qa-team
+T-0007,test_merge_defaults,app.config,"test_merge_defaults with {'retries': 9, 'timeout_s': 90}, {'region': 'eu-west', 'retries':",54,active,qa-team
+T-0008,test_merge_defaults,app.config,"test_merge_defaults with {'verbose': False, 'region': 'sa-east'}, {'region': 'sa-east', 'r",61,active,qa-team
+T-0009,test_is_valid_key,app.config,"test_is_valid_key with 'region', True",8,active,qa-team
+T-0010,test_is_valid_key,app.config,"test_is_valid_key with 'retries', True",15,active,qa-team
+T-0011,test_is_valid_key,app.config,"test_is_valid_key with 'timeout_s', True",22,active,qa-team
+T-0012,test_is_valid_key,app.config,"test_is_valid_key with 'verbose', True",29,active,qa-team
+T-0013,test_is_valid_key,app.config,"test_is_valid_key with 'unknown', False",36,active,qa-team
+T-0014,test_is_valid_key,app.config,"test_is_valid_key with '', False",43,active,qa-team
+T-0015,test_is_valid_key,app.config,"test_is_valid_key with None, False",50,active,qa-team
+T-0016,test_is_valid_key,app.config,"test_is_valid_key with 7, False",57,active,qa-team
+T-0017,test_is_valid_key,app.config,"test_is_valid_key with 'Region', False",64,active,qa-team
+T-0018,test_is_valid_key,app.config,"test_is_valid_key with 'region ', False",11,active,qa-team
+T-0019,test_describe,app.config,"test_describe with {'region': 'eu-west', 'retries': 3, 'timeout_s': 30, 'verbose': False},",18,active,qa-team
+T-0020,test_describe,app.config,"test_describe with {'region': 'us-east', 'retries': 0, 'timeout_s': 1, 'verbose': True}, '",25,active,qa-team
+T-0021,test_describe,app.config,"test_describe with {'region': 'ap-south', 'retries': 9, 'timeout_s': 90, 'verbose': False}",32,active,qa-team
+T-0022,test_describe,app.config,"test_describe with {'region': 'sa-east', 'retries': 1, 'timeout_s': 10, 'verbose': True}, ",39,active,qa-team
+T-0023,test_describe,app.config,"test_describe with {'region': 'r1', 'retries': 1, 'timeout_s': 10, 'verbose': True}, 'regi",46,active,qa-team
+T-0024,test_describe,app.config,"test_describe with {'region': 'r2', 'retries': 2, 'timeout_s': 20, 'verbose': False}, 'reg",53,active,qa-team
+T-0025,test_describe,app.config,"test_describe with {'region': 'r3', 'retries': 3, 'timeout_s': 30, 'verbose': True}, 'regi",60,active,qa-team
+T-0026,test_describe,app.config,"test_describe with {'region': 'r4', 'retries': 4, 'timeout_s': 40, 'verbose': False}, 'reg",7,active,qa-team
+T-0027,test_load_config_rejects_bad_overrides,app.config,"test_load_config_rejects_bad_overrides with {'nosuchkey': 1}, 'KeyError'",14,active,qa-team
+T-0028,test_load_config_rejects_bad_overrides,app.config,"test_load_config_rejects_bad_overrides with {'RETRIES': 2}, 'KeyError'",21,active,qa-team
+T-0029,test_load_config_rejects_bad_overrides,app.config,"test_load_config_rejects_bad_overrides with {'region': 5}, 'TypeError'",28,active,qa-team
+T-0030,test_load_config_rejects_bad_overrides,app.config,"test_load_config_rejects_bad_overrides with {'verbose': 'yes'}, 'TypeError'",35,active,qa-team
+T-0031,test_make_account,app.models,"test_make_account with 'ACCT-000000', 'owner-0'",42,active,qa-team
+T-0032,test_make_account,app.models,"test_make_account with 'ACCT-000001', 'owner-1'",49,active,qa-team
+T-0033,test_make_account,app.models,"test_make_account with 'ACCT-000002', 'owner-2'",56,active,qa-team
+T-0034,test_make_account,app.models,"test_make_account with 'ACCT-000003', 'owner-3'",63,active,qa-team
+T-0035,test_make_account,app.models,"test_make_account with 'ACCT-000004', 'owner-4'",10,active,qa-team
+T-0036,test_make_account,app.models,"test_make_account with 'ACCT-000005', 'owner-5'",17,active,qa-team
+T-0037,test_make_account,app.models,"test_make_account with 'ACCT-000006', 'owner-6'",24,active,qa-team
+T-0038,test_make_account,app.models,"test_make_account with 'ACCT-000007', 'owner-7'",31,active,qa-team
+T-0039,test_make_account,app.models,"test_make_account with 'ACCT-000008', 'owner-8'",38,active,qa-team
+T-0040,test_make_account,app.models,"test_make_account with 'ACCT-000009', 'owner-9'",45,active,qa-team
+T-0041,test_line_total,app.models,"test_line_total with {'unit_cents': 100, 'quantity': 3}, 300",52,active,qa-team
+T-0042,test_line_total,app.models,"test_line_total with {'unit_cents': 0, 'quantity': 5}, 0",59,active,qa-team
+T-0043,test_line_total,app.models,"test_line_total with {'unit_cents': 250, 'quantity': 1}, 250",6,active,qa-team
+T-0044,test_line_total,app.models,"test_line_total with {'unit_cents': 999, 'quantity': 7}, 6993",13,active,qa-team
+T-0045,test_line_total,app.models,"test_line_total with {'unit_cents': 1, 'quantity': 1}, 1",20,active,qa-team
+T-0046,test_line_total,app.models,"test_line_total with {'unit_cents': 1250, 'quantity': 2}, 2500",27,active,qa-team
+T-0047,test_line_total,app.models,"test_line_total with {'unit_cents': 40, 'quantity': 10}, 400",34,active,qa-team
+T-0048,test_line_total,app.models,"test_line_total with {'unit_cents': 7, 'quantity': 9}, 63",41,active,qa-team
+T-0049,test_line_total,app.models,"test_line_total with {'unit_cents': 5000, 'quantity': 3}, 15000",48,active,qa-team
+T-0050,test_line_total,app.models,"test_line_total with {'unit_cents': 33, 'quantity': 33}, 1089",55,active,qa-team
+T-0051,test_make_invoice,app.models,"test_make_invoice with 'acct', [{'unit_cents': 100, 'quantity': 2}]",62,active,qa-team
+T-0052,test_make_invoice,app.models,"test_make_invoice with 'acct', [{'unit_cents': 100, 'quantity': 2}]",9,active,qa-team
+T-0053,test_make_invoice,app.models,"test_make_invoice with 'acct', []",16,active,qa-team
+T-0054,test_make_invoice,app.models,"test_make_invoice with 'acct', [{'unit_cents': 2500, 'quantity': 1}]",23,active,qa-team
+T-0055,test_make_invoice,app.models,"test_make_invoice with 'acct', [{'unit_cents': 999, 'quantity': 3}]",30,active,qa-team
+T-0056,test_make_invoice,app.models,"test_make_invoice with 'acct', [{'unit_cents': 1, 'quantity': 1}]",37,active,qa-team
+T-0057,test_make_invoice,app.models,"test_make_invoice with 'acct', [{'unit_cents': 40, 'quantity': 10}, {'unit_cents': 60, 'qu",44,active,qa-team
+T-0058,test_make_invoice,app.models,"test_make_invoice with 'acct', [{'unit_cents': 0, 'quantity': 10}]",51,active,qa-team
+T-0059,test_make_invoice,app.models,"test_make_invoice with 'acct', [{'unit_cents': 123456, 'quantity': 2}]",58,active,qa-team
+T-0060,test_make_invoice,app.models,"test_make_invoice with 'acct', [{'unit_cents': 5, 'quantity': 5}]",5,active,qa-team
+T-0061,test_invoice_total,app.models,"test_invoice_total with {'account_id': 'acct', 'lines': [{'unit_cents': 100, 'quantity': 2",12,active,qa-team
+T-0062,test_invoice_total,app.models,"test_invoice_total with {'account_id': 'acct', 'lines': [{'unit_cents': 100, 'quantity': 2",19,active,qa-team
+T-0063,test_invoice_total,app.models,"test_invoice_total with {'account_id': 'acct', 'lines': [], 'subtotal_cents': 0, 'tax_cent",26,active,qa-team
+T-0064,test_invoice_total,app.models,"test_invoice_total with {'account_id': 'acct', 'lines': [{'unit_cents': 2500, 'quantity': ",33,active,qa-team
+T-0065,test_invoice_total,app.models,"test_invoice_total with {'account_id': 'acct', 'lines': [{'unit_cents': 999, 'quantity': 3",40,active,qa-team
+T-0066,test_invoice_total,app.models,"test_invoice_total with {'account_id': 'acct', 'lines': [{'unit_cents': 1, 'quantity': 1}]",47,active,qa-team
+T-0067,test_invoice_total,app.models,"test_invoice_total with {'account_id': 'acct', 'lines': [{'unit_cents': 40, 'quantity': 10",54,active,qa-team
+T-0068,test_invoice_total,app.models,"test_invoice_total with {'account_id': 'acct', 'lines': [{'unit_cents': 0, 'quantity': 10}",61,active,qa-team
+T-0069,test_invoice_total,app.models,"test_invoice_total with {'account_id': 'acct', 'lines': [{'unit_cents': 123456, 'quantity'",8,active,qa-team
+T-0070,test_invoice_total,app.models,"test_invoice_total with {'account_id': 'acct', 'lines': [{'unit_cents': 5, 'quantity': 5}]",15,active,qa-team
+T-0071,test_apply_fee,app.services.billing_service,"test_apply_fee with 0, 0",22,active,qa-team
+T-0072,test_apply_fee,app.services.billing_service,"test_apply_fee with 1, 0",29,active,qa-team
+T-0073,test_apply_fee,app.services.billing_service,"test_apply_fee with 39, 0",36,active,qa-team
+T-0074,test_apply_fee,app.services.billing_service,"test_apply_fee with 40, 0",43,active,qa-team
+T-0075,test_apply_fee,app.services.billing_service,"test_apply_fee with 100, 0",50,active,qa-team
+T-0076,test_apply_fee,app.services.billing_service,"test_apply_fee with 101, 0",57,active,qa-team
+T-0077,test_apply_fee,app.services.billing_service,"test_apply_fee with 999, 2",64,active,qa-team
+T-0078,test_apply_fee,app.services.billing_service,"test_apply_fee with 1000, 2",11,active,qa-team
+T-0079,test_apply_fee,app.services.billing_service,"test_apply_fee with 2500, 6",18,active,qa-team
+T-0080,test_apply_fee,app.services.billing_service,"test_apply_fee with 10000, 25",25,active,qa-team
+T-0081,test_apply_fee,app.services.billing_service,"test_apply_fee with 12345, 30",32,active,qa-team
+T-0082,test_apply_fee,app.services.billing_service,"test_apply_fee with 99999, 249",39,active,qa-team
+T-0083,test_apply_fee,app.services.billing_service,"test_apply_fee with 100000, 250",46,active,qa-team
+T-0084,test_apply_fee,app.services.billing_service,"test_apply_fee with 250000, 625",53,active,qa-team
+T-0085,test_apply_fee,app.services.billing_service,"test_apply_fee with 400, 1",60,active,qa-team
+T-0086,test_apply_fee,app.services.billing_service,"test_apply_fee with 800, 2",7,active,qa-team
+T-0087,test_apply_fee,app.services.billing_service,"test_apply_fee with 1200, 3",14,active,qa-team
+T-0088,test_apply_fee,app.services.billing_service,"test_apply_fee with 1600, 4",21,active,qa-team
+T-0089,test_apply_fee,app.services.billing_service,"test_apply_fee with 2000, 5",28,active,qa-team
+T-0090,test_apply_fee,app.services.billing_service,"test_apply_fee with 2400, 6",35,active,qa-team
+T-0091,test_apply_fee,app.services.billing_service,"test_apply_fee with 3600, 9",42,active,qa-team
+T-0092,test_apply_fee,app.services.billing_service,"test_apply_fee with 4800, 12",49,active,qa-team
+T-0093,test_apply_fee,app.services.billing_service,"test_apply_fee with 6000, 15",56,active,qa-team
+T-0094,test_apply_fee,app.services.billing_service,"test_apply_fee with 7200, 18",63,active,qa-team
+T-0095,test_apply_fee,app.services.billing_service,"test_apply_fee with 8400, 21",10,active,qa-team
+T-0096,test_build_receipt,app.services.billing_service,"test_build_receipt with 'ACCT-000000', 0",17,active,qa-team
+T-0097,test_build_receipt,app.services.billing_service,"test_build_receipt with 'ACCT-000001', 1",24,active,qa-team
+T-0098,test_build_receipt,app.services.billing_service,"test_build_receipt with 'ACCT-000039', 39",31,active,qa-team
+T-0099,test_build_receipt,app.services.billing_service,"test_build_receipt with 'ACCT-000040', 40",38,active,qa-team
+T-0100,test_build_receipt,app.services.billing_service,"test_build_receipt with 'ACCT-000100', 100",45,active,qa-team
+T-0101,test_build_receipt,app.services.billing_service,"test_build_receipt with 'ACCT-000101', 101",52,active,qa-team
+T-0102,test_build_receipt,app.services.billing_service,"test_build_receipt with 'ACCT-000999', 999",59,active,qa-team
+T-0103,test_build_receipt,app.services.billing_service,"test_build_receipt with 'ACCT-001000', 1000",6,active,qa-team
+T-0104,test_build_receipt,app.services.billing_service,"test_build_receipt with 'ACCT-002500', 2500",13,active,qa-team
+T-0105,test_build_receipt,app.services.billing_service,"test_build_receipt with 'ACCT-010000', 10000",20,active,qa-team
+T-0106,test_build_receipt,app.services.billing_service,"test_build_receipt with 'ACCT-012345', 12345",27,active,qa-team
+T-0107,test_build_receipt,app.services.billing_service,"test_build_receipt with 'ACCT-099999', 99999",34,active,qa-team
+T-0108,test_build_receipt,app.services.billing_service,"test_build_receipt with 'ACCT-100000', 100000",41,active,qa-team
+T-0109,test_build_receipt,app.services.billing_service,"test_build_receipt with 'ACCT-250000', 250000",48,active,qa-team
+T-0110,test_build_receipt,app.services.billing_service,"test_build_receipt with 'ACCT-000400', 400",55,active,qa-team
+T-0111,test_build_receipt,app.services.billing_service,"test_build_receipt with 'ACCT-000800', 800",62,active,qa-team
+T-0112,test_build_receipt,app.services.billing_service,"test_build_receipt with 'ACCT-001200', 1200",9,active,qa-team
+T-0113,test_build_receipt,app.services.billing_service,"test_build_receipt with 'ACCT-001600', 1600",16,active,qa-team
+T-0114,test_build_receipt,app.services.billing_service,"test_build_receipt with 'ACCT-002000', 2000",23,active,qa-team
+T-0115,test_build_receipt,app.services.billing_service,"test_build_receipt with 'ACCT-002400', 2400",30,active,qa-team
+T-0116,test_build_receipt,app.services.billing_service,"test_build_receipt with 'ACCT-003600', 3600",37,active,qa-team
+T-0117,test_build_receipt,app.services.billing_service,"test_build_receipt with 'ACCT-004800', 4800",44,active,qa-team
+T-0118,test_build_receipt,app.services.billing_service,"test_build_receipt with 'ACCT-006000', 6000",51,active,qa-team
+T-0119,test_build_receipt,app.services.billing_service,"test_build_receipt with 'ACCT-007200', 7200",58,active,qa-team
+T-0120,test_build_receipt,app.services.billing_service,"test_build_receipt with 'ACCT-008400', 8400",5,active,qa-team
+T-0121,test_settle,app.services.billing_service,"test_settle with 'ACCT-000000', 0",12,active,qa-team
+T-0122,test_settle,app.services.billing_service,"test_settle with 'ACCT-000001', 1",19,active,qa-team
+T-0123,test_settle,app.services.billing_service,"test_settle with 'ACCT-000039', 39",26,active,qa-team
+T-0124,test_settle,app.services.billing_service,"test_settle with 'ACCT-000040', 40",33,active,qa-team
+T-0125,test_settle,app.services.billing_service,"test_settle with 'ACCT-000100', 100",40,active,qa-team
+T-0126,test_settle,app.services.billing_service,"test_settle with 'ACCT-000101', 101",47,active,qa-team
+T-0127,test_settle,app.services.billing_service,"test_settle with 'ACCT-000999', 999",54,active,qa-team
+T-0128,test_settle,app.services.billing_service,"test_settle with 'ACCT-001000', 1000",61,active,qa-team
+T-0129,test_settle,app.services.billing_service,"test_settle with 'ACCT-002500', 2500",8,active,qa-team
+T-0130,test_settle,app.services.billing_service,"test_settle with 'ACCT-010000', 10000",15,active,qa-team
+T-0131,test_settle,app.services.billing_service,"test_settle with 'ACCT-012345', 12345",22,active,qa-team
+T-0132,test_settle,app.services.billing_service,"test_settle with 'ACCT-099999', 99999",29,active,qa-team
+T-0133,test_settle,app.services.billing_service,"test_settle with 'ACCT-100000', 100000",36,active,qa-team
+T-0134,test_settle,app.services.billing_service,"test_settle with 'ACCT-250000', 250000",43,active,qa-team
+T-0135,test_settle,app.services.billing_service,"test_settle with 'ACCT-000400', 400",50,active,qa-team
+T-0136,test_settle,app.services.billing_service,"test_settle with 'ACCT-000800', 800",57,active,qa-team
+T-0137,test_settle,app.services.billing_service,"test_settle with 'ACCT-001200', 1200",64,active,qa-team
+T-0138,test_settle,app.services.billing_service,"test_settle with 'ACCT-001600', 1600",11,active,qa-team
+T-0139,test_settle,app.services.billing_service,"test_settle with 'ACCT-002000', 2000",18,active,qa-team
+T-0140,test_settle,app.services.billing_service,"test_settle with 'ACCT-002400', 2400",25,active,qa-team
+T-0141,test_settle,app.services.billing_service,"test_settle with 'ACCT-003600', 3600",32,active,qa-team
+T-0142,test_settle,app.services.billing_service,"test_settle with 'ACCT-004800', 4800",39,active,qa-team
+T-0143,test_settle,app.services.billing_service,"test_settle with 'ACCT-006000', 6000",46,active,qa-team
+T-0144,test_settle,app.services.billing_service,"test_settle with 'ACCT-007200', 7200",53,active,qa-team
+T-0145,test_settle,app.services.billing_service,"test_settle with 'ACCT-008400', 8400",60,active,qa-team
+T-0146,test_normalise_slug,app.utils.ids,"test_normalise_slug with '  Mixed Case 1/Part_1  ', 'mixed-case-1-part-1'",7,active,qa-team
+T-0147,test_normalise_slug,app.utils.text,"test_normalise_slug with 'Invoice Service', 'invoice-service'",14,active,qa-team
+T-0148,test_normalise_slug,app.utils.text,"test_normalise_slug with 'ALREADY-SLUGGED', 'already-slugged'",21,active,qa-team
+T-0149,test_normalise_slug,app.utils.text,"test_normalise_slug with 'dots.and.dots', 'dots-and-dots'",28,active,qa-team
+T-0150,test_normalise_slug,app.utils.text,"test_normalise_slug with 'under_scores_here', 'under-scores-here'",35,active,qa-team
+T-0151,test_normalise_slug,app.utils.text,"test_normalise_slug with 'trailing---', 'trailing'",42,active,qa-team
+T-0152,test_normalise_slug,app.utils.text,"test_normalise_slug with '---leading', 'leading'",49,active,qa-team
+T-0153,test_normalise_slug,app.utils.text,"test_normalise_slug with 'a b  c   d', 'a-b-c-d'",56,active,qa-team
+T-0154,test_normalise_slug,app.utils.text,"test_normalise_slug with 'Report/Worker', 'report-worker'",63,active,qa-team
+T-0155,test_normalise_slug,app.utils.text,"test_normalise_slug with '', ''",10,active,qa-team
+T-0156,test_normalise_slug,app.utils.text,"test_normalise_slug with '   ', ''",17,active,qa-team
+T-0157,test_normalise_slug,app.utils.text,"test_normalise_slug with '9lives', '9lives'",24,active,qa-team
+T-0158,test_normalise_slug,app.utils.text,"test_normalise_slug with 'MixedCASE99', 'mixedcase99'",31,active,qa-team
+T-0159,test_normalise_slug,app.utils.text,"test_normalise_slug with 'slashes//double', 'slashes-double'",38,active,qa-team
+T-0160,test_normalise_slug,app.utils.text,"test_normalise_slug with 'spaces and-dashes_and/slashes', 'spaces-and-dashes-and-slashes'",45,active,qa-team
+T-0161,test_normalise_slug,app.utils.text,"test_normalise_slug with '  spaced  ', 'spaced'",52,active,qa-team
+T-0162,test_normalise_slug,app.utils.text,"test_normalise_slug with 'one', 'one'",59,active,qa-team
+T-0163,test_normalise_slug,app.utils.text,"test_normalise_slug with 'Two Words', 'two-words'",6,active,qa-team
+T-0164,test_normalise_slug,app.utils.text,"test_normalise_slug with 'three-words-here', 'three-words-here'",13,active,qa-team
+T-0165,test_normalise_slug,app.utils.text,"test_normalise_slug with 'x/y/z', 'x-y-z'",20,active,qa-team
+T-0166,test_word_count,app.utils.text,"test_word_count with '', 0",27,active,qa-team
+T-0167,test_word_count,app.utils.text,"test_word_count with ' ', 0",34,active,qa-team
+T-0168,test_word_count,app.utils.text,"test_word_count with 'one', 1",41,active,qa-team
+T-0169,test_word_count,app.utils.text,"test_word_count with 'one two', 2",48,active,qa-team
+T-0170,test_word_count,app.utils.text,"test_word_count with 'one  two   three', 3",55,active,qa-team
+T-0171,test_word_count,app.utils.text,"test_word_count with 'a b c d e', 5",62,active,qa-team
+T-0172,test_word_count,app.utils.text,"test_word_count with '\ttab\tseparated\t', 2",9,active,qa-team
+T-0173,test_word_count,app.utils.text,"test_word_count with 'trailing ', 1",16,active,qa-team
+T-0174,test_word_count,app.utils.text,"test_word_count with ' leading', 1",23,active,qa-team
+T-0175,test_word_count,app.utils.text,"test_word_count with 'many many many many many', 5",30,active,qa-team
+T-0176,test_word_count,app.utils.text,"test_word_count with 'x', 1",37,active,qa-team
+T-0177,test_word_count,app.utils.text,"test_word_count with 'x y', 2",44,active,qa-team
+T-0178,test_word_count,app.utils.text,"test_word_count with 'x y z', 3",51,active,qa-team
+T-0179,test_word_count,app.utils.text,"test_word_count with 'x y z w', 4",58,active,qa-team
+T-0180,test_word_count,app.utils.text,"test_word_count with 'x y z w v', 5",5,active,qa-team
+T-0181,test_word_count,app.utils.text,"test_word_count with 'line\nbreak', 2",12,active,qa-team
+T-0182,test_word_count,app.utils.text,"test_word_count with 'line\n\nbreak', 2",19,active,qa-team
+T-0183,test_word_count,app.utils.text,"test_word_count with 'a-b c-d', 2",26,active,qa-team
+T-0184,test_word_count,app.utils.text,"test_word_count with '  spaced  out  ', 2",33,active,qa-team
+T-0185,test_word_count,app.utils.text,"test_word_count with 'unicode café count', 3",40,active,qa-team
+T-0186,test_truncate,app.utils.text,"test_truncate with 'abcdef', 3",47,active,qa-team
+T-0187,test_truncate,app.utils.text,"test_truncate with 'abcdef', 0",54,active,qa-team
+T-0188,test_truncate,app.utils.text,"test_truncate with 'abcdef', 4",61,active,qa-team
+T-0189,test_truncate,app.utils.text,"test_truncate with 'abcdef', 6",8,active,qa-team
+T-0190,test_truncate,app.utils.text,"test_truncate with 'abcdef', 10",15,active,qa-team
+T-0191,test_truncate,app.utils.text,"test_truncate with '', 0",22,active,qa-team
+T-0192,test_truncate,app.utils.text,"test_truncate with 'abc', 2",29,active,qa-team
+T-0193,test_truncate,app.utils.text,"test_truncate with 'abc', 1",36,active,qa-team
+T-0194,test_truncate,app.utils.text,"test_truncate with 'a much longer sentence to truncate', 12",43,active,qa-team
+T-0195,test_truncate,app.utils.text,"test_truncate with 'a much longer sentence to truncate', 13",50,active,qa-team
+T-0196,test_truncate,app.utils.text,"test_truncate with 'twenty-five characters', 20",57,active,qa-team
+T-0197,test_truncate,app.utils.text,"test_truncate with 'twenty-five characters', 25",64,active,qa-team
+T-0198,test_truncate,app.utils.text,"test_truncate with 'twenty-five characters', 26",11,active,qa-team
+T-0199,test_truncate,app.utils.text,"test_truncate with 'short', 5",18,active,qa-team
+T-0200,test_truncate,app.utils.text,"test_truncate with 'short', 100",25,active,qa-team
+T-0201,test_truncate,app.utils.text,"test_truncate with '0123456789', 8",32,active,qa-team
+T-0202,test_truncate,app.utils.text,"test_truncate with '0123456789', 3",39,active,qa-team
+T-0203,test_truncate,app.utils.text,"test_truncate with '0123456789', 2",46,active,qa-team
+T-0204,test_truncate,app.utils.text,"test_truncate with 'unicode café', 6",53,active,qa-team
+T-0205,test_truncate,app.utils.text,"test_truncate with 'unicode café', 4",60,active,qa-team
+T-0206,test_parse_duration_ms,app.utils.timeutil,"test_parse_duration_ms with '0ms', 0",7,active,qa-team
+T-0207,test_parse_duration_ms,app.utils.timeutil,"test_parse_duration_ms with '1ms', 1",14,active,qa-team
+T-0208,test_parse_duration_ms,app.utils.timeutil,"test_parse_duration_ms with '999ms', 999",21,active,qa-team
+T-0209,test_parse_duration_ms,app.utils.timeutil,"test_parse_duration_ms with '1s', 1000",28,active,qa-team
+T-0210,test_parse_duration_ms,app.utils.timeutil,"test_parse_duration_ms with '2s', 2000",35,active,qa-team
+T-0211,test_parse_duration_ms,app.utils.timeutil,"test_parse_duration_ms with '59s', 59000",42,active,qa-team
+T-0212,test_parse_duration_ms,app.utils.timeutil,"test_parse_duration_ms with '1m', 60000",49,active,qa-team
+T-0213,test_parse_duration_ms,app.utils.timeutil,"test_parse_duration_ms with '90m', 5400000",56,active,qa-team
+T-0214,test_parse_duration_ms,app.utils.timeutil,"test_parse_duration_ms with '1h', 3600000",63,active,qa-team
+T-0215,test_parse_duration_ms,app.utils.timeutil,"test_parse_duration_ms with '24h', 86400000",10,active,qa-team
+T-0216,test_format_duration,app.utils.timeutil,"test_format_duration with 0, '0ms'",17,active,qa-team
+T-0217,test_format_duration,app.utils.timeutil,"test_format_duration with 1, '1ms'",24,active,qa-team
+T-0218,test_format_duration,app.utils.timeutil,"test_format_duration with 500, '500ms'",31,active,qa-team
+T-0219,test_format_duration,app.utils.timeutil,"test_format_duration with 1000, '1s'",38,active,qa-team
+T-0220,test_format_duration,app.utils.timeutil,"test_format_duration with 2000, '2s'",45,active,qa-team
+T-0221,test_format_duration,app.utils.timeutil,"test_format_duration with 59000, '59s'",52,active,qa-team
+T-0222,test_format_duration,app.utils.timeutil,"test_format_duration with 60000, '1m'",59,active,qa-team
+T-0223,test_format_duration,app.utils.timeutil,"test_format_duration with 90000, '90s'",6,active,qa-team
+T-0224,test_format_duration,app.utils.timeutil,"test_format_duration with 3600000, '1h'",13,active,qa-team
+T-0225,test_format_duration,app.utils.timeutil,"test_format_duration with 7200000, '2h'",20,active,qa-team
+T-0226,test_add_seconds,app.utils.timeutil,"test_add_seconds with 0, 0",27,active,qa-team
+T-0227,test_add_seconds,app.utils.timeutil,"test_add_seconds with 0, 60",34,active,qa-team
+T-0228,test_add_seconds,app.utils.timeutil,"test_add_seconds with 1000, -500",41,active,qa-team
+T-0229,test_add_seconds,app.utils.timeutil,"test_add_seconds with 86399, 1",48,active,qa-team
+T-0230,test_add_seconds,app.utils.timeutil,"test_add_seconds with 1700000000, 3600",55,active,qa-team
+T-0231,test_add_seconds,app.utils.timeutil,"test_add_seconds with 1, 1",62,active,qa-team
+T-0232,test_add_seconds,app.utils.timeutil,"test_add_seconds with -10, 5",9,active,qa-team
+T-0233,test_add_seconds,app.utils.timeutil,"test_add_seconds with 99, 1",16,active,qa-team
+T-0234,test_add_seconds,app.utils.timeutil,"test_add_seconds with 123456789, 987654",23,active,qa-team
+T-0235,test_add_seconds,app.utils.timeutil,"test_add_seconds with 5, 0",30,active,qa-team
+T-0236,test_is_business_day,app.utils.timeutil,"test_is_business_day with 0, True",37,active,qa-team
+T-0237,test_is_business_day,app.utils.timeutil,"test_is_business_day with 1, True",44,active,qa-team
+T-0238,test_is_business_day,app.utils.timeutil,"test_is_business_day with 2, True",51,active,qa-team
+T-0239,test_is_business_day,app.utils.timeutil,"test_is_business_day with 3, True",58,active,qa-team
+T-0240,test_is_business_day,app.utils.timeutil,"test_is_business_day with 4, True",5,active,qa-team
+T-0241,test_is_business_day,app.utils.timeutil,"test_is_business_day with 5, False",12,active,qa-team
+T-0242,test_is_business_day,app.utils.timeutil,"test_is_business_day with 6, False",19,active,qa-team
+T-0243,test_is_business_day,app.utils.timeutil,"test_is_business_day with -1, False",26,active,qa-team
+T-0244,test_is_business_day,app.utils.timeutil,"test_is_business_day with 7, False",33,active,qa-team
+T-0245,test_is_business_day,app.utils.timeutil,"test_is_business_day with 3, True",40,active,qa-team
+T-0246,test_account_id,app.utils.ids,"test_account_id with 0, 'ACCT-000000'",47,active,qa-team
+T-0247,test_account_id,app.utils.ids,"test_account_id with 1, 'ACCT-000001'",54,active,qa-team
+T-0248,test_account_id,app.utils.ids,"test_account_id with 9, 'ACCT-000009'",61,active,qa-team
+T-0249,test_account_id,app.utils.ids,"test_account_id with 10, 'ACCT-000010'",8,active,qa-team
+T-0250,test_account_id,app.utils.ids,"test_account_id with 99, 'ACCT-000099'",15,active,qa-team
+T-0251,test_account_id,app.utils.ids,"test_account_id with 100, 'ACCT-000100'",22,active,qa-team
+T-0252,test_account_id,app.utils.ids,"test_account_id with 999, 'ACCT-000999'",29,active,qa-team
+T-0253,test_account_id,app.utils.ids,"test_account_id with 1000, 'ACCT-001000'",36,active,qa-team
+T-0254,test_account_id,app.utils.ids,"test_account_id with 999999, 'ACCT-999999'",43,active,qa-team
+T-0255,test_account_id,app.utils.ids,"test_account_id with 123456, 'ACCT-123456'",50,active,qa-team
+T-0256,test_invoice_id,app.utils.ids,"test_invoice_id with 0, 'INV-000000'",57,active,qa-team
+T-0257,test_invoice_id,app.utils.ids,"test_invoice_id with 1, 'INV-000001'",64,active,qa-team
+T-0258,test_invoice_id,app.utils.ids,"test_invoice_id with 9, 'INV-000009'",11,active,qa-team
+T-0259,test_invoice_id,app.utils.ids,"test_invoice_id with 10, 'INV-000010'",18,active,qa-team
+T-0260,test_invoice_id,app.utils.ids,"test_invoice_id with 99, 'INV-000099'",25,active,qa-team
+T-0261,test_invoice_id,app.utils.ids,"test_invoice_id with 100, 'INV-000100'",32,active,qa-team
+T-0262,test_invoice_id,app.utils.ids,"test_invoice_id with 999, 'INV-000999'",39,active,qa-team
+T-0263,test_invoice_id,app.utils.ids,"test_invoice_id with 1000, 'INV-001000'",46,active,qa-team
+T-0264,test_invoice_id,app.utils.ids,"test_invoice_id with 999999, 'INV-999999'",53,active,qa-team
+T-0265,test_invoice_id,app.utils.ids,"test_invoice_id with 123456, 'INV-123456'",60,active,qa-team
+T-0266,test_is_valid_id,app.utils.ids,"test_is_valid_id with 'ACCT-000001', True",7,active,qa-team
+T-0267,test_is_valid_id,app.utils.ids,"test_is_valid_id with 'INV-000001', True",14,active,qa-team
+T-0268,test_is_valid_id,app.utils.ids,"test_is_valid_id with 'TXN-123456', True",21,active,qa-team
+T-0269,test_is_valid_id,app.utils.ids,"test_is_valid_id with 'ACCT-00000', False",28,active,qa-team
+T-0270,test_is_valid_id,app.utils.ids,"test_is_valid_id with 'ACCT-0000001', False",35,active,qa-team
+T-0271,test_is_valid_id,app.utils.ids,"test_is_valid_id with 'acct-000001', False",42,active,qa-team
+T-0272,test_is_valid_id,app.utils.ids,"test_is_valid_id with 'ACCT000001', False",49,active,qa-team
+T-0273,test_is_valid_id,app.utils.ids,"test_is_valid_id with 'ACCT-00000a', False",56,active,qa-team
+T-0274,test_is_valid_id,app.utils.ids,"test_is_valid_id with 'XXXX-000001', False",63,active,qa-team
+T-0275,test_is_valid_id,app.utils.ids,"test_is_valid_id with None, False",10,active,qa-team
+T-0276,test_next_sequence,app.utils.ids,"test_next_sequence with [], 1",17,active,qa-team
+T-0277,test_next_sequence,app.utils.ids,"test_next_sequence with ['ACCT-000001'], 2",24,active,qa-team
+T-0278,test_next_sequence,app.utils.ids,"test_next_sequence with ['ACCT-000009', 'ACCT-000003'], 10",31,active,qa-team
+T-0279,test_next_sequence,app.utils.ids,"test_next_sequence with ['nonsense'], 1",38,active,qa-team
+T-0280,test_next_sequence,app.utils.ids,"test_next_sequence with ['INV-000100', 'TXN-000050'], 101",45,active,qa-team
+T-0281,test_next_sequence,app.utils.ids,"test_next_sequence with ['ACCT-999999'], 1000000",52,active,qa-team
+T-0282,test_next_sequence,app.utils.ids,"test_next_sequence with ['ACCT-000001', 'nonsense', 'TXN-000002'], 3",59,active,qa-team
+T-0283,test_next_sequence,app.utils.ids,"test_next_sequence with ['ACCT-00000'], 1",6,active,qa-team
+T-0284,test_next_sequence,app.utils.ids,"test_next_sequence with ['ACCT-000020', 'INV-000019'], 21",13,active,qa-team
+T-0285,test_next_sequence,app.utils.ids,"test_next_sequence with ['TXN-000042'], 43",20,active,qa-team
+T-0286,test_hash_token,app.api.auth,"test_hash_token with '', 'e3b0c44298fc1c14'",27,active,qa-team
+T-0287,test_hash_token,app.api.auth,"test_hash_token with 'a', 'ca978112ca1bbdca'",34,active,qa-team
+T-0288,test_hash_token,app.api.auth,"test_hash_token with 'token-1', '3f08aace122ee236'",41,active,qa-team
+T-0289,test_hash_token,app.api.auth,"test_hash_token with '1111111111111111111111111111111111111111111111111111111111111111', '",48,active,qa-team
+T-0290,test_hash_token,app.api.auth,"test_hash_token with 'üñïçø∂é', '66b47e2f6fe3e06b'",55,active,qa-team
+T-0291,test_verify_token,app.api.auth,"test_verify_token with '', 'e3b0c44298fc1c14'",62,active,qa-team
+T-0292,test_verify_token,app.api.auth,"test_verify_token with 'a', 'ca978112ca1bbdca'",9,active,qa-team
+T-0293,test_verify_token,app.api.auth,"test_verify_token with 'token-1', '3f08aace122ee236'",16,active,qa-team
+T-0294,test_verify_token,app.api.auth,"test_verify_token with '1111111111111111111111111111111111111111111111111111111111111111',",23,active,qa-team
+T-0295,test_verify_token,app.api.auth,"test_verify_token with 'üñïçø∂é', 'a21f0a021a9de5eb'",30,active,qa-team
+T-0296,test_scopes_for,app.api.auth,"test_scopes_for with 'viewer', ['read']",37,active,qa-team
+T-0297,test_scopes_for,app.api.auth,"test_scopes_for with 'operator', ['read', 'write']",44,active,qa-team
+T-0298,test_scopes_for,app.api.auth,"test_scopes_for with 'admin', ['delete', 'read', 'write']",51,active,qa-team
+T-0299,test_scopes_for,app.api.auth,"test_scopes_for with 'auditor', []",58,active,qa-team
+T-0300,test_scopes_for,app.api.auth,"test_scopes_for with 'ADMIN', []",5,active,qa-team
+T-0301,test_is_allowed,app.api.auth,"test_is_allowed with 'viewer', 'read'",12,active,qa-team
+T-0302,test_is_allowed,app.api.auth,"test_is_allowed with 'viewer', 'write'",19,active,qa-team
+T-0303,test_is_allowed,app.api.auth,"test_is_allowed with 'operator', 'write'",26,active,qa-team
+T-0304,test_is_allowed,app.api.auth,"test_is_allowed with 'admin', 'delete'",33,active,qa-team
+T-0305,test_is_allowed,app.api.auth,"test_is_allowed with 'auditor', 'read'",40,active,qa-team
+T-0306,test_to_cents,app.utils.money,"test_to_cents with '0.00', 0",47,active,qa-team
+T-0307,test_to_cents,app.utils.money,"test_to_cents with '0.10', 10",54,active,qa-team
+T-0308,test_to_cents,app.utils.money,"test_to_cents with '1.00', 100",61,active,qa-team
+T-0309,test_to_cents,app.utils.money,"test_to_cents with '99.99', 9999",8,active,qa-team
+T-0310,test_to_cents,app.utils.money,"test_to_cents with '-2.50', -250",15,active,qa-team
+T-0311,test_to_cents,app.utils.money,"test_to_cents with '+3', 300",22,active,qa-team
+T-0312,test_to_cents,app.utils.money,"test_to_cents with '7', 700",29,active,qa-team
+T-0313,test_to_cents,app.utils.money,"test_to_cents with '12.3', 1230",36,active,qa-team
+T-0314,test_format_amount,app.utils.money,"test_format_amount with 0, '0.00'",43,active,qa-team
+T-0315,test_format_amount,app.utils.money,"test_format_amount with 5, '0.05'",50,active,qa-team
+T-0316,test_format_amount,app.utils.money,"test_format_amount with 10, '0.10'",57,active,qa-team
+T-0317,test_format_amount,app.utils.money,"test_format_amount with 100, '1.00'",64,active,qa-team
+T-0318,test_format_amount,app.utils.money,"test_format_amount with 9999, '99.99'",11,active,qa-team
+T-0319,test_format_amount,app.utils.money,"test_format_amount with -250, '-2.50'",18,active,qa-team
+T-0320,test_format_amount,app.utils.money,"test_format_amount with 123456, '1234.56'",25,active,qa-team
+T-0321,test_format_amount,app.utils.money,"test_format_amount with 1, '0.01'",32,active,qa-team
+T-0322,test_apply_rate,app.utils.money,"test_apply_rate with 10000, 250",39,active,qa-team
+T-0323,test_apply_rate,app.utils.money,"test_apply_rate with 10000, 0",46,active,qa-team
+T-0324,test_apply_rate,app.utils.money,"test_apply_rate with 999, 1",53,active,qa-team
+T-0325,test_apply_rate,app.utils.money,"test_apply_rate with 100, 10000",60,active,qa-team
+T-0326,test_apply_rate,app.utils.money,"test_apply_rate with 12345, 725",7,active,qa-team
+T-0327,test_apply_rate,app.utils.money,"test_apply_rate with 1, 9999",14,active,qa-team
+T-0328,test_apply_rate,app.utils.money,"test_apply_rate with 5000, 5000",21,active,qa-team
+T-0329,test_apply_rate,app.utils.money,"test_apply_rate with 999999, 1",28,active,qa-team
+T-0330,test_split_amount,app.utils.money,"test_split_amount with 0, 1",35,active,qa-team
+T-0331,test_split_amount,app.utils.money,"test_split_amount with 10, 1",42,active,qa-team
+T-0332,test_split_amount,app.utils.money,"test_split_amount with 10, 2",49,active,qa-team
+T-0333,test_split_amount,app.utils.money,"test_split_amount with 10, 3",56,active,qa-team
+T-0334,test_split_amount,app.utils.money,"test_split_amount with 100, 3",63,active,qa-team
+T-0335,test_split_amount,app.utils.money,"test_split_amount with 7, 4",10,active,qa-team
+T-0336,test_split_amount,app.utils.money,"test_split_amount with -10, 2",17,active,qa-team
+T-0337,test_split_amount,app.utils.money,"test_split_amount with 1, 3",24,active,qa-team
+T-0338,test_parse_keeps_unknown_payloads,app.workers.report_worker,parsing: payload that is not three fields is kept,22,active,qa-team
+T-0339,test_parse_pipe_records,app.workers.report_worker,parsing: a three-field record parses field by field,19,active,qa-team
+T-0340,test_recent_entries_round_trip_contract,app.workers.report_worker,contract: every written field survives the round trip,31,active,qa-team
+T-0341,test_recent_entries_round_trip_statuses,app.workers.report_worker,"contract: the status field survives, in order",28,active,qa-team
+T-0342,test_recent_entries_round_trip_totals,app.workers.report_worker,contract: the counts written are the counts reported,7,active,qa-team
+T-0343,test_summarise_entries_totals_counts,app.workers.report_worker,summarise: counts add up across records,15,active,qa-team
+T-0344,test_base_price,app.services.pricing_service,"test_base_price with 'starter', 900",13,active,qa-team
+T-0345,test_base_price,app.services.pricing_service,"test_base_price with 'standard', 2500",20,active,qa-team
+T-0346,test_base_price,app.services.pricing_service,"test_base_price with 'premium', 7900",27,active,qa-team
+T-0347,test_base_price,app.services.pricing_service,"test_base_price with 'starter', 900",34,active,qa-team
+T-0348,test_base_price,app.services.pricing_service,"test_base_price with 'standard', 2500",41,active,qa-team
+T-0349,test_base_price,app.services.pricing_service,"test_base_price with 'premium', 7900",48,active,qa-team
+T-0350,test_base_price,app.services.pricing_service,"test_base_price with 'starter', 900",55,active,qa-team
+T-0351,test_base_price,app.services.pricing_service,"test_base_price with 'standard', 2500",62,active,qa-team
+T-0352,test_base_price,app.services.pricing_service,"test_base_price with 'premium', 7900",9,active,qa-team
+T-0353,test_base_price,app.services.pricing_service,"test_base_price with 'starter', 900",16,active,qa-team
+T-0354,test_base_price,app.services.pricing_service,"test_base_price with 'standard', 2500",23,active,qa-team
+T-0355,test_base_price,app.services.pricing_service,"test_base_price with 'premium', 7900",30,active,qa-team
+T-0356,test_base_price,app.services.pricing_service,"test_base_price with 'starter', 900",37,active,qa-team
+T-0357,test_base_price,app.services.pricing_service,"test_base_price with 'standard', 2500",44,active,qa-team
+T-0358,test_discounted,app.services.pricing_service,"test_discounted with 900, 0",51,active,qa-team
+T-0359,test_discounted,app.services.pricing_service,"test_discounted with 900, 10",58,active,qa-team
+T-0360,test_discounted,app.services.pricing_service,"test_discounted with 2500, 25",5,active,qa-team
+T-0361,test_discounted,app.services.pricing_service,"test_discounted with 7900, 50",12,active,qa-team
+T-0362,test_discounted,app.services.pricing_service,"test_discounted with 100, 100",19,active,qa-team
+T-0363,test_discounted,app.services.pricing_service,"test_discounted with 99, 33",26,active,qa-team
+T-0364,test_discounted,app.services.pricing_service,"test_discounted with 1, 50",33,active,qa-team
+T-0365,test_discounted,app.services.pricing_service,"test_discounted with 123456, 7",40,active,qa-team
+T-0366,test_discounted,app.services.pricing_service,"test_discounted with 500, 1",47,active,qa-team
+T-0367,test_discounted,app.services.pricing_service,"test_discounted with 500, 99",54,active,qa-team
+T-0368,test_discounted,app.services.pricing_service,"test_discounted with 1000, 5",61,active,qa-team
+T-0369,test_discounted,app.services.pricing_service,"test_discounted with 1000, 15",8,active,qa-team
+T-0370,test_discounted,app.services.pricing_service,"test_discounted with 2500, 100",15,active,qa-team
+T-0371,test_discounted,app.services.pricing_service,"test_discounted with 7, 7",22,active,qa-team
+T-0372,test_tier_for,app.services.pricing_service,"test_tier_for with 0, 'none'",29,active,qa-team
+T-0373,test_tier_for,app.services.pricing_service,"test_tier_for with 1, 'single'",36,active,qa-team
+T-0374,test_tier_for,app.services.pricing_service,"test_tier_for with 9, 'single'",43,active,qa-team
+T-0375,test_tier_for,app.services.pricing_service,"test_tier_for with 10, 'team'",50,active,qa-team
+T-0376,test_tier_for,app.services.pricing_service,"test_tier_for with 11, 'team'",57,active,qa-team
+T-0377,test_tier_for,app.services.pricing_service,"test_tier_for with 99, 'team'",64,active,qa-team
+T-0378,test_tier_for,app.services.pricing_service,"test_tier_for with 100, 'volume'",11,active,qa-team
+T-0379,test_tier_for,app.services.pricing_service,"test_tier_for with 101, 'volume'",18,active,qa-team
+T-0380,test_tier_for,app.services.pricing_service,"test_tier_for with 1000, 'volume'",25,active,qa-team
+T-0381,test_tier_for,app.services.pricing_service,"test_tier_for with 5, 'single'",32,active,qa-team
+T-0382,test_tier_for,app.services.pricing_service,"test_tier_for with 50, 'team'",39,active,qa-team
+T-0383,test_tier_for,app.services.pricing_service,"test_tier_for with 500, 'volume'",46,active,qa-team
+T-0384,test_tier_for,app.services.pricing_service,"test_tier_for with 99, 'team'",53,active,qa-team
+T-0385,test_tier_for,app.services.pricing_service,"test_tier_for with 100, 'volume'",60,active,qa-team
+T-0386,test_total_for,app.services.pricing_service,"test_total_for with 'starter', 0",7,active,qa-team
+T-0387,test_total_for,app.services.pricing_service,"test_total_for with 'starter', 1",14,active,qa-team
+T-0388,test_total_for,app.services.pricing_service,"test_total_for with 'starter', 10",21,active,qa-team
+T-0389,test_total_for,app.services.pricing_service,"test_total_for with 'standard', 1",28,active,qa-team
+T-0390,test_total_for,app.services.pricing_service,"test_total_for with 'standard', 3",35,active,qa-team
+T-0391,test_total_for,app.services.pricing_service,"test_total_for with 'premium', 2",42,active,qa-team
+T-0392,test_total_for,app.services.pricing_service,"test_total_for with 'premium', 0",49,active,qa-team
+T-0393,test_total_for,app.services.pricing_service,"test_total_for with 'starter', 100",56,active,qa-team
+T-0394,test_total_for,app.services.pricing_service,"test_total_for with 'standard', 100",63,active,qa-team
+T-0395,test_total_for,app.services.pricing_service,"test_total_for with 'premium', 10",10,active,qa-team
+T-0396,test_total_for,app.services.pricing_service,"test_total_for with 'starter', 7",17,active,qa-team
+T-0397,test_total_for,app.services.pricing_service,"test_total_for with 'standard', 11",24,active,qa-team
+T-0398,test_total_for,app.services.pricing_service,"test_total_for with 'premium', 13",31,active,qa-team
+T-0399,test_total_for,app.services.pricing_service,"test_total_for with 'starter', 99",38,active,qa-team
+T-0400,test_is_valid_code,app.services.discount_service,"test_is_valid_code with 'SAVE10', True",45,active,qa-team
+T-0401,test_is_valid_code,app.services.discount_service,"test_is_valid_code with 'SAVE99', True",52,active,qa-team
+T-0402,test_is_valid_code,app.services.discount_service,"test_is_valid_code with 'SAVE00', True",59,active,qa-team
+T-0403,test_is_valid_code,app.services.discount_service,"test_is_valid_code with 'SAVE1', False",6,active,qa-team
+T-0404,test_is_valid_code,app.services.discount_service,"test_is_valid_code with 'SAVE100', False",13,active,qa-team
+T-0405,test_is_valid_code,app.services.discount_service,"test_is_valid_code with 'save10', False",20,active,qa-team
+T-0406,test_is_valid_code,app.services.discount_service,"test_is_valid_code with 'SAVE1A', False",27,active,qa-team
+T-0407,test_is_valid_code,app.services.discount_service,"test_is_valid_code with 'NOPE10', False",34,active,qa-team
+T-0408,test_is_valid_code,app.services.discount_service,"test_is_valid_code with '', False",41,active,qa-team
+T-0409,test_is_valid_code,app.services.discount_service,"test_is_valid_code with None, False",48,active,qa-team
+T-0410,test_discount_for,app.services.discount_service,"test_discount_for with 'SAVE10', 1000",55,active,qa-team
+T-0411,test_discount_for,app.services.discount_service,"test_discount_for with 'SAVE50', 999",62,active,qa-team
+T-0412,test_discount_for,app.services.discount_service,"test_discount_for with 'SAVE00', 12345",9,active,qa-team
+T-0413,test_discount_for,app.services.discount_service,"test_discount_for with 'SAVE99', 100",16,active,qa-team
+T-0414,test_discount_for,app.services.discount_service,"test_discount_for with 'NOPE10', 1000",23,active,qa-team
+T-0415,test_discount_for,app.services.discount_service,"test_discount_for with 'SAVE20', 0",30,active,qa-team
+T-0416,test_discount_for,app.services.discount_service,"test_discount_for with 'SAVE33', 1234",37,active,qa-team
+T-0417,test_discount_for,app.services.discount_service,"test_discount_for with 'SAVE10', 1",44,active,qa-team
+T-0418,test_discount_for,app.services.discount_service,"test_discount_for with 'SAVE10', 9",51,active,qa-team
+T-0419,test_discount_for,app.services.discount_service,"test_discount_for with 'SAVE99', 99999",58,active,qa-team
+T-0420,test_apply,app.services.discount_service,"test_apply with 'SAVE10', 1000",5,active,qa-team
+T-0421,test_apply,app.services.discount_service,"test_apply with 'SAVE25', 2500",12,active,qa-team
+T-0422,test_apply,app.services.discount_service,"test_apply with 'SAVE00', 0",19,active,qa-team
+T-0423,test_apply,app.services.discount_service,"test_apply with 'SAVE50', 7",26,active,qa-team
+T-0424,test_apply,app.services.discount_service,"test_apply with 'NOPE10', 500",33,active,qa-team
+T-0425,test_apply,app.services.discount_service,"test_apply with 'SAVE99', 10000",40,active,qa-team
+T-0426,test_apply,app.services.discount_service,"test_apply with 'SAVE01', 99",47,active,qa-team
+T-0427,test_apply,app.services.discount_service,"test_apply with 'SAVE10', 55",54,active,qa-team
+T-0428,test_apply,app.services.discount_service,"test_apply with 'SAVE20', 123456",61,active,qa-team
+T-0429,test_apply,app.services.discount_service,"test_apply with 'SAVE75', 4",8,active,qa-team
+T-0430,test_batch,app.workers.export_worker,"test_batch with [], 3",15,active,qa-team
+T-0431,test_batch,app.workers.export_worker,"test_batch with [1], 3",22,active,qa-team
+T-0432,test_batch,app.workers.export_worker,"test_batch with [1, 2, 3], 3",29,active,qa-team
+T-0433,test_batch,app.workers.export_worker,"test_batch with [1, 2, 3, 4], 3",36,active,qa-team
+T-0434,test_batch,app.workers.export_worker,"test_batch with [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], 4",43,active,qa-team
+T-0435,test_batch,app.workers.export_worker,"test_batch with [1, 2], 1",50,active,qa-team
+T-0436,test_batch,app.workers.export_worker,"test_batch with [], 1",57,active,qa-team
+T-0437,test_batch,app.workers.export_worker,"test_batch with [0, 1, 2, 3, 4, 5], 2",64,active,qa-team
+T-0438,test_batch,app.workers.export_worker,"test_batch with [1, 2, 3], 10",11,active,qa-team
+T-0439,test_batch,app.workers.export_worker,"test_batch with [0, 1, 2, 3, 4], 5",18,active,qa-team
+T-0440,test_batch_count,app.workers.export_worker,"test_batch_count with 0, 10",25,active,qa-team
+T-0441,test_batch_count,app.workers.export_worker,"test_batch_count with 1, 10",32,active,qa-team
+T-0442,test_batch_count,app.workers.export_worker,"test_batch_count with 10, 10",39,active,qa-team
+T-0443,test_batch_count,app.workers.export_worker,"test_batch_count with 11, 10",46,active,qa-team
+T-0444,test_batch_count,app.workers.export_worker,"test_batch_count with 100, 100",53,active,qa-team
+T-0445,test_batch_count,app.workers.export_worker,"test_batch_count with 101, 100",60,active,qa-team
+T-0446,test_batch_count,app.workers.export_worker,"test_batch_count with 7, 3",7,active,qa-team
+T-0447,test_batch_count,app.workers.export_worker,"test_batch_count with 9, 3",14,active,qa-team
+T-0448,test_batch_count,app.workers.export_worker,"test_batch_count with 10, 3",21,active,qa-team
+T-0449,test_batch_count,app.workers.export_worker,"test_batch_count with 1000, 7",28,active,qa-team
+T-0450,test_flatten,app.workers.export_worker,"test_flatten with [], []",35,active,qa-team
+T-0451,test_flatten,app.workers.export_worker,"test_flatten with [[1]], [1]",42,active,qa-team
+T-0452,test_flatten,app.workers.export_worker,"test_flatten with [[1, 2], [3]], [1, 2, 3]",49,active,qa-team
+T-0453,test_flatten,app.workers.export_worker,"test_flatten with [[], [1]], [1]",56,active,qa-team
+T-0454,test_flatten,app.workers.export_worker,"test_flatten with [[1], [], [2]], [1, 2]",63,active,qa-team
+T-0455,test_flatten,app.workers.export_worker,"test_flatten with [[0, 1, 2], [3, 4]], [0, 1, 2, 3, 4]",10,active,qa-team
+T-0456,test_flatten,app.workers.export_worker,"test_flatten with [['a'], ['b', 'c']], ['a', 'b', 'c']",17,active,qa-team
+T-0457,test_flatten,app.workers.export_worker,"test_flatten with [[1, 2, 3]], [1, 2, 3]",24,active,qa-team
+T-0458,test_flatten,app.workers.export_worker,"test_flatten with [[1], [2], [3], [4]], [1, 2, 3, 4]",31,active,qa-team
+T-0459,test_flatten,app.workers.export_worker,"test_flatten with [[], []], []",38,active,qa-team
+T-0460,test_write_cache_entry_returns_a_payload,app.services.cache_service,"test_write_cache_entry_returns_a_payload with 'key-0', 'ok'",45,active,qa-team
+T-0461,test_read_cache_entries,app.services.cache_service,test_read_cache_entries with None,52,active,qa-team
+T-0462,test_open_account,app.services.account_service,"test_open_account with 'ACCT-000001', 'owner-1'",59,active,qa-team
+T-0463,test_account_summary_counts_cached_entries,app.services.account_service,test_account_summary_counts_cached_entries with None,6,active,qa-team
+T-0464,test_match_accounts,app.services.search_service,"test_match_accounts with ['Alpha', 'beta', 'ALPHABET', 'gamma'], 'alph'",13,active,qa-team
+T-0465,test_rank,app.services.search_service,"test_rank with ['bb', 'a', 'bbb'], 'b'",20,active,qa-team
+T-0466,test_export_rows,app.services.export_service,"test_export_rows with ['ab', 'c']",27,active,qa-team
+T-0467,test_export_filename,app.services.export_service,"test_export_filename with 'recent', '20260101'",34,active,qa-team
+T-0468,test_resolve,app.api.routes,"test_resolve with 'GET', '/accounts'",41,active,qa-team
+T-0469,test_is_known,app.api.routes,"test_is_known with 'GET', '/reports/recent'",48,active,qa-team
+T-0470,test_serialise_account,app.api.serializers,"test_serialise_account with {'id': 'ACCT-1', 'state': 'open'}",55,active,qa-team
+T-0471,test_serialise_error,app.api.serializers,"test_serialise_error with 404, 'missing'",62,active,qa-team
+T-0472,test_normalise_status,app.workers.ingest_worker,test_normalise_status with '',9,active,qa-team
+T-0473,test_ingest_batch,app.workers.ingest_worker,"test_ingest_batch with [{'key': 'k1', 'status': 'ok'}, {'key': 'k2', 'status': 'nope'}]",16,active,qa-team
+T-0474,test_summarise_batch,app.workers.ingest_worker,"test_summarise_batch with [{'key': 'a', 'status': 'ok'}, {'key': 'b', 'status': 'weird'}]",23,active,qa-team
+T-0475,test_trim,app.workers.cleanup_worker,"test_trim with [1, 2, 3], 2",30,active,qa-team
+T-0476,test_clean_cache,app.workers.cleanup_worker,"test_clean_cache with 1, (1, 1)",37,active,qa-team
+T-0477,test_is_sensitive,app.services.audit_service,"test_is_sensitive with 'delete', True",44,active,qa-team
+T-0478,test_channels_for,app.services.notification_service,"test_channels_for with {'state': 'open'}, ['email', 'push']",51,active,qa-team
+T-0479,test_channels_for,app.services.notification_service,"test_channels_for with {'state': 'closed'}, ['email']",58,active,qa-team
+T-0480,test_channels_for,app.services.notification_service,"test_channels_for with {'state': 'frozen'}, ['email']",5,active,qa-team
+T-0481,test_channels_for,app.services.notification_service,"test_channels_for with {}, ['email']",12,active,qa-team
+T-0482,test_channels_for,app.services.notification_service,"test_channels_for with {'state': 'open', 'id': 'ACCT-1'}, ['email', 'push']",19,active,qa-team
+T-0483,test_render_message,app.services.notification_service,"test_render_message with 'hello {name}', {'name': 'world'}",26,active,qa-team
+T-0484,test_render_message,app.services.notification_service,"test_render_message with '{a}-{b}', {'a': '1', 'b': '2'}",33,active,qa-team
+T-0485,test_render_message,app.services.notification_service,"test_render_message with 'no placeholders', {}",40,active,qa-team
+T-0486,test_render_message,app.services.notification_service,"test_render_message with '{x}{x}', {'x': 'ab'}",47,active,qa-team
+T-0487,test_render_message,app.services.notification_service,"test_render_message with 'total {amount} cents', {'amount': 250}",54,active,qa-team
+T-0488,test_should_notify,app.services.notification_service,"test_should_notify with {'state': 'open'}, 'settled'",61,active,qa-team
+T-0489,test_should_notify,app.services.notification_service,"test_should_notify with {'state': 'closed'}, 'settled'",8,active,qa-team
+T-0490,test_should_notify,app.services.notification_service,"test_should_notify with {'state': 'open'}, 'opened'",15,active,qa-team
+T-0491,test_should_notify,app.services.notification_service,"test_should_notify with {'state': 'closed'}, 'opened'",22,active,qa-team
+T-0492,test_should_notify,app.services.notification_service,"test_should_notify with {'state': 'open'}, 'ignored'",29,active,qa-team
+T-0493,test_body_length,app.services.notification_service,"test_body_length with '', 0",36,active,qa-team
+T-0494,test_body_length,app.services.notification_service,"test_body_length with 'abc', 3",43,active,qa-team
+T-0495,test_body_length,app.services.notification_service,test_body_length with 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx,50,active,qa-team
+T-0496,test_body_length,app.services.notification_service,test_body_length with 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx,57,active,qa-team
+T-0497,test_body_length,app.services.notification_service,test_body_length with 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx,64,active,qa-team
+T-0498,test_issue,app.services.invoice_service,"test_issue with {'id': 'ACCT-1'}, {'id': 'INV-2'}",11,active,qa-team
+T-0499,test_due_date,app.services.invoice_service,test_due_date with 0,18,active,qa-team
+T-0500,test_is_overdue,app.services.invoice_service,"test_is_overdue with 30, 31",25,active,qa-team

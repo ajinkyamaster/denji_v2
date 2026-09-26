@@ -1,144 +1,228 @@
 #!/usr/bin/env python3
-"""The MCP kernel: four tools, no more.
+"""MCP over STDIO: the four tools that expose TestScope to Bob.
 
-A deliberately small, coarse surface, because tool definitions are re-sent
-every interaction and therefore cost coins on every turn:
+Protocol: JSON-RPC 2.0, one JSON object per line on stdin, one per line on
+stdout, and **nothing else on stdout ever**. A stray ``print`` corrupts the
+stream and the client sees a broken server, so every diagnostic goes to stderr
+and stdout is flushed after each protocol message.
 
-    testscope_ledger   the deterministic engine            alwaysAllow
-    testscope_verify   the kernel                          alwaysAllow
-    testscope_oracle   executed ground truth               alwaysAllow
-    testscope_gate     G1..G5 on an authored test          requires a click
+Methods served: ``initialize``, ``notifications/initialized``, ``tools/list``,
+``tools/call``, ``ping``.
 
-Transport: one JSON request per line on stdin, one JSON response per line on
-stdout. None of the four tools imports the target repository or executes its
-code; they only ``ast.parse`` it, and the gate executes tests only inside a
-sandbox copy.
+Hard rules, each with a reason:
+
+  * Tools 1-3 are pure with respect to the user's inputs: no writes into the
+    analysed repository, no network. Tool 4 is the only one that touches test
+    files, and it writes only inside a temp sandbox - which is why its
+    ``alwaysAllow`` is false in ``.bob/mcp.json``: the human click is the trust
+    boundary expressed in the permission model.
+  * No tool imports or executes the analysed repository's code. ``ast.parse``
+    only. That is what makes it safe to point the server at a hostile repository.
+  * Input lines are capped (8 MiB) and every request is validated before it is
+    dispatched; malformed input produces a JSON-RPC error, never a traceback on
+    stdout.
+  * Unknown arguments are refused rather than ignored: silently dropping a
+    misspelled parameter is how a caller ends up believing it asked for something
+    it did not.
 """
-from __future__ import annotations
 
 import json
-import pathlib
 import sys
-from typing import Callable, Dict, Optional
+from pathlib import Path
 
-sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1]))
+if __package__ in (None, ""):
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from bob_session import gate as gate_mod
-from bob_session import oracle as oracle_mod
-from bob_session import verify
-from bob_session.pipeline import inventory as inventory_mod
-from bob_session.pipeline.index import RepoIndex
-from bob_session.pipeline.run_analysis import run as run_ledger
+from bob_session import gates as gates_module
+from bob_session import oracle as oracle_module
+from bob_session.pipeline.report import validate
+from bob_session.run_analysis import run_pipeline
+from bob_session.tools_spec import (
+    PROTOCOL_VERSION,
+    SERVER_NAME,
+    TOOLS,
+    TOOL_NAMES,
+    TOOL_VERSION,
+    tool_by_name,
+)
+from bob_session.verify import summary_of, verify_claims
 
-TOOLS: Dict[str, Callable[[dict], dict]] = {}
-
-
-def tool(name: str) -> Callable[[Callable[[dict], dict]], Callable[[dict], dict]]:
-    def register(function: Callable[[dict], dict]) -> Callable[[dict], dict]:
-        TOOLS[name] = function
-        return function
-
-    return register
-
-
-@tool("testscope_ledger")
-def _ledger(request: dict) -> dict:
-    return run_ledger(
-        repo=request.get("repo", "demo"),
-        diff_path=request.get("diff", "diffs/change_b.patch"),
-        inventory_path=request.get("inventory", "demo/inventory.csv"),
-        generated_at=request.get("generated_at", "2026-09-26T00:00:00Z"),
-        model_layer=request.get("model_layer", "enabled"),
-        proposal_cache=request.get("proposal_cache", "bob_session/proposal_cache"),
-        evidence_dir=request.get("evidence_dir", "bob_session/evidence"),
-        ablation_baseline=request.get("ablation_baseline"),
-    )
+MAX_LINE_BYTES = 8 * 1024 * 1024
+JSONRPC_ERRORS = {
+    "parse": -32700,
+    "invalid_request": -32600,
+    "method_not_found": -32601,
+    "invalid_params": -32602,
+    "internal": -32603,
+}
 
 
-@tool("testscope_verify")
-def _verify(request: dict) -> dict:
-    repo = pathlib.Path(request.get("repo", "demo"))
-    index = RepoIndex(repo)
-    return verify.verify_claims(
-        request.get("claims", []),
-        repo_root=repo,
-        index=index,
-        symbolic_selection=set(request.get("symbolic_selection", [])),
-        coverage=verify.coverage_from_evidence(request.get("coverage", "bob_session/evidence/coverage_b.json")),
-        intent_lines=request.get("intent_lines"),
-        gate_evidence=request.get("gate_evidence"),
-    )
+def log(message):
+    """Diagnostics go to stderr only: stdout carries the protocol and nothing else."""
+    print(f"[testscope] {message}", file=sys.stderr, flush=True)
 
 
-@tool("testscope_oracle")
-def _oracle(request: dict) -> dict:
-    rows = inventory_mod.load(request.get("inventory", "demo/inventory.csv"))
-    import tempfile
+def _check_arguments(name, arguments):
+    """Minimal JSON-Schema enforcement: required keys present, unknown keys refused."""
+    spec = tool_by_name(name)
+    if spec is None:
+        raise ValueError(f"unknown tool: {name}")
+    schema = spec["inputSchema"]
+    if not isinstance(arguments, dict):
+        raise ValueError("arguments must be an object")
+    required = schema.get("required", [])
+    missing = [key for key in required if key not in arguments]
+    if missing:
+        raise ValueError(f"missing required argument(s): {', '.join(missing)}")
+    known = set(schema.get("properties", {}))
+    unknown = sorted(set(arguments) - known)
+    if unknown:
+        raise ValueError(f"unknown argument(s): {', '.join(unknown)}")
+    return spec
 
-    with tempfile.TemporaryDirectory(prefix="testscope-mcp-oracle-") as tmp:
-        workdir = pathlib.Path(tmp)
-        runs_a, deselected_a = oracle_mod.run_revision(
-            request.get("repo", "demo"),
-            request["rev_a"],
-            python=request.get("python", sys.executable),
-            markers=request.get("markers", "-m ''"),
-            repeats=int(request.get("repeats", 2)),
-            workdir=workdir / "a",
+
+def call_tool(name, arguments):
+    """Dispatch one tool call. Returns ``(payload, is_error)``."""
+    spec = _check_arguments(name, arguments)
+
+    if name == "testscope_ledger":
+        artifact, inventory_ids = run_pipeline(
+            repo=arguments["repo"],
+            diff_path=arguments["diff"],
+            inventory_path=arguments["inventory"],
+            generated_at=arguments["generated_at"],
+            oracle_path=arguments.get("oracle"),
+            claims_path=arguments.get("claims"),
+            model_layer=arguments.get("model_layer", "disabled"),
         )
-        runs_b, deselected_b = oracle_mod.run_revision(
-            request.get("repo", "demo"),
-            request["rev_b"],
-            python=request.get("python", sys.executable),
-            markers=request.get("markers", "-m ''"),
-            repeats=int(request.get("repeats", 2)),
-            workdir=workdir / "b",
+        problems = validate(artifact, inventory_ids=inventory_ids)
+        if problems:
+            return {"validation_problems": problems, "artifact": artifact}, True
+        return artifact, False
+
+    if name == "testscope_verify":
+        inventory = None
+        if arguments.get("inventory"):
+            from bob_session.pipeline.inventory import load_inventory
+
+            inventory = load_inventory(Path(arguments["inventory"]))
+        result = verify_claims(arguments["claims"], repo=Path(arguments["repo"]), inventory=inventory)
+        return result, False
+
+    if name == "testscope_oracle":
+        result = oracle_module.run_oracle(
+            repo=arguments["repo"],
+            patch=arguments.get("patch"),
+            rev_a=arguments.get("rev_a"),
+            rev_b=arguments.get("rev_b"),
+            inventory_total=arguments.get("inventory_total"),
+            run_cmd=arguments.get("run_cmd").split() if arguments.get("run_cmd") else None,
+            timeout=int(arguments.get("timeout", 900)),
         )
-    evidence = oracle_mod.analyse(
-        rows=rows,
-        runs_a=runs_a,
-        runs_b=runs_b,
-        strategy=request.get("label", "mcp"),
-        deselected=max(deselected_a, deselected_b),
-    )
-    return evidence
+        return result, False
+
+    if name == "testscope_gate":
+        result = gates_module.run_gates(
+            repo=arguments["repo"],
+            test_patch=arguments["test_patch"],
+            symbol=arguments["symbol"],
+            change_patch=arguments.get("patch"),
+            test_path=arguments.get("test_path"),
+            intent=arguments.get("intent"),
+            timeout=int(arguments.get("timeout", 120)),
+        )
+        return result, not result["accepted"]
+
+    raise ValueError(f"unhandled tool: {spec['name']}")
 
 
-@tool("testscope_gate")
-def _gate(request: dict) -> dict:
-    return gate_mod.run_for_patch(
-        repo=request.get("repo", "demo"),
-        patch_path=request["test_patch"],
-        test_node=request["test_node"],
-        symbol=request["symbol"],
-        rev_a=request["rev_a"],
-        rev_b=request["rev_b"],
-    )
+def handle(request):
+    """Handle one JSON-RPC request; return a response dict, or None for a notification."""
+    if not isinstance(request, dict):
+        return _error(None, JSONRPC_ERRORS["invalid_request"], "request must be an object")
+    method = request.get("method")
+    identifier = request.get("id")
+    is_notification = identifier is None
+    if not isinstance(method, str):
+        return _error(identifier, JSONRPC_ERRORS["invalid_request"], "method must be a string")
 
-
-def main() -> int:
-    for line in sys.stdin:
-        line = line.strip()
-        if not line:
-            continue
+    if method == "initialize":
+        return _result(
+            identifier,
+            {
+                "protocolVersion": PROTOCOL_VERSION,
+                "capabilities": {"tools": {}},
+                "serverInfo": {"name": SERVER_NAME, "version": TOOL_VERSION},
+            },
+        )
+    if method in ("notifications/initialized", "initialized", "notifications/cancelled"):
+        return None
+    if method == "ping":
+        return None if is_notification else _result(identifier, {})
+    if method == "tools/list":
+        return _result(identifier, {"tools": TOOLS})
+    if method == "tools/call":
+        params = request.get("params") or {}
+        name = params.get("name")
+        arguments = params.get("arguments") or {}
         try:
-            request = json.loads(line)
-        except json.JSONDecodeError as exc:
-            print(json.dumps({"error": f"malformed request: {exc}"}), flush=True)
+            payload, is_error = call_tool(name, arguments)
+        except Exception as error:  # noqa: BLE001 - every failure becomes a protocol error
+            log(f"tool {name!r} failed: {type(error).__name__}: {error}")
+            return _error(identifier, JSONRPC_ERRORS["internal"], f"{type(error).__name__}: {error}")
+        if is_error:
+            log(f"tool {name!r} reported a problem")
+        return _result(
+            identifier,
+            {
+                "content": [{"type": "text", "text": json.dumps(payload, sort_keys=True)}],
+                "isError": bool(is_error),
+            },
+        )
+    if is_notification:
+        return None
+    return _error(identifier, JSONRPC_ERRORS["method_not_found"], f"unknown method: {method}")
+
+
+def _result(identifier, result):
+    return {"jsonrpc": "2.0", "id": identifier, "result": result}
+
+
+def _error(identifier, code, message):
+    return {"jsonrpc": "2.0", "id": identifier, "error": {"code": code, "message": message}}
+
+
+def serve(instream=None, outstream=None):
+    """Read newline-delimited JSON-RPC from ``instream`` and answer on ``outstream``."""
+    instream = instream or sys.stdin
+    outstream = outstream or sys.stdout
+    for raw in instream:
+        if len(raw.encode("utf-8", errors="ignore")) > MAX_LINE_BYTES:
+            response = _error(None, JSONRPC_ERRORS["invalid_request"], "request line too large")
+        else:
+            stripped = raw.strip()
+            if not stripped:
+                continue
+            try:
+                request = json.loads(stripped)
+            except json.JSONDecodeError as error:
+                response = _error(None, JSONRPC_ERRORS["parse"], f"invalid JSON: {error.msg}")
+            else:
+                try:
+                    response = handle(request)
+                except Exception as error:  # noqa: BLE001
+                    log(f"dispatch failed: {type(error).__name__}: {error}")
+                    response = _error(None, JSONRPC_ERRORS["internal"], f"{type(error).__name__}: {error}")
+        if response is None:
             continue
-        name = request.get("tool")
-        if name == "list":
-            print(json.dumps({"tools": sorted(TOOLS)}), flush=True)
-            continue
-        function = TOOLS.get(name or "")
-        if function is None:
-            print(json.dumps({"error": f"unknown tool {name!r}", "tools": sorted(TOOLS)}), flush=True)
-            continue
-        try:
-            result = function(request.get("params") or {})
-            print(json.dumps({"tool": name, "ok": True, "result": result}), flush=True)
-        except Exception as exc:  # fail loud, never silently coerce
-            print(json.dumps({"tool": name, "ok": False, "error": f"{exc.__class__.__name__}: {exc}"}), flush=True)
+        outstream.write(json.dumps(response, sort_keys=True) + "\n")
+        outstream.flush()
     return 0
+
+
+def main():
+    log(f"serving {len(TOOL_NAMES)} tools over stdio: {', '.join(TOOL_NAMES)}")
+    return serve()
 
 
 if __name__ == "__main__":
