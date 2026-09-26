@@ -1,0 +1,28 @@
+# Bob context exclusions.
+#
+# Two reasons: these paths are noise, and context is a recurring cost (C23) —
+# tool definitions and stray files are re-sent every interaction.
+
+# sandboxes / scratch space written by the deterministic tools
+bob_session/sandbox/
+bob_session/.scratch/
+bob_session/oracle_scratch/
+tmp/
+.tmp/
+
+# caches and compiled Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+
+# coverage and measurement scratch
+.coverage
+htmlcov/
+coverage.xml
+
+# local virtualenvs
+.venv/
+venv/

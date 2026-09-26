@@ -1,0 +1,6 @@
+# Python bytecode caches
+__pycache__/
+*.py[cod]
+
+# Tool-local state (untracked by choice; remove this line if the team wants it versioned)
+.freebuff/
