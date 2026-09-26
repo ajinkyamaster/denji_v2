@@ -1,0 +1,34 @@
+diff --git a/tests/test_cache_service.py b/tests/test_cache_service.py
+index a267851..5d3237d 100644
+--- a/tests/test_cache_service.py
++++ b/tests/test_cache_service.py
+@@ -1,6 +1,8 @@
+ """Cache writing: asserts shape only, never the wire format.
+ The format itself is pinned end-to-end by tests/test_report_worker.py."""
+ 
++import json
++
+ import pytest
+ 
+ from app.services.cache_service import read_cache_entries, write_cache_entry
+@@ -33,3 +35,20 @@ def test_read_cache_entries(blank, tmp_path):
+     assert read_cache_entries(path) == ['a', ' b ']
+ 
+ 
++@pytest.mark.parametrize(
++    "case",
++    [
++        pytest.param("json-object", id="T-A001"),
++    ],
++)
++def test_cache_entry_is_a_json_object(case):
++    """An authored test added by the Author role, gated G1..G5.
++
++    It is a patch test on purpose: it asserts the *serialised shape* and then
++    parses it, so at the previous revision (a pipe-delimited record) the first
++    assertion fires - an assertion failure, not an import error, which is exactly
++    what G3 demands.
++    """
++    payload = write_cache_entry("k", "ok", 1)
++    assert payload.startswith("{")
++    assert json.loads(payload) == {"count": 1, "key": "k", "status": "ok"}

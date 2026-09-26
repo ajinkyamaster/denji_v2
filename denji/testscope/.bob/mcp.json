@@ -1,0 +1,29 @@
+{
+  "_comment": [
+    "TestScope MCP registration for IBM Bob IDE.",
+    "command points at the project virtualenv because the oracle and the gate execute pytest;",
+    "the interpreter running the server is also the interpreter handed to those subprocesses.",
+    "Path is absolute by design (Bob documents absolute args); update it if the repository moves.",
+    "alwaysAllow contains EXACTLY three tools: the pure read-only ones. testscope_gate is NOT",
+    "auto-approved because it is the only tool that touches test files - the human click is the",
+    "trust boundary expressed in the permission model."
+  ],
+  "mcpServers": {
+    "testscope": {
+      "command": "/home/rana/denji/testscope/.venv/bin/python",
+      "args": [
+        "/home/rana/denji/testscope/bob_session/mcp_server.py"
+      ],
+      "cwd": "/home/rana/denji/testscope",
+      "env": {
+        "PYTHONDONTWRITEBYTECODE": "1"
+      },
+      "alwaysAllow": [
+        "testscope_ledger",
+        "testscope_verify",
+        "testscope_oracle"
+      ],
+      "disabled": false
+    }
+  }
+}
