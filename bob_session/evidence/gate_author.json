@@ -1,0 +1,22 @@
+{
+  "accepted": true,
+  "capability": "PINS",
+  "detail": "all gates passed",
+  "g1_buildable": true,
+  "g2_passes_5x": true,
+  "g2_runs": [
+    true,
+    true,
+    true,
+    true,
+    true
+  ],
+  "g3_assertion_fires_at_a": true,
+  "g3_failure_origin": "assertion",
+  "g4_mutants_killed": 3,
+  "g4_mutants_total": 4,
+  "g4_mutation_strength": 0.75,
+  "g5_spec_anchored": null,
+  "symbol": "app.services.cache_service._should_drop",
+  "test_node": "tests/test_cache_service.py::test_evict_expired_drops_status_expired"
+}

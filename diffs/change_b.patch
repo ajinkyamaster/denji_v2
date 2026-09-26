@@ -1,0 +1,54 @@
+diff --git a/README.md b/README.md
+index 3ae22e1..680baee 100644
+--- a/README.md
++++ b/README.md
+@@ -24,4 +24,4 @@ The default run excludes the cross-module contract tests and the
+ pre-existing failures marked `known_broken`; the release pipeline runs
+ everything with `-m ""`.
+ 
+-This service is the caches public API and nothing else imports it.
++This service is the cache's public API and nothing else imports it.
+diff --git a/app/services/billing_service.py b/app/services/billing_service.py
+index 22f7317..42ad105 100644
+--- a/app/services/billing_service.py
++++ b/app/services/billing_service.py
+@@ -12,7 +12,7 @@ def settle(amount: int, currency: str = "EUR") -> dict:
+     """Settle an amount and return the receipt fields."""
+     require(amount >= 0, "amount must not be negative")
+     require(currency in CURRENCIES, f"unsupported currency: {currency}")
+-    logger.info("billing settle begin")
++    logger.info("billing settle: starting")
+     record("billing.settle")
+     return {"amount": amount, "currency": currency, "settled": True}
+ 
+diff --git a/app/services/cache_service.py b/app/services/cache_service.py
+index 147a02f..93fdb67 100644
+--- a/app/services/cache_service.py
++++ b/app/services/cache_service.py
+@@ -39,7 +39,7 @@ class CacheService:
+         key = truncate(str(key), 64)
+         if len(self._entries) >= max_entries():
+             self.evict_expired(now_ms())
+-        entry = f"{value['id']}|{value['status']}|{value['amount']}"
++        entry = json.dumps(value, sort_keys=True)
+         self._backend.set(self._storage_key(key), entry)
+         self._entries[key] = dict(value)
+         record("cache.write")
+@@ -76,7 +76,7 @@ class CacheService:
+ 
+     def _should_drop(self, value: Dict[str, Any], moment: int) -> bool:
+         """Return True when an entry must be dropped at the given moment."""
+-        return is_expired(int(value.get("expires_at", 0)), moment)
++        return is_expired(int(value.get("expires_at", 0)), moment) or value.get("status") == "expired"
+ 
+     def evict_expired(self, now: Optional[int] = None) -> int:
+         """Drop expired entries and return how many were removed."""
+@@ -94,3 +94,8 @@ class CacheService:
+     def entry_count(self) -> int:
+         """Return the number of live entries."""
+         return len(self._entries)
++
++    def estimate_footprint(self, size_hint: int) -> int:
++        """Return the estimated footprint in bytes for a size hint."""
++        require(size_hint >= 0, "size_hint must not be negative")
++        return size_hint * 64 + 128

@@ -1,0 +1,14 @@
+--- a/tests/test_cache_service.py
++++ b/tests/test_cache_service.py
+@@ -37,3 +37,11 @@
+ 
+ def test_storage_path_is_configurable():
+     assert cache_service.CacheService().storage_path().endswith('entries.dat')
++
++
++def test_evict_expired_drops_status_expired():
++    '''Pin the behaviour the diff added: an entry marked expired is dropped.'''
++    service = cache_service.CacheService()
++    service.write_cache_entry('a', {'id': 1, 'status': 'expired', 'amount': 0, 'expires_at': 10 ** 13})
++    assert service.evict_expired(10 ** 12) == 1
++    assert service.entry_count() == 0

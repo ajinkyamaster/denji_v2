@@ -1,0 +1,11 @@
+# Sandbox and generated artefacts excluded from Bob's context (context tax).
+bob_session/proposal_cache/
+bob_session/evidence/coverage_b.json
+submissions/ablation/
+tmp/
+sandbox/
+.venv/
+__pycache__/
+*.pyc
+demo/.git/
+demo/var/

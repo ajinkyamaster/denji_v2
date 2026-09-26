@@ -1,0 +1,18 @@
+{
+  "mcpServers": {
+    "testscope": {
+      "command": "python3",
+      "args": ["bob_session/mcp_server.py"],
+      "cwd": ".",
+      "env": {},
+      "alwaysAllow": ["testscope_ledger", "testscope_verify", "testscope_oracle"],
+      "disabled": false,
+      "tools": {
+        "testscope_ledger": "The deterministic engine: diff + inventory + repository -> the verdict ledger artefact. Zero coins.",
+        "testscope_verify": "The kernel: re-derives every claim against the repository. Nothing a model says becomes a verdict without it. Zero coins.",
+        "testscope_oracle": "Executed ground truth: runs the full suite at both revisions and reports its own blindness. Zero coins.",
+        "testscope_gate": "G1..G5 filtration for an authored test, inside a sandbox. NOT alwaysAllow: this is the only tool that touches test files, so it requires an explicit click."
+      }
+    }
+  }
+}

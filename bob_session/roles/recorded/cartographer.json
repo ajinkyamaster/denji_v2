@@ -1,0 +1,37 @@
+{
+  "model": "recorded:document-tier",
+  "coins": 5,
+  "recorded_at": "2026-09-26T00:00:00Z",
+  "claims": [
+    {
+      "claim_type": "intent",
+      "role": "cartographer",
+      "targets": {
+        "symbol": "app.services.cache_service.write_cache_entry",
+        "quote": "Entries are serialised as pipe-delimited text before they are handed to the",
+        "violated_tag": "sep:|",
+        "declared_intent": "the cache file stays greppable with the documented separator"
+      },
+      "citations": [
+        {"path": "app/services/cache_service.py", "symbol": "write_cache_entry", "line": 40}
+      ],
+      "confidence": "high",
+      "rationale": "The module docstring states the serialisation contract; the change removed it."
+    },
+    {
+      "claim_type": "intent",
+      "role": "cartographer",
+      "targets": {
+        "symbol": "app.services.cache_service.write_cache_entry",
+        "quote": "Entries are stored in a compact binary format to save space",
+        "violated_tag": "sep:|",
+        "declared_intent": "a binary layout was intended"
+      },
+      "citations": [
+        {"path": "app/services/cache_service.py", "symbol": "write_cache_entry", "line": 40}
+      ],
+      "confidence": "low",
+      "rationale": "Prose found in the runbook that would justify the new layout if it were real."
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "bundle_digest": "d599c15aa6d085d34d63aacd10b58754e0cd2ad87efe184e223b5d74b1fbc501",
+  "claims": [
+    {
+      "citations": [
+        {
+          "line": 6,
+          "path": "tests/test_ops_smoke.py",
+          "symbol": "test_ops_smoke_parses_cache_dump"
+        },
+        {
+          "line": 16,
+          "path": "app/workers/report_worker.py",
+          "symbol": "parse_recent_cache_entries"
+        }
+      ],
+      "claim_type": "missed",
+      "confidence": "med",
+      "rationale": "Declared against a metrics module, so the ledger's declared-module coupling missed it.",
+      "role": "falsifier",
+      "targets": {
+        "consumer": "app.workers.report_worker.parse_recent_cache_entries",
+        "declared_module": "app.utils.metrics",
+        "producer": "app.services.cache_service.write_cache_entry",
+        "reason": "the ops smoke check parses a raw cache dump, so it exercises the changed wire format",
+        "test_id": "T-0341",
+        "test_node": "tests/test_ops_smoke.py::test_ops_smoke_parses_cache_dump"
+      }
+    }
+  ],
+  "coins": 4,
+  "model": "recorded:reasoning-tier",
+  "prompt_version": "v2.0.0",
+  "recorded_at": "2026-09-26T00:00:00Z",
+  "role": "falsifier"
+}

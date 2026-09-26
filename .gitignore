@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+.coverage
+coverage.json
+junit_*.xml
+tmp/
+sandbox/
+demo/var/
