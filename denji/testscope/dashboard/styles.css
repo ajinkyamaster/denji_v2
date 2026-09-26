@@ -1,0 +1,1120 @@
+/* ==========================================================================
+   TestScope — change-impact report
+   An editorial report, not a SaaS dashboard. Light, flat, hairline-ruled.
+
+   THE RULES THIS FILE FOLLOWS
+   --------------------------------------------------------------------------
+   1. PINNED TO LIGHT. This report gets screenshotted, printed and recorded. A
+      viewer's OS appearance setting must not change what they see — appearance
+      that varies by machine is appearance nobody can review twice.
+
+   2. INK IS THE ACCENT. The most common thing an AI-built dashboard does is
+      reach for a blue gradient. So structure here is drawn in ink and hairlines,
+      and colour is spent only where it carries meaning: a verdict, a failure, a
+      warning. If something is coloured, it means something.
+
+   3. TYPE DOES THE HIERARCHY, NOT WEIGHT. One superfamily in three voices —
+      Plex Serif for the argument, Plex Sans for reading, Plex Mono for anything
+      a machine wrote. Weights stay at 400/500/600; size and space carry the
+      structure. Numbers are tabular so columns align without a grid.
+
+   4. FLAT. No gradients, no shadows, no blur, no rounded corners, no glass.
+      Depth is a hairline and a change of surface. Square corners are the clearest
+      signal that a surface was designed rather than generated.
+
+   5. WARM NEUTRALS. Pure #000 on #fff is harsh and cold grey is the default
+      look of every template. The page is white; the panels sitting on it are a
+      warm paper, and the rules are a warm grey. Only the code plate is dark,
+      because code is the one thing that should look like code.
+
+   6. ABSENT IS NOT ZERO. A field the report does not carry prints the words
+      "not reported". A zero is a measurement; a blank is a missing fact.
+   ========================================================================== */
+
+:root {
+  /* --- surfaces ------------------------------------------------------- */
+  --paper: #ffffff;
+  --panel: #f8f7f4;
+  --panel-2: #f1efea;
+  --rule: #e3e0da;
+  --rule-strong: #cdc8bf;
+
+  /* --- ink ------------------------------------------------------------ */
+  --ink: #1a1a18;
+  --ink-2: #56534e;
+  --ink-3: #85807a;
+
+  /* --- the one accent: a deep petrol, used for anything interactive --- */
+  --accent: #0b5f63;
+  --accent-soft: #e2efee;
+  --accent-line: #7fb0af;
+
+  /* --- meaning, and only meaning --------------------------------------- */
+  --fail: #b3261e;
+  --fail-soft: #fdeceb;
+  --warn: #7d5400;
+  --warn-soft: #fbf1d8;
+  --rust: #96450f;
+  --rust-soft: #fceee1;
+  --good: #1c6b3f;
+  --good-soft: #e5f2e9;
+
+  /* --- code plate ------------------------------------------------------ */
+  --plate: #1c1c1a;
+  --plate-2: #262624;
+  --plate-ink: #eae8e3;
+  --plate-dim: #8f8b83;
+  --plate-kw: #d3a2f0;
+  --plate-fn: #8fc3ff;
+  --plate-str: #86d9a0;
+  --plate-num: #f5b97a;
+  --plate-line: rgba(255, 255, 255, 0.07);
+
+  /* --- 8px rhythm ------------------------------------------------------ */
+  --sp-01: 0.125rem; /*  2 */
+  --sp-02: 0.25rem;  /*  4 */
+  --sp-03: 0.5rem;   /*  8 */
+  --sp-04: 0.75rem;  /* 12 */
+  --sp-05: 1rem;     /* 16 */
+  --sp-06: 1.5rem;   /* 24 */
+  --sp-07: 2rem;     /* 32 */
+  --sp-08: 2.5rem;   /* 40 */
+  --sp-09: 3rem;     /* 48 */
+  --sp-10: 4rem;     /* 64 */
+  --sp-11: 5rem;     /* 80 */
+  --sp-12: 6rem;     /* 96 */
+
+  --font-serif: "IBM Plex Serif", Charter, Georgia, "Times New Roman", serif;
+  --font-sans: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas,
+    "Liberation Mono", monospace;
+
+  --rule: 1px solid var(--rule);
+  --measure: 68ch;
+}
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+/* The spinner and the app both set display, which would otherwise beat the UA
+   rule for [hidden] and leave a spinner sitting above a loaded page. */
+[hidden] { display: none !important; }
+
+html {
+  color-scheme: light;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 0.9375rem; /* 15px */
+  line-height: 1.6;
+  font-variant-numeric: tabular-nums;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection { background: var(--accent-soft); color: var(--ink); }
+
+h1, h2, h3, h4 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  letter-spacing: -0.014em;
+  margin: 0;
+  text-wrap: balance;
+}
+h1 { font-size: 2.75rem; line-height: 1.1; letter-spacing: -0.022em; }
+h2 { font-size: 1.875rem; line-height: 1.2; letter-spacing: -0.018em; }
+h3 { font-size: 1.1875rem; line-height: 1.35; }
+h4 { font-size: 0.9375rem; line-height: 1.4; font-family: var(--font-sans); font-weight: 600; }
+
+p { margin: 0; }
+ol, ul { margin: 0; padding: 0; list-style: none; }
+code { font-family: var(--font-mono); }
+
+a { color: var(--accent); text-underline-offset: 0.18em; }
+
+.mono { font-family: var(--font-mono); }
+
+.num-inline {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 0.94em;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* the small uppercase label used above headings and beside values */
+.eyebrow,
+.label,
+th,
+.metric-label,
+.triage-action,
+.rejection-gate,
+.claim-type {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.085em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+/* ============================== loading ============================== */
+.loading {
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-05);
+  color: var(--ink-3);
+  font-size: 0.8125rem;
+  letter-spacing: 0.04em;
+}
+.spinner {
+  width: 1.5rem; height: 1.5rem;
+  border: 2px solid var(--rule-strong);
+  border-top-color: var(--ink);
+  border-radius: 50%;
+  animation: spin 720ms linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) {
+  .spinner { animation-duration: 2.4s; }
+}
+
+/* =============================== error =============================== */
+.error {
+  max-width: 44rem;
+  margin: var(--sp-11) auto;
+  padding: var(--sp-06);
+  border: var(--rule);
+  border-left: 3px solid var(--fail);
+  background: var(--fail-soft);
+}
+.error h2 { font-size: 1.25rem; margin-bottom: var(--sp-03); }
+.error ul { margin: var(--sp-04) 0 0; padding-left: 1.1rem; list-style: disc; }
+.error li { font-family: var(--font-mono); font-size: 0.8125rem; color: var(--ink-2); }
+.error p { font-size: 0.875rem; color: var(--ink-2); margin-top: var(--sp-04); }
+.error code {
+  background: rgba(0, 0, 0, 0.05);
+  padding: 0.1em 0.35em;
+}
+
+/* ============================== layout =============================== */
+.app {
+  max-width: 74rem;
+  margin: 0 auto;
+  padding: 0 var(--sp-07) var(--sp-12);
+}
+
+.masthead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--sp-05);
+  padding: var(--sp-06) 0 var(--sp-05);
+  border-bottom: 2px solid var(--ink);
+}
+.brand { display: flex; align-items: baseline; gap: var(--sp-04); min-width: 0; }
+.wordmark {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+.brand-sub {
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  white-space: nowrap;
+}
+.run-strip { display: flex; gap: var(--sp-07); margin: 0; flex-wrap: wrap; }
+.run-strip div { display: flex; flex-direction: column; gap: 2px; }
+.run-strip dt {
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.run-strip dd {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--ink-2);
+}
+
+/* ============================= banners =============================== */
+.banner {
+  margin-top: var(--sp-06);
+  padding: var(--sp-05) var(--sp-06);
+  border: var(--rule);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-02);
+}
+.banner-title { font-family: var(--font-sans); font-weight: 600; font-size: 0.9375rem; }
+.banner p { font-size: 0.875rem; color: var(--ink-2); max-width: var(--measure); }
+.stat-note { font-family: var(--font-mono); font-size: 0.75rem; line-height: 1.6; }
+.banner .stat-note { color: var(--ink-2); }
+.error .stat-note {
+  display: block;
+  margin-top: var(--sp-04);
+  padding: var(--sp-04);
+  background: rgba(0, 0, 0, 0.04);
+  overflow-wrap: anywhere;
+}
+.banner-error { border-left: 3px solid var(--fail); background: var(--fail-soft); }
+.banner-error .banner-title { color: var(--fail); }
+.banner-warning { border-left: 3px solid var(--warn); background: var(--warn-soft); }
+.banner-warning .banner-title { color: var(--warn); }
+
+/* ============================= activity ============================== */
+/* A quiet band, not a console. One line per check, one word for its state,
+   one number for what it produced. If a session is running live the label
+   changes and the running cell gets a slow pulse; nothing blinks, nothing
+   scrolls, and a finished report reads as finished. */
+.activity {
+  margin-top: var(--sp-07);
+  border: var(--rule);
+  border-left: 2px solid var(--ink);
+  background: var(--panel);
+  padding: var(--sp-05) var(--sp-06);
+}
+.activity-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--sp-03) var(--sp-05);
+  padding-bottom: var(--sp-04);
+  margin-bottom: var(--sp-04);
+  border-bottom: var(--rule);
+}
+.activity-label {
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  white-space: nowrap;
+}
+.activity-now {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--ink-2);
+  overflow-wrap: anywhere;
+  min-width: 0;
+}
+.activity[data-live="true"] { border-left-color: var(--accent); }
+.activity[data-live="true"] .activity-label { color: var(--accent); }
+
+.agents { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--sp-05); }
+.agent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-01);
+  min-width: 0;
+  padding-left: var(--sp-04);
+  border-left: 2px solid var(--rule);
+}
+.agent:first-child { padding-left: 0; border-left: 0; }
+.agent[data-agent="none"] { grid-column: 1 / -1; padding-left: 0; border-left: 0; }
+.agent[data-agent="none"] .agent-job { min-height: 0; max-width: 62ch; }
+.agent-top { display: flex; align-items: baseline; gap: var(--sp-03); flex-wrap: wrap; }
+.agent-name { font-size: 0.8125rem; font-weight: 600; color: var(--ink); }
+.agent-state {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  white-space: nowrap;
+}
+.agent-state::before {
+  content: "";
+  display: inline-block;
+  width: 0.4rem; height: 0.4rem;
+  margin-right: 0.4em;
+  vertical-align: 0.05em;
+  background: var(--rule-strong);
+}
+.agent[data-state="done"] .agent-state { color: var(--good); }
+.agent[data-state="done"] .agent-state::before { background: var(--good); }
+.agent[data-state="running"] .agent-state { color: var(--accent); }
+.agent[data-state="running"] .agent-state::before {
+  background: var(--accent);
+  animation: pulse 1.6s ease-in-out infinite;
+}
+.agent[data-state="skipped"] { opacity: 0.55; }
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.25; } }
+@media (prefers-reduced-motion: reduce) {
+  .agent[data-state="running"] .agent-state::before { animation: none; }
+}
+.agent-job {
+  font-size: 0.75rem;
+  line-height: 1.45;
+  color: var(--ink-2);
+  overflow-wrap: anywhere;
+  /* Two lines' worth, so every tally sits on the same baseline even when the
+     descriptions above them wrap to different depths. */
+  min-height: 2.9em;
+}
+.agent-tally { font-family: var(--font-mono); font-size: 0.6875rem; color: var(--ink-3); }
+
+@media (max-width: 56rem) {
+  .agents { grid-template-columns: 1fr 1fr; }
+  .agent:nth-child(3) { padding-left: 0; border-left: 0; }
+  .agent:nth-child(n + 3) { padding-top: var(--sp-04); border-top: var(--rule); }
+  .agent[data-agent="none"] { padding-top: 0; border-top: 0; }
+}
+
+/* =============================== hero ================================ */
+.hero {
+  padding: var(--sp-10) 0 var(--sp-11);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-06);
+}
+.hero-copy { display: flex; flex-direction: column; gap: var(--sp-05); max-width: 46rem; }
+.eyebrow { color: var(--accent); }
+.hero-copy h1 { max-width: 22ch; }
+.lede {
+  font-size: 1.0625rem;
+  line-height: 1.62;
+  color: var(--ink-2);
+  max-width: var(--measure);
+}
+.lede em { font-style: italic; color: var(--ink); }
+
+/* The four facts: one rail split by hairlines, not four boxes. Every cell is a
+   flex column with the number pinned to the top and the label to the bottom, so
+   the four numbers share a baseline and the four labels share a baseline, no
+   matter how differently their text wraps. A tinted cell would break the rail's
+   hairlines and float free of them, so the emphasised cell is marked with a
+   rule under its number instead. */
+.facts {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-top: 2px solid var(--ink);
+  border-bottom: var(--rule);
+}
+.fact {
+  padding: var(--sp-06) var(--sp-06) var(--sp-05) 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-03);
+  border-left: var(--rule);
+  padding-left: var(--sp-06);
+  min-width: 0;
+}
+.fact:first-child { border-left: 0; padding-left: 0; }
+.fact-num {
+  font-family: var(--font-mono);
+  font-size: 2.375rem;
+  line-height: 1;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  overflow-wrap: anywhere;
+  display: flex;
+  align-items: baseline;
+  gap: var(--sp-03);
+}
+.fact-label {
+  font-size: 0.8125rem;
+  line-height: 1.45;
+  color: var(--ink-2);
+  /* Three lines reserved, so the four labels end on the same line even when
+     their text wraps to different depths. */
+  min-height: 3.6rem;
+}
+.fact-label strong { color: var(--ink); font-weight: 600; }
+.fact-emphasis .fact-num { color: var(--accent); }
+.fact-emphasis .fact-num::after {
+  content: "";
+  flex: none;
+  width: 2.5rem;
+  height: 2px;
+  background: var(--accent);
+  transform: translateY(-0.3em);
+}
+.fact-verdict .fact-num-fail { color: var(--fail); font-size: 2.125rem; letter-spacing: -0.02em; }
+.fact-num.is-small,
+.metric-value.is-small { font-size: 1.25rem; line-height: 1.3; letter-spacing: -0.01em; }
+.fact-foot {
+  font-size: 0.9375rem;
+  color: var(--ink-2);
+  max-width: var(--measure);
+  padding-top: var(--sp-02);
+}
+
+/* ============================== chapters ============================= */
+.chapter {
+  padding: var(--sp-11) 0;
+  border-top: var(--rule);
+}
+.chapter-head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-04);
+  margin-bottom: var(--sp-08);
+  max-width: 48rem;
+}
+.chapter-head h2 { max-width: 26ch; }
+.chapter-body { display: flex; flex-direction: column; gap: var(--sp-07); }
+.subhead {
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.085em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  padding-top: var(--sp-07);
+  border-top: var(--rule);
+}
+.count {
+  font-family: var(--font-mono);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--ink-3);
+  letter-spacing: 0;
+}
+
+/* ============================ code plates ============================ */
+.codepair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-05);
+  align-items: start;
+}
+.codepane { margin: 0; min-width: 0; }
+.codepane figcaption {
+  font-size: 0.75rem;
+  line-height: 1.5;
+  color: var(--ink-2);
+  padding-bottom: var(--sp-03);
+  border-bottom: 2px solid var(--ink);
+  margin-bottom: var(--sp-04);
+  overflow-wrap: anywhere;
+}
+.codepane figcaption code { font-size: 0.75rem; }
+.codepane pre {
+  margin: 0;
+  background: var(--plate);
+  color: var(--plate-ink);
+  padding: var(--sp-05) var(--sp-06);
+  overflow-x: auto;
+  font-size: 0.75rem;
+  line-height: 1.75;
+  tab-size: 4;
+}
+.codepane code { font-family: var(--font-mono); }
+.code-title {
+  display: block;
+  color: var(--plate-dim);
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin: var(--sp-04) 0 var(--sp-02);
+}
+.code-title:first-child { margin-top: 0; }
+.kw { color: var(--plate-kw); }
+.fn { color: var(--plate-fn); }
+.str { color: var(--plate-str); }
+.num { color: var(--plate-num); }
+.com { color: var(--plate-dim); }
+.hl-added { color: var(--plate-str); font-weight: 500; }
+/* A highlight inside a dark plate stays a neutral lift. Tinting the fill reads
+   as a rendering fault, so the semantic colour lives on the left rule instead. */
+.hl-line {
+  display: inline-block;
+  width: 100%;
+  background: var(--plate-2);
+  box-shadow: inset 2px 0 0 var(--plate-num);
+  padding-left: var(--sp-04);
+  margin-left: calc(var(--sp-04) * -1);
+}
+.codepane-note {
+  margin-top: var(--sp-04);
+  font-size: 0.8125rem;
+  line-height: 1.55;
+  color: var(--ink-2);
+  max-width: var(--measure);
+}
+.codepane-note code {
+  font-size: 0.75rem;
+  background: var(--panel-2);
+  padding: 0.1em 0.3em;
+}
+
+.fact-pairs {
+  margin: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-05) var(--sp-08);
+  padding-top: var(--sp-06);
+  border-top: var(--rule);
+}
+.fact-pairs div { display: flex; gap: var(--sp-04); align-items: baseline; min-width: 0; }
+.fact-pairs dt {
+  flex: none;
+  min-width: 7rem;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.085em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.fact-pairs dd {
+  margin: 0;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--ink-2);
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.fact-pairs code { font-size: 0.75rem; color: var(--ink); }
+
+/* =============================== tables ============================== */
+.table-scroll {
+  overflow-x: auto;
+  border-top: 2px solid var(--ink);
+  border-bottom: var(--rule);
+}
+.tests {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+.tests th,
+.tests td {
+  padding: var(--sp-03) var(--sp-05);
+  vertical-align: top;
+  border-bottom: var(--rule);
+  font-size: 0.875rem;
+  line-height: 1.45;
+}
+.tests th {
+  border-bottom: var(--rule);
+  color: var(--ink-3);
+  white-space: nowrap;
+  padding-top: var(--sp-04);
+  padding-bottom: var(--sp-04);
+}
+.tests tbody tr:last-child > td { border-bottom: 0; }
+
+/* Column widths are derived from the longest real value in the report, not
+   guessed: a monospace column a few pixels narrow breaks an identifier across
+   two lines, which reads as a bug. */
+.tests th:nth-child(1), .tests td:nth-child(1) { width: 5.5rem; }  /*  88px */
+.tests th:nth-child(2), .tests td:nth-child(2) { width: 31.5rem; } /* 504px */
+.tests th:nth-child(3), .tests td:nth-child(3) { width: 17rem; }   /* 272px */
+.tests th:nth-child(4), .tests td:nth-child(4) { width: auto; }
+
+.tests td.test-id,
+.tests td.test-name,
+.tests td.test-module {
+  font-family: var(--font-mono);
+  white-space: nowrap;
+}
+.tests td.test-id { font-size: 0.8125rem; color: var(--ink-3); }
+.tests td.test-name { font-size: 0.8125rem; color: var(--ink); }
+.tests td.test-module { font-size: 0.75rem; color: var(--ink-2); }
+
+tr.test-row { height: 3rem; }
+tr.test-row:hover > td { background: var(--panel); }
+tr.test-row.is-open > td { background: var(--panel); border-bottom-color: transparent; }
+
+.row-toggle {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-03);
+  background: none;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  color: var(--ink-3);
+  cursor: pointer;
+  text-align: left;
+}
+.row-toggle::before {
+  content: "+";
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  line-height: 1;
+  width: 0.75rem;
+  flex: none;
+  color: var(--rule-strong);
+}
+.row-toggle:hover { color: var(--ink); }
+tr.is-open .row-toggle::before { content: "\2212"; color: var(--ink); }
+tr.is-open .row-toggle { color: var(--ink); }
+.row-toggle:focus-visible,
+.disclosure > summary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ================================ pills ============================== */
+.pill {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  line-height: 1.4;
+  padding: 0.15em 0.5em;
+  white-space: nowrap;
+  border: 1px solid transparent;
+}
+.pill-syntactic,
+.pill-new { background: var(--panel-2); color: var(--ink-2); border-color: var(--rule); }
+.pill-semantic,
+.pill-by-staleness { background: var(--accent-soft); color: var(--accent); border-color: var(--accent-line); }
+.pill-stale { background: var(--warn-soft); color: var(--warn); }
+.pill-unknown { background: var(--panel-2); color: var(--ink-3); border-color: var(--rule); }
+.pill-regression { background: var(--fail-soft); color: var(--fail); }
+.pill-flaky { background: var(--panel-2); color: var(--ink-2); border-color: var(--rule); }
+.pill-priority { background: var(--good-soft); color: var(--good); border-color: #b6d8c4; }
+
+/* =========================== detail rows ============================= */
+tr.detail-row > td {
+  background: var(--panel);
+  border-bottom: var(--rule);
+  padding-top: 0;
+  padding-bottom: var(--sp-05);
+}
+tr.detail-row .detail-label {
+  display: block;
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  padding-top: var(--sp-04);
+}
+.detail-label { font-size: 0.625rem; font-weight: 600; letter-spacing: 0.09em; text-transform: uppercase; color: var(--ink-3); }
+tr.detail-row td {
+  font-size: 0.8125rem;
+  line-height: 1.55;
+  color: var(--ink-2);
+  overflow-wrap: anywhere;
+}
+/* Clamped to two lines. The real artefact's evidence strings are paragraphs,
+   and an unbounded cell makes one row three times the height of its neighbours,
+   which reads as a rendering fault and breaks the table's rhythm. The full text
+   is one click away in the detail row, so nothing is lost. */
+.ev-flow {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+}
+.evidence-key {
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.evidence { color: var(--ink-2); }
+.detail-evidence { display: block; margin-top: var(--sp-03); }
+
+/* =============================== ledger ============================== */
+.ledger-stack { gap: var(--sp-09); }
+.verdict {
+  border-top: 2px solid var(--rule-strong);
+  padding-top: var(--sp-05);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-05);
+  min-width: 0;
+}
+.verdict[data-verdict="newly_relevant"] { border-top-color: var(--accent); }
+.verdict[data-verdict="stale"] { border-top-color: var(--warn); }
+.verdict[data-verdict="uncovered"] { border-top-color: var(--rust); }
+.verdict[data-verdict="unknown"] { border-top-color: var(--rule-strong); }
+.verdict[data-verdict="valid"] { border-top-color: var(--good); }
+.verdict-head { display: flex; flex-direction: column; gap: var(--sp-03); }
+.verdict-meaning {
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  color: var(--ink-2);
+  max-width: var(--measure);
+  overflow-wrap: anywhere;
+}
+.verdict-body { display: flex; flex-direction: column; gap: var(--sp-04); min-width: 0; }
+
+/* Auto layout with a floor on the prose column, not a fixed layout. Fixed widths
+   sum past the container on a narrow screen, which collapses the evidence column
+   to zero width; auto layout keeps all four columns intact and lets the scroll
+   container do its job below the width where they stop fitting. At desktop the
+   declared minimums total 69rem inside a 70rem column, so nothing scrolls. */
+.ledger-table { table-layout: auto; }
+.ledger-table th:nth-child(4), .ledger-table td:nth-child(4) { min-width: 15rem; }
+.ledger-table td:nth-child(4) {
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--ink-2);
+}
+
+/* No declared widths: the three identifier columns are nowrap, so the engine
+   gives each its true content width and the action column takes the remainder. */
+.uncovered-table { table-layout: auto; }
+.uncovered-table td:nth-child(1) {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--ink);
+  white-space: nowrap;
+}
+.uncovered-table td:nth-child(3) {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--ink-2);
+  white-space: nowrap;
+}
+.uncovered-table td:nth-child(2) { white-space: nowrap; }
+.uncovered-table td:nth-child(4) { font-size: 0.8125rem; color: var(--ink-2); overflow-wrap: anywhere; }
+
+.disclosure > summary {
+  cursor: pointer;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--ink-2);
+  padding: var(--sp-04) 0;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: var(--sp-03);
+}
+.disclosure > summary::-webkit-details-marker { display: none; }
+.disclosure > summary::before {
+  content: "+";
+  font-family: var(--font-mono);
+  width: 0.75rem;
+  flex: none;
+  color: var(--rule-strong);
+}
+.disclosure[open] > summary::before { content: "\2212"; color: var(--ink); }
+.panel-note {
+  font-size: 0.75rem;
+  color: var(--ink-3);
+  padding-bottom: var(--sp-04);
+  max-width: var(--measure);
+}
+
+/* ============================== metrics ============================== */
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  border-top: 2px solid var(--ink);
+  border-bottom: var(--rule);
+}
+.metric {
+  padding: var(--sp-06) var(--sp-05) var(--sp-06) 0;
+  border-left: var(--rule);
+  padding-left: var(--sp-05);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-02);
+  min-width: 0;
+}
+.metric:first-child { border-left: 0; padding-left: 0; }
+.metric-value {
+  font-family: var(--font-mono);
+  font-size: 2rem;
+  line-height: 1.1;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  overflow-wrap: anywhere;
+}
+.metric-value.is-void { color: var(--fail); font-size: 1.125rem; letter-spacing: 0; }
+.metric-note { font-size: 0.75rem; line-height: 1.45; color: var(--ink-3); }
+.metric-emphasis { background: var(--panel); }
+.metric-caveat {
+  font-size: 0.8125rem;
+  line-height: 1.55;
+  color: var(--ink-2);
+  max-width: var(--measure);
+  padding-left: var(--sp-05);
+  border-left: 2px solid var(--rule-strong);
+}
+
+/* =============================== triage ============================== */
+/* min() lets the track shrink below its ideal width on a narrow screen; a bare
+   18rem minimum is wider than the column and pushes the whole page sideways. */
+.triage-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(18rem, 100%), 1fr));
+  gap: var(--sp-05);
+}
+.triage-card {
+  border: var(--rule);
+  border-top: 2px solid var(--rule-strong);
+  padding: var(--sp-05);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-03);
+  min-width: 0;
+}
+.triage-card[data-diagnosis="regression"] { border-top-color: var(--fail); }
+.triage-card[data-diagnosis="stale"] { border-top-color: var(--warn); }
+.triage-card[data-diagnosis="flaky"] { border-top-color: var(--rule-strong); }
+.triage-top { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-04); flex-wrap: wrap; }
+.triage-test { font-family: var(--font-mono); font-size: 0.8125rem; overflow-wrap: anywhere; }
+.triage-action { color: var(--ink); white-space: nowrap; }
+.triage-signal {
+  font-size: 0.8125rem;
+  line-height: 1.55;
+  color: var(--ink-2);
+  overflow-wrap: anywhere;
+}
+
+/* ============================== priority ============================= */
+.priority { display: flex; flex-direction: column; border-top: 2px solid var(--ink); }
+.priority li {
+  display: grid;
+  grid-template-columns: 2.5rem 7rem 1fr;
+  gap: var(--sp-04);
+  align-items: baseline;
+  padding: var(--sp-04) var(--sp-03);
+  border-bottom: var(--rule);
+  min-width: 0;
+}
+.priority-rank { font-family: var(--font-mono); font-size: 0.75rem; color: var(--ink-3); }
+.priority-id { font-family: var(--font-mono); font-size: 0.8125rem; color: var(--ink); }
+.priority-why { font-size: 0.8125rem; color: var(--ink-2); overflow-wrap: anywhere; }
+.priority li.priority-first { background: var(--accent-soft); }
+.priority li.priority-first .priority-why,
+.priority li.priority-first .priority-id { color: var(--ink); }
+
+/* ============================== claims =============================== */
+.claims { display: flex; flex-direction: column; gap: var(--sp-05); }
+.claim {
+  border: var(--rule);
+  padding: var(--sp-05);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-03);
+  min-width: 0;
+}
+.claim-head { display: flex; align-items: baseline; gap: var(--sp-04); flex-wrap: wrap; }
+.claim-type { color: var(--accent); }
+.claim-role { font-family: var(--font-mono); font-size: 0.6875rem; color: var(--ink-3); }
+.claim-rationale { font-size: 0.9375rem; line-height: 1.55; color: var(--ink); }
+.citations { display: flex; flex-direction: column; gap: var(--sp-02); }
+.citation {
+  display: flex;
+  gap: var(--sp-04);
+  align-items: baseline;
+  flex-wrap: wrap;
+  padding-top: var(--sp-02);
+  border-top: var(--rule);
+}
+.citation-ref { font-family: var(--font-mono); font-size: 0.75rem; color: var(--ink); overflow-wrap: anywhere; }
+.obligation {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  padding: 0.1em 0.45em;
+  background: var(--good-soft);
+  color: var(--good);
+  white-space: nowrap;
+}
+.obligation.is-drift { background: var(--warn-soft); color: var(--warn); }
+.obligation.is-rejected { background: var(--fail-soft); color: var(--fail); }
+
+/* ============================ rejections ============================= */
+.claim-counts {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-top: 2px solid var(--ink);
+  border-bottom: var(--rule);
+}
+.claim-count {
+  padding: var(--sp-05) var(--sp-05) var(--sp-05) 0;
+  border-left: var(--rule);
+  padding-left: var(--sp-05);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-02);
+  min-width: 0;
+}
+.claim-count:first-child { border-left: 0; padding-left: 0; }
+.claim-count .metric-value { font-size: 1.75rem; }
+.by-role { font-family: var(--font-mono); font-size: 0.75rem; color: var(--ink-3); }
+.rejections { display: flex; flex-direction: column; }
+.rejection {
+  border-bottom: var(--rule);
+  padding: var(--sp-04) 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-02);
+  min-width: 0;
+}
+.rejection-head { display: flex; gap: var(--sp-04); align-items: baseline; flex-wrap: wrap; }
+.rejection-role { font-family: var(--font-mono); font-size: 0.6875rem; color: var(--ink-3); }
+.rejection-gate { color: var(--fail); }
+.rejection-detail { font-size: 0.875rem; line-height: 1.55; color: var(--ink-2); }
+.rejection-ref { font-family: var(--font-mono); font-size: 0.6875rem; color: var(--ink-3); overflow-wrap: anywhere; }
+
+/* ============================== compare ============================== */
+.compare { width: 100%; border-collapse: collapse; text-align: left; }
+.compare th,
+.compare td {
+  padding: var(--sp-03) var(--sp-04);
+  border-bottom: var(--rule);
+  font-size: 0.8125rem;
+  line-height: 1.45;
+  vertical-align: top;
+}
+.compare thead th { border-bottom: 2px solid var(--ink); padding-top: var(--sp-04); }
+.compare tbody th { font-weight: 600; white-space: nowrap; }
+.compare td { color: var(--ink-2); }
+.compare-us { background: var(--panel); }
+.compare-us th, .compare-us td { color: var(--ink); }
+.mark {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.mark-yes { color: var(--good); }
+.mark-no { color: var(--ink-3); }
+.compare-note {
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  color: var(--ink-2);
+  max-width: var(--measure);
+  padding: var(--sp-05);
+  background: var(--panel);
+  border-left: 2px solid var(--ink);
+}
+
+/* ============================== pipeline ============================= */
+.pipeline { display: flex; flex-direction: column; counter-reset: step; }
+.step {
+  display: grid;
+  grid-template-columns: 5.5rem 1fr;
+  gap: var(--sp-04);
+  align-items: baseline;
+  padding: var(--sp-04) 0;
+  border-bottom: var(--rule);
+  min-width: 0;
+}
+.step-kind {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.step-name { font-size: 0.9375rem; line-height: 1.5; color: var(--ink-2); }
+.step-det .step-kind { color: var(--ink-3); }
+.step-ai .step-kind { color: var(--rust); }
+.step-kernel { background: var(--accent-soft); padding-left: var(--sp-04); padding-right: var(--sp-04); }
+.step-kernel .step-kind { color: var(--accent); }
+.step-kernel .step-name { color: var(--ink); }
+.step-int .step-kind { color: var(--fail); }
+.step-int .step-name { color: var(--ink); }
+.pipeline-note {
+  font-size: 0.8125rem;
+  line-height: 1.55;
+  color: var(--ink-2);
+  max-width: var(--measure);
+  padding-bottom: var(--sp-05);
+}
+
+/* ============================= provenance ============================ */
+.provenance {
+  margin-top: var(--sp-10);
+  padding-top: var(--sp-06);
+  border-top: 2px solid var(--ink);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-03);
+}
+.provenance-row { display: flex; gap: var(--sp-04); align-items: baseline; min-width: 0; }
+.provenance-row .label { flex: none; min-width: 9rem; }
+.provenance-row span:last-child,
+.provenance-row code {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--ink-2);
+  overflow-wrap: anywhere;
+}
+.provenance-note {
+  margin-top: var(--sp-05);
+  font-size: 0.75rem;
+  line-height: 1.6;
+  color: var(--ink-3);
+  max-width: var(--measure);
+}
+.provenance-note code { font-size: 0.6875rem; background: var(--panel-2); padding: 0.1em 0.3em; }
+
+.empty-state {
+  font-size: 0.875rem;
+  color: var(--ink-3);
+  padding: var(--sp-06) 0;
+  max-width: var(--measure);
+}
+
+/* ============================== responsive ============================ */
+@media (max-width: 70rem) {
+  .metrics { grid-template-columns: repeat(3, 1fr); }
+  .metric:nth-child(4) { border-left: 0; padding-left: 0; }
+  .metric:nth-child(n + 4) { border-top: var(--rule); }
+}
+
+@media (max-width: 56rem) {
+  .app { padding: 0 var(--sp-05) var(--sp-10); }
+  h1 { font-size: 2.125rem; }
+  h2 { font-size: 1.5rem; }
+  .hero { padding: var(--sp-08) 0 var(--sp-09); gap: var(--sp-06); }
+  .chapter { padding: var(--sp-09) 0; }
+  .facts { grid-template-columns: 1fr 1fr; }
+  .fact:nth-child(3) { border-left: 0; padding-left: 0; }
+  .fact:nth-child(n + 3) { border-top: var(--rule); }
+  .fact-num { font-size: 2rem; }
+  .codepair { grid-template-columns: 1fr; }
+  .fact-pairs { grid-template-columns: 1fr; gap: var(--sp-04); }
+  .metrics { grid-template-columns: 1fr 1fr; }
+  .metric:nth-child(odd) { border-left: 0; padding-left: 0; }
+  .metric:nth-child(n + 3) { border-top: var(--rule); }
+  .metric-value { font-size: 1.75rem; }
+  .claim-counts { grid-template-columns: 1fr 1fr; }
+  .claim-count:nth-child(odd) { border-left: 0; padding-left: 0; }
+  .claim-count:nth-child(n + 3) { border-top: var(--rule); }
+  .priority li { grid-template-columns: 2rem 6.5rem 1fr; }
+  .step { grid-template-columns: 4.5rem 1fr; }
+  .provenance-row { flex-direction: column; gap: 2px; }
+  .provenance-row .label { min-width: 0; }
+}
+
+/* ================================ print ============================== */
+@media print {
+  .app { max-width: none; padding: 0; }
+  body { font-size: 10pt; }
+  .loading, .spinner, .disclosure > summary::before, .row-toggle { display: none !important; }
+  .chapter { break-inside: avoid; }
+  .table-scroll { overflow: visible; }
+  .codepane pre { background: #fff; color: #000; border: 1px solid #999; }
+  .kw, .fn, .str, .num, .com, .hl-added { color: #000; }
+  .hl-line { background: #eee; box-shadow: none; }
+}
