@@ -1,0 +1,69 @@
+diff --git a/app/services/cache_service.py b/app/services/cache_service.py
+index 147a02f..93fdb67 100644
+--- a/app/services/cache_service.py
++++ b/app/services/cache_service.py
+@@ -39,7 +39,7 @@ class CacheService:
+         key = truncate(str(key), 64)
+         if len(self._entries) >= max_entries():
+             self.evict_expired(now_ms())
+-        entry = f"{value['id']}|{value['status']}|{value['amount']}"
++        entry = json.dumps(value, sort_keys=True)
+         self._backend.set(self._storage_key(key), entry)
+         self._entries[key] = dict(value)
+         record("cache.write")
+@@ -76,7 +76,7 @@ class CacheService:
+ 
+     def _should_drop(self, value: Dict[str, Any], moment: int) -> bool:
+         """Return True when an entry must be dropped at the given moment."""
+-        return is_expired(int(value.get("expires_at", 0)), moment)
++        return is_expired(int(value.get("expires_at", 0)), moment) or value.get("status") == "expired"
+ 
+     def evict_expired(self, now: Optional[int] = None) -> int:
+         """Drop expired entries and return how many were removed."""
+@@ -94,3 +94,8 @@ class CacheService:
+     def entry_count(self) -> int:
+         """Return the number of live entries."""
+         return len(self._entries)
++
++    def estimate_footprint(self, size_hint: int) -> int:
++        """Return the estimated footprint in bytes for a size hint."""
++        require(size_hint >= 0, "size_hint must not be negative")
++        return size_hint * 64 + 128
+diff --git a/app/workers/report_worker.py b/app/workers/report_worker.py
+index 954cac7..801eb62 100644
+--- a/app/workers/report_worker.py
++++ b/app/workers/report_worker.py
+@@ -4,6 +4,7 @@ The report worker reads the cache file directly and deliberately does not
+ import the cache service: it runs as a separate process with a read-only
+ view of the cache.
+ """
++import json
+ from typing import Any, Dict, List, Optional
+ 
+ from app.models import CacheEntry, Report
+@@ -15,12 +16,22 @@ STATUS_UNKNOWN = "unknown"
+ def parse_recent_cache_entries(raw_line: str) -> Optional[Dict[str, Any]]:
+     """Parse one serialised cache entry.
+ 
+-    The cache stores every entry as pipe-delimited text, so the three leading
+-    fields are id, status and amount in that order.
++    The cache stores entry objects as JSON text; the legacy pipe-delimited
++    layout is still accepted for files written by older releases.
+     """
+     if not raw_line or not raw_line.strip():
+         return None
+-    parts = raw_line.strip().split("|")
++    text = raw_line.strip()
++    try:
++        parsed = json.loads(text)
++    except (TypeError, ValueError):
++        parsed = None
++    if isinstance(parsed, dict):
++        try:
++            return {"id": int(parsed["id"]), "status": str(parsed["status"]), "amount": int(parsed["amount"])}
++        except (KeyError, TypeError, ValueError):
++            return None
++    parts = text.split("|")
+     if len(parts) < 3:
+         return None
+     try:

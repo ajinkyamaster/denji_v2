@@ -1,0 +1,35 @@
+{
+  "bundle_digest": "05fb290a5f87ce1d5389b6e6d64c659e5ffbcbbbb109cbcac8d184dd0b101b59",
+  "claims": [
+    {
+      "citations": [
+        {
+          "line": 20,
+          "path": "app/services/cache_service.py",
+          "symbol": "_should_drop"
+        },
+        {
+          "line": 24,
+          "path": "tests/test_cache_service.py",
+          "symbol": "test_evict_expired_removes_overdue_entries"
+        }
+      ],
+      "claim_type": "test",
+      "confidence": "med",
+      "rationale": "Pin the behaviour the diff added to _should_drop: an entry marked expired is dropped.",
+      "role": "author",
+      "targets": {
+        "capability": "PINS",
+        "patch": "bob_session/roles/patches/author_should_drop.patch",
+        "symbol": "app.services.cache_service._should_drop",
+        "test_file": "tests/test_cache_service.py",
+        "test_name": "test_evict_expired_drops_status_expired"
+      }
+    }
+  ],
+  "coins": 8,
+  "model": "recorded:code-tier",
+  "prompt_version": "v2.0.0",
+  "recorded_at": "2026-09-26T00:00:00Z",
+  "role": "author"
+}

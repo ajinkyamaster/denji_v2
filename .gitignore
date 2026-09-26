@@ -1,6 +1,19 @@
+<<<<<<< HEAD
 # Python bytecode caches
 __pycache__/
 *.py[cod]
 
 # Tool-local state (untracked by choice; remove this line if the team wants it versioned)
 .freebuff/
+=======
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+.coverage
+coverage.json
+junit_*.xml
+tmp/
+sandbox/
+demo/var/
+>>>>>>> origin/saurabh

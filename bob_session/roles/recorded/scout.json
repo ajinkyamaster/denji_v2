@@ -1,0 +1,61 @@
+{
+  "model": "recorded:fast-tier",
+  "coins": 6,
+  "recorded_at": "2026-09-26T00:00:00Z",
+  "claims": [
+    {
+      "claim_type": "link_exists",
+      "role": "scout",
+      "targets": {
+        "test_id": "T-0342",
+        "test_node": "tests/test_report_worker.py::test_cache_roundtrip_contract",
+        "declared_module": "app.workers.legacy_adapter",
+        "producer": "app.services.cache_service.write_cache_entry",
+        "consumer": "app.workers.report_worker.parse_recent_cache_entries",
+        "asserts": "link_exists"
+      },
+      "citations": [
+        {"path": "tests/test_report_worker.py", "symbol": "test_cache_roundtrip_contract", "line": 9},
+        {"path": "app/workers/report_worker.py", "symbol": "parse_recent_cache_entries", "line": 16}
+      ],
+      "confidence": "high",
+      "rationale": "T-0342 writes through the changed producer and parses the result with the coupled consumer."
+    },
+    {
+      "claim_type": "link_exists",
+      "role": "scout",
+      "targets": {
+        "test_id": "T-0343",
+        "test_node": "tests/test_report_worker.py::test_summary_counts_contract",
+        "declared_module": "app.workers.report_worker",
+        "producer": "app.services.cache_service.write_cache_entry",
+        "consumer": "app.workers.report_worker.parse_recent_cache_entries",
+        "asserts": "no_link"
+      },
+      "citations": [
+        {"path": "tests/test_report_worker.py", "symbol": "test_summary_counts_contract", "line": 19},
+        {"path": "app/workers/report_worker.py", "symbol": "parse_recent_cache_entries", "line": 16}
+      ],
+      "confidence": "low",
+      "rationale": "Candidate: the report worker's own tests are untouched by the change, so they need no link."
+    },
+    {
+      "claim_type": "link_exists",
+      "role": "scout",
+      "targets": {
+        "test_id": "T-0344",
+        "test_node": "tests/test_report_worker.py::test_amount_totals_contract",
+        "declared_module": "app.workers.report_worker",
+        "producer": "app.services.cache_service.write_cache_entry",
+        "consumer": "app.workers.report_worker.parse_recent_cache_entries_v2",
+        "asserts": "link_exists"
+      },
+      "citations": [
+        {"path": "tests/test_report_worker.py", "symbol": "test_amount_totals_contract", "line": 29},
+        {"path": "app/workers/report_worker.py", "symbol": "parse_recent_cache_entries_v2", "line": 16}
+      ],
+      "confidence": "med",
+      "rationale": "Second parse site proposed for the same consumer module."
+    }
+  ]
+}

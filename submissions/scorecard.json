@@ -1,0 +1,163 @@
+{
+  "elapsed_seconds": 53.6,
+  "failed": 0,
+  "generated_at_note": "the timestamp is omitted on purpose: the scorecard is a function of the repository",
+  "generated_by": "bob_session/reliability_check.py",
+  "passed": 17,
+  "rows": [
+    {
+      "claim": "the necessity control: fixing the consumer removes the coupling edge",
+      "expectation": "0 coupling links, 0 semantically affected, hero not selected",
+      "fail_evidence": "baseline change: 7 semantically linked; with the consumer fixed: 1 coupling link(s), 7 semantically affected, 41 structural (the consumer file itself changed), hero T-0342 selected=True, model layer warm-cache-replay",
+      "key": "C1",
+      "observed": "baseline change: 7 semantically linked; with the consumer fixed: 0 coupling link(s), 0 semantically affected, 46 structural (the consumer file itself changed), hero T-0342 selected=False, model layer model-unavailable",
+      "observed_fail": true,
+      "passed": true
+    },
+    {
+      "claim": "the sensitivity control: making the inert edit behavioural returns control tests",
+      "expectation": "the selection grows and billing tests return",
+      "fail_evidence": "inert reword: 46 selected, 0 billing tests; the same edit made behavioural: 66 selected, 20/20 billing tests return",
+      "key": "C2",
+      "observed": "inert reword: 46 selected, 0 billing tests; the same edit made behavioural: 66 selected, 20/20 billing tests return",
+      "observed_fail": true,
+      "passed": true
+    },
+    {
+      "claim": "the reachability control: a docs-only change selects nothing",
+      "expectation": "0 tests selected",
+      "fail_evidence": "docs-only diff selects 0 tests (expected 0), 0 model calls counted",
+      "key": "C3",
+      "observed": "docs-only diff selects 0 tests (expected 0), 0 model calls counted",
+      "observed_fail": true,
+      "passed": true
+    },
+    {
+      "claim": "the change patch reconstructs the target revision",
+      "expectation": "0 differing files",
+      "fail_evidence": "patch reconstruction: 3 file(s) differ between patched rev-a and rev-b",
+      "key": "C4",
+      "observed": "patch reconstruction: 0 file(s) differ between patched rev-a and rev-b",
+      "observed_fail": true,
+      "passed": true
+    },
+    {
+      "claim": "replay determinism: the artefact is a function of the kernel and the cache",
+      "expectation": "8 runs -> 1 digest in each configuration; warm vs cold differ, and the cache is why",
+      "fail_evidence": "warm: 1 digest; cold+disabled: 1 digest; disabled-only: 1 digest; warm vs cold with the layer enabled: accepted claim set differs=True, selection differs=True -> the CACHE is doing the work, by design",
+      "key": "R1",
+      "observed": "warm: 1 digest; cold+disabled: 1 digest; disabled-only: 1 digest; warm vs cold with the layer enabled: accepted claim set differs=True, selection differs=True -> the CACHE is doing the work, by design",
+      "observed_fail": true,
+      "passed": true
+    },
+    {
+      "claim": "monotonicity: the model layer can only add",
+      "expectation": "disabled selection is a subset of enabled and identical to a fresh baseline",
+      "fail_evidence": "disabled selection is a subset of enabled=False; the disabled run is byte-identical to a fresh baseline run=True (46 vs 48 entries)",
+      "key": "R2",
+      "observed": "disabled selection is a subset of enabled=True; the disabled run is byte-identical to a fresh baseline run=True (46 vs 48 entries)",
+      "observed_fail": true,
+      "passed": true
+    },
+    {
+      "claim": "kernel soundness: fabricated citations are rejected",
+      "expectation": "rejected with citation_invalid and symbol_mismatch",
+      "fail_evidence": "fabricated claims rejected with gates ['citation_invalid', 'symbol_mismatch'], accepted=0",
+      "key": "R3",
+      "observed": "fabricated claims rejected with gates ['citation_invalid', 'symbol_mismatch'], accepted=0",
+      "observed_fail": true,
+      "passed": true
+    },
+    {
+      "claim": "kernel non-vacuity: a valid claim is accepted, a plausible one is unconfirmed and included",
+      "expectation": "accepted T-0342; unconfirmed claim takes the safe direction",
+      "fail_evidence": "valid claim accepted: ['T-0342']; unverifiable-but-plausible claim: ['T-0346'] recorded as unconfirmed and INCLUDED by the safe direction=True",
+      "key": "R4",
+      "observed": "valid claim accepted: ['T-0342']; unverifiable-but-plausible claim: ['T-0346'] recorded as unconfirmed and INCLUDED by the safe direction=True",
+      "observed_fail": true,
+      "passed": true
+    },
+    {
+      "claim": "gate falsifiers: each of G1..G5 rejects a bad input",
+      "expectation": "G1..G5 each observed to fail; positive control accepted",
+      "fail_evidence": "positive control accepted=True; G1 rejects a non-parsing patch=True; G2 rejects a state-dependent test=True; G3 rejects an error-origin failure=True and a no-fire test=True; G4 rejects the weak assertion (strength 0.0 < 0.5)=True; G5 rejects an absent intent anchor=True",
+      "key": "R5",
+      "observed": "positive control accepted=True; G1 rejects a non-parsing patch=True; G2 rejects a state-dependent test=True; G3 rejects an error-origin failure=True and a no-fire test=True; G4 rejects the weak assertion (strength 0.0 < 0.5)=True; G5 rejects an absent intent anchor=True",
+      "observed_fail": true,
+      "passed": true
+    },
+    {
+      "claim": "oracle blindness regression: the instrument reports its own blindness",
+      "expectation": "default markers -> complete=false; all markers -> complete=true",
+      "fail_evidence": "under pytest.ini's default markers the oracle reports complete=False (deselected=4) and changed=0 (blind); with -m '' it reports complete=True and changed=3",
+      "key": "R6",
+      "observed": "under pytest.ini's default markers the oracle reports complete=False (deselected=4) and changed=0 (blind); with -m '' it reports complete=True and changed=3",
+      "observed_fail": true,
+      "passed": true
+    },
+    {
+      "claim": "no unsourced number: every figure in a document is sourced",
+      "expectation": "0 unsourced figures over the discovered scope",
+      "fail_evidence": "scanned 7 discovered document(s) [AGENTS.md, IBM_BOB_USAGE_STATEMENT.md, PROBLEM_SOLUTION_STATEMENT.md, README.md, VIDEO_STORYBOARD.md, submissions/_r7_probe.md, submissions/checklist.md]; 1 unsourced figure(s); evidence corpus holds 2056 distinct figure(s); first violation: submissions/_r7_probe.md: contains forbidden figure #1",
+      "key": "R7",
+      "observed": "scanned 6 discovered document(s) [AGENTS.md, IBM_BOB_USAGE_STATEMENT.md, PROBLEM_SOLUTION_STATEMENT.md, README.md, VIDEO_STORYBOARD.md, submissions/checklist.md]; 0 unsourced figure(s); evidence corpus holds 2056 distinct figure(s)",
+      "observed_fail": true,
+      "passed": true
+    },
+    {
+      "claim": "red triage in all three directions",
+      "expectation": "stale / flaky / regression",
+      "fail_evidence": "(a) a test asserting removed behaviour -> stale (fix the test); (b) a failure with no verified link -> flaky (quarantine); (c) the SAME failure once a link is verified -> regression \u2014 not written off as flaky",
+      "key": "R8",
+      "observed": "(a) a test asserting removed behaviour -> stale (fix the test); (b) a failure with no verified link -> flaky (quarantine); (c) the SAME failure once a link is verified -> regression \u2014 not written off as flaky",
+      "observed_fail": true,
+      "passed": true
+    },
+    {
+      "claim": "flakiness exclusion and lower-bound honesty",
+      "expectation": "flaky excluded and counted; pass-both not discriminating",
+      "fail_evidence": "discriminating=1, flaky_excluded_count=1 (count REPORTED), already_red=1; a test passing at BOTH revisions is not counted as discriminating (lower bound, disclosed)",
+      "key": "R9",
+      "observed": "discriminating=1, flaky_excluded_count=1 (count REPORTED), already_red=1; a test passing at BOTH revisions is not counted as discriminating (lower bound, disclosed)",
+      "observed_fail": true,
+      "passed": true
+    },
+    {
+      "claim": "degraded-run honesty with no model available",
+      "expectation": "artefact valid, coverage 0.0, selection == baseline",
+      "fail_evidence": "with no path to a model: artefact still schema-valid=True, model_coverage=0.0, status=model-unavailable, selection equals the deterministic baseline byte for byte=True",
+      "key": "R10",
+      "observed": "with no path to a model: artefact still schema-valid=True, model_coverage=0.0, status=model-unavailable, selection equals the deterministic baseline byte for byte=True",
+      "observed_fail": true,
+      "passed": true
+    },
+    {
+      "claim": "the committed artefact is schema-valid and satisfies its invariants",
+      "expectation": "0 schema errors, 0 invariant violations",
+      "fail_evidence": "schema valid=False; invariant violations=['I4: measurement.selected disagrees with summary.selected_for_run']",
+      "key": "S1",
+      "observed": "schema valid=True; invariant violations=none",
+      "observed_fail": true,
+      "passed": true
+    },
+    {
+      "claim": "both statements are within the 500-word limit",
+      "expectation": "counts <= 500",
+      "fail_evidence": "word counts {'IBM_BOB_USAGE_STATEMENT.md': 492, 'PROBLEM_SOLUTION_STATEMENT.md': 1732} (limit 500)",
+      "key": "S2",
+      "observed": "word counts {'IBM_BOB_USAGE_STATEMENT.md': 492, 'PROBLEM_SOLUTION_STATEMENT.md': 482} (limit 500)",
+      "observed_fail": true,
+      "passed": true
+    },
+    {
+      "claim": "no primacy claims in the submission documents",
+      "expectation": "no 'first ever' / 'nobody has' / 'no one has'",
+      "fail_evidence": "primacy-claim patterns present: [('_probe.md', 'primacy claim')]",
+      "key": "S3",
+      "observed": "primacy-claim patterns present: none",
+      "observed_fail": true,
+      "passed": true
+    }
+  ],
+  "total": 17
+}

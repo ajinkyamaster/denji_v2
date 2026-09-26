@@ -1,0 +1,10 @@
+diff --git a/README.md b/README.md
+index 3ae22e1..680baee 100644
+--- a/README.md
++++ b/README.md
+@@ -24,4 +24,4 @@ The default run excludes the cross-module contract tests and the
+ pre-existing failures marked `known_broken`; the release pipeline runs
+ everything with `-m ""`.
+ 
+-This service is the caches public API and nothing else imports it.
++This service is the cache's public API and nothing else imports it.

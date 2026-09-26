@@ -1,0 +1,188 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/testscope/testscope_report.schema.json",
+  "title": "TestScope ledger artefact v2",
+  "description": "v1's three keys keep their exact shape; the ledger, uncovered, claims, rejection_ledger, measurement, triage and priority_order keys are additive.",
+  "type": "object",
+  "required": [
+    "run_metadata",
+    "classification",
+    "ledger",
+    "uncovered",
+    "claims",
+    "rejection_ledger",
+    "measurement",
+    "triage",
+    "priority_order",
+    "summary"
+  ],
+  "properties": {
+    "run_metadata": {
+      "type": "object",
+      "required": ["schema_version", "diff_files", "total_tests_in_suite", "generated_at", "model_layer", "prompt_version", "coins_spent"],
+      "properties": {
+        "schema_version": {"type": "string"},
+        "diff_files": {"type": "array", "items": {"type": "string"}},
+        "total_tests_in_suite": {"type": "integer", "minimum": 0},
+        "generated_at": {"type": "string"},
+        "model_layer": {"enum": ["enabled", "disabled"]},
+        "prompt_version": {"type": "string"},
+        "coins_spent": {"type": "integer", "minimum": 0},
+        "model_status": {"type": "string"},
+        "model_coverage": {"type": "number", "minimum": 0, "maximum": 1}
+      }
+    },
+    "classification": {
+      "type": "object",
+      "required": ["definitely_affected", "semantically_affected", "not_affected"],
+      "properties": {
+        "definitely_affected": {"$ref": "#/$defs/classified_rows"},
+        "semantically_affected": {"$ref": "#/$defs/classified_rows"},
+        "not_affected": {"$ref": "#/$defs/classified_rows"}
+      }
+    },
+    "ledger": {
+      "type": "object",
+      "required": ["valid", "stale", "newly_relevant", "unknown"],
+      "properties": {
+        "valid": {"$ref": "#/$defs/ledger_rows"},
+        "stale": {"$ref": "#/$defs/ledger_rows"},
+        "newly_relevant": {"$ref": "#/$defs/ledger_rows"},
+        "unknown": {"$ref": "#/$defs/ledger_rows"}
+      }
+    },
+    "uncovered": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["symbol", "path", "line", "changed_lines", "has_any_test"],
+        "properties": {
+          "symbol": {"type": "string"},
+          "path": {"type": "string"},
+          "line": {"type": "integer"},
+          "changed_lines": {"type": "array", "items": {"type": "integer"}},
+          "has_any_test": {"type": "boolean"}
+        }
+      }
+    },
+    "claims": {
+      "type": "object",
+      "required": ["proposed", "accepted", "rejected", "by_role"],
+      "properties": {
+        "proposed": {"type": "integer", "minimum": 0},
+        "accepted": {"type": "integer", "minimum": 0},
+        "rejected": {"type": "integer", "minimum": 0},
+        "unconfirmed": {"type": "integer", "minimum": 0},
+        "by_role": {"type": "object"}
+      }
+    },
+    "rejection_ledger": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["role", "gate", "detail", "claim_ref"],
+        "properties": {
+          "role": {"type": "string"},
+          "gate": {"enum": ["citation_invalid", "symbol_mismatch", "contradicts_symbolic"]},
+          "detail": {"type": "string"},
+          "claim_ref": {"type": "string"}
+        }
+      }
+    },
+    "measurement": {
+      "type": "object",
+      "required": ["oracle", "selected", "structurally_reachable", "price_of_safety"],
+      "properties": {
+        "oracle": {
+          "type": "object",
+          "required": ["collected", "inventory_total", "complete"],
+          "properties": {
+            "collected": {"type": "integer", "minimum": 0},
+            "inventory_total": {"type": "integer", "minimum": 0},
+            "complete": {"type": "boolean"},
+            "missing": {"type": "array", "items": {"type": "string"}},
+            "unmapped": {"type": "array", "items": {"type": "string"}},
+            "already_red": {"type": "array", "items": {"type": "string"}},
+            "flaky_excluded": {"type": "array", "items": {"type": "string"}},
+            "flaky_excluded_count": {"type": "integer", "minimum": 0}
+          }
+        },
+        "truth_size": {"type": ["integer", "string", "null"]},
+        "selected": {"type": "integer", "minimum": 0},
+        "structurally_reachable": {"type": "integer", "minimum": 0},
+        "recall": {"type": ["number", "string", "null"]},
+        "missed": {"type": "array", "items": {"type": "string"}},
+        "price_of_safety": {"type": "integer"},
+        "model_layer_recall_delta": {"type": ["number", "null"]}
+      }
+    },
+    "triage": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["test_id", "diagnosis", "signal"],
+        "properties": {
+          "test_id": {"type": "string"},
+          "diagnosis": {"enum": ["regression", "stale", "flaky"]},
+          "signal": {"type": "string"}
+        }
+      }
+    },
+    "priority_order": {"type": "array", "items": {"type": "string"}},
+    "summary": {
+      "type": "object",
+      "required": [
+        "total",
+        "selected_for_run",
+        "definitely_affected_count",
+        "semantically_affected_count",
+        "reduction_pct",
+        "stale_count",
+        "uncovered_count",
+        "newly_relevant_count",
+        "valid_count"
+      ],
+      "properties": {
+        "total": {"type": "integer", "minimum": 0},
+        "selected_for_run": {"type": "integer", "minimum": 0},
+        "definitely_affected_count": {"type": "integer", "minimum": 0},
+        "semantically_affected_count": {"type": "integer", "minimum": 0},
+        "reduction_pct": {"type": "number"},
+        "stale_count": {"type": "integer", "minimum": 0},
+        "uncovered_count": {"type": "integer", "minimum": 0},
+        "newly_relevant_count": {"type": "integer", "minimum": 0},
+        "valid_count": {"type": "integer", "minimum": 0},
+        "unknown_count": {"type": "integer", "minimum": 0}
+      }
+    }
+  },
+  "$defs": {
+    "classified_rows": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["test_id", "test_name", "module", "reason", "explanation"],
+        "properties": {
+          "test_id": {"type": "string"},
+          "test_name": {"type": "string"},
+          "module": {"type": "string"},
+          "reason": {"type": "string"},
+          "explanation": {"type": "string"}
+        }
+      }
+    },
+    "ledger_rows": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["test_id", "why"],
+        "properties": {
+          "test_id": {"type": "string"},
+          "why": {"type": "string"},
+          "removed_behaviour": {"type": "string"},
+          "link_evidence": {"type": "array", "items": {"type": "string"}}
+        }
+      }
+    }
+  }
+}

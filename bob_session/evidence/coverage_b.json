@@ -1,0 +1,4633 @@
+{
+  "revision": "62ad0ccccc7d5064839c512b20d184bf58e62cac",
+  "tests": {
+    "T-0001": {
+      "lines": {
+        "app/config.py": [
+          16
+        ]
+      },
+      "node": "tests/test_config.py::test_default_cache_path_is_relative"
+    },
+    "T-0002": {
+      "lines": {
+        "app/config.py": [
+          31
+        ]
+      },
+      "node": "tests/test_config.py::test_service_name_uses_the_app_name"
+    },
+    "T-0003": {
+      "lines": {
+        "app/logging_setup.py": [
+          11,
+          12,
+          19,
+          20
+        ]
+      },
+      "node": "tests/test_logging_setup.py::test_get_logger_returns_a_logger"
+    },
+    "T-0004": {
+      "lines": {
+        "app/logging_setup.py": [
+          25
+        ]
+      },
+      "node": "tests/test_logging_setup.py::test_log_level_name_is_canonical"
+    },
+    "T-0005": {
+      "lines": {
+        "app/models.py": [
+          30,
+          31,
+          32,
+          33
+        ]
+      },
+      "node": "tests/test_models.py::test_report_add_folds_entries"
+    },
+    "T-0006": {
+      "lines": {
+        "app/models.py": [
+          17
+        ]
+      },
+      "node": "tests/test_models.py::test_entry_expiry_flag"
+    },
+    "T-0007": {
+      "lines": {
+        "app/storage/backends.py": [
+          13,
+          17,
+          19,
+          23
+        ]
+      },
+      "node": "tests/test_backends.py::test_set_get_roundtrip"
+    },
+    "T-0008": {
+      "lines": {
+        "app/storage/backends.py": [
+          13,
+          17,
+          19,
+          23,
+          27
+        ]
+      },
+      "node": "tests/test_backends.py::test_delete_reports_removal"
+    },
+    "T-0009": {
+      "lines": {
+        "app/telemetry.py": [
+          13,
+          14,
+          19,
+          24
+        ]
+      },
+      "node": "tests/test_telemetry.py::test_record_increments_counters"
+    },
+    "T-0010": {
+      "lines": {
+        "app/utils/hashing.py": [
+          7
+        ]
+      },
+      "node": "tests/test_hashing.py::test_sha256_matches_known_digest"
+    },
+    "T-0011": {
+      "lines": {
+        "app/utils/hashing.py": [
+          7,
+          19
+        ]
+      },
+      "node": "tests/test_hashing.py::test_hash_text_encodes_utf8"
+    },
+    "T-0012": {
+      "lines": {
+        "app/utils/hashing.py": [
+          7,
+          12,
+          14
+        ]
+      },
+      "node": "tests/test_hashing.py::test_short_hash_length"
+    },
+    "T-0013": {
+      "lines": {
+        "app/utils/hashing.py": [
+          7,
+          12,
+          14
+        ]
+      },
+      "node": "tests/test_hashing.py::test_short_hash_default_length"
+    },
+    "T-0014": {
+      "lines": {
+        "app/utils/hashing.py": [
+          12,
+          13
+        ]
+      },
+      "node": "tests/test_hashing.py::test_short_hash_rejects_zero_length"
+    },
+    "T-0015": {
+      "lines": {
+        "app/utils/hashing.py": [
+          7,
+          12,
+          14
+        ]
+      },
+      "node": "tests/test_hashing.py::test_short_hash_is_prefix_of_sha256"
+    },
+    "T-0016": {
+      "lines": {
+        "app/utils/hashing.py": [
+          7
+        ]
+      },
+      "node": "tests/test_hashing.py::test_sha256_is_stable_across_calls"
+    },
+    "T-0017": {
+      "lines": {
+        "app/utils/hashing.py": [
+          12,
+          13
+        ]
+      },
+      "node": "tests/test_hashing.py::test_short_hash_rejects_negative_length"
+    },
+    "T-0018": {
+      "lines": {
+        "app/utils/encoding.py": [
+          13,
+          18,
+          19,
+          20,
+          22
+        ],
+        "app/utils/hashing.py": [
+          7
+        ]
+      },
+      "node": "tests/test_encoding.py::test_encode_decode_roundtrip"
+    },
+    "T-0019": {
+      "lines": {
+        "app/utils/encoding.py": [
+          13
+        ],
+        "app/utils/hashing.py": [
+          7
+        ]
+      },
+      "node": "tests/test_encoding.py::test_encoded_form_has_hash_prefix"
+    },
+    "T-0020": {
+      "lines": {
+        "app/utils/encoding.py": [
+          18,
+          19,
+          20,
+          21
+        ],
+        "app/utils/hashing.py": [
+          7
+        ]
+      },
+      "node": "tests/test_encoding.py::test_corrupt_blob_is_rejected"
+    },
+    "T-0021": {
+      "lines": {
+        "app/utils/encoding.py": [
+          27,
+          28
+        ]
+      },
+      "node": "tests/test_encoding.py::test_unchecked_decode_skips_hash_check"
+    },
+    "T-0022": {
+      "lines": {
+        "app/utils/encoding.py": [
+          13,
+          18,
+          19,
+          20,
+          22
+        ],
+        "app/utils/hashing.py": [
+          7
+        ]
+      },
+      "node": "tests/test_encoding.py::test_empty_payload_roundtrip"
+    },
+    "T-0023": {
+      "lines": {
+        "app/utils/encoding.py": [
+          13
+        ],
+        "app/utils/hashing.py": [
+          7
+        ]
+      },
+      "node": "tests/test_encoding.py::test_encode_is_deterministic"
+    },
+    "T-0024": {
+      "lines": {
+        "app/utils/encoding.py": [
+          13
+        ],
+        "app/utils/hashing.py": [
+          7
+        ]
+      },
+      "node": "tests/test_encoding.py::test_encoded_is_ascii"
+    },
+    "T-0025": {
+      "lines": {
+        "app/utils/encoding.py": [
+          13
+        ],
+        "app/utils/hashing.py": [
+          7
+        ]
+      },
+      "node": "tests/test_encoding.py::test_prefix_is_64_hex_chars"
+    },
+    "T-0026": {
+      "lines": {
+        "app/utils/encoding.py": [
+          13,
+          18,
+          19,
+          20,
+          22
+        ],
+        "app/utils/hashing.py": [
+          7
+        ]
+      },
+      "node": "tests/test_encoding.py::test_binary_payload_roundtrip"
+    },
+    "T-0027": {
+      "lines": {
+        "app/utils/encoding.py": [
+          13
+        ],
+        "app/utils/hashing.py": [
+          7
+        ]
+      },
+      "node": "tests/test_encoding.py::test_encoded_length_grows_with_payload"
+    },
+    "T-0028": {
+      "lines": {
+        "app/utils/encoding.py": [
+          13,
+          18,
+          19,
+          20,
+          22
+        ],
+        "app/utils/hashing.py": [
+          7
+        ]
+      },
+      "node": "tests/test_encoding.py::test_manually_built_blob_decodes"
+    },
+    "T-0029": {
+      "lines": {
+        "app/utils/encoding.py": [
+          27,
+          28
+        ]
+      },
+      "node": "tests/test_encoding.py::test_unchecked_decode_of_empty_text"
+    },
+    "T-0030": {
+      "lines": {
+        "app/utils/encoding.py": [
+          13
+        ],
+        "app/utils/hashing.py": [
+          7
+        ]
+      },
+      "node": "tests/test_encoding.py::test_two_payloads_have_distinct_encodings"
+    },
+    "T-0031": {
+      "lines": {
+        "app/utils/encoding.py": [
+          27,
+          28
+        ]
+      },
+      "node": "tests/test_encoding.py::test_partition_ignores_extra_colons"
+    },
+    "T-0032": {
+      "lines": {
+        "app/utils/encoding.py": [
+          13
+        ],
+        "app/utils/hashing.py": [
+          7
+        ]
+      },
+      "node": "tests/test_encoding.py::test_encode_returns_text"
+    },
+    "T-0033": {
+      "lines": {
+        "app/utils/text.py": [
+          7,
+          8,
+          9,
+          10
+        ]
+      },
+      "node": "tests/test_text.py::test_slugify_collapses_separators"
+    },
+    "T-0034": {
+      "lines": {
+        "app/utils/timeutil.py": [
+          23,
+          24,
+          25
+        ]
+      },
+      "node": "tests/test_timeutil.py::test_expiry_semantics"
+    },
+    "T-0035": {
+      "lines": {
+        "app/config.py": [
+          21
+        ],
+        "app/services/cache_service.py": [
+          26,
+          27,
+          34,
+          38,
+          39,
+          40,
+          42,
+          43,
+          44,
+          45,
+          46
+        ],
+        "app/storage/backends.py": [
+          13,
+          17,
+          19
+        ],
+        "app/telemetry.py": [
+          13,
+          14
+        ],
+        "app/utils/encoding.py": [
+          13
+        ],
+        "app/utils/hashing.py": [
+          7
+        ],
+        "app/utils/text.py": [
+          7,
+          8,
+          10,
+          15,
+          17,
+          22
+        ],
+        "app/validators.py": [
+          11
+        ]
+      },
+      "node": "tests/test_cache_service.py::test_write_returns_serialised_text"
+    },
+    "T-0036": {
+      "lines": {
+        "app/config.py": [
+          21
+        ],
+        "app/services/cache_service.py": [
+          26,
+          27,
+          34,
+          38,
+          39,
+          40,
+          42,
+          43,
+          44,
+          45,
+          46,
+          50,
+          51,
+          54,
+          55,
+          59,
+          60,
+          63,
+          64
+        ],
+        "app/storage/backends.py": [
+          13,
+          17,
+          19,
+          23
+        ],
+        "app/telemetry.py": [
+          13,
+          14
+        ],
+        "app/utils/encoding.py": [
+          13
+        ],
+        "app/utils/hashing.py": [
+          7
+        ],
+        "app/utils/text.py": [
+          7,
+          8,
+          10,
+          15,
+          17,
+          22
+        ],
+        "app/validators.py": [
+          11
+        ]
+      },
+      "node": "tests/test_cache_service.py::test_read_returns_the_written_mapping"
+    },
+    "T-0037": {
+      "lines": {
+        "app/services/cache_service.py": [
+          26,
+          27,
+          34,
+          50,
+          51,
+          52,
+          53
+        ],
+        "app/storage/backends.py": [
+          13,
+          23
+        ],
+        "app/telemetry.py": [
+          13,
+          14
+        ],
+        "app/utils/encoding.py": [
+          13
+        ],
+        "app/utils/hashing.py": [
+          7
+        ],
+        "app/utils/text.py": [
+          7,
+          8,
+          10,
+          15,
+          17,
+          22
+        ]
+      },
+      "node": "tests/test_cache_service.py::test_read_missing_key_returns_none"
+    },
+    "T-0038": {
+      "lines": {
+        "app/config.py": [
+          21
+        ],
+        "app/services/cache_service.py": [
+          26,
+          27,
+          34,
+          38,
+          39,
+          40,
+          42,
+          43,
+          44,
+          45,
+          46,
+          79,
+          83,
+          84,
+          85,
+          86,
+          87,
+          88,
+          89,
+          90,
+          91,
+          92,
+          96
+        ],
+        "app/storage/backends.py": [
+          13,
+          17,
+          19,
+          27
+        ],
+        "app/telemetry.py": [
+          13,
+          14
+        ],
+        "app/utils/encoding.py": [
+          13
+        ],
+        "app/utils/hashing.py": [
+          7
+        ],
+        "app/utils/text.py": [
+          7,
+          8,
+          10,
+          15,
+          17,
+          22
+        ],
+        "app/utils/timeutil.py": [
+          23,
+          25
+        ],
+        "app/validators.py": [
+          11
+        ]
+      },
+      "node": "tests/test_cache_service.py::test_evict_expired_removes_overdue_entries"
+    },
+    "T-0039": {
+      "lines": {
+        "app/config.py": [
+          21
+        ],
+        "app/services/cache_service.py": [
+          26,
+          27,
+          34,
+          38,
+          39,
+          40,
+          42,
+          43,
+          44,
+          45,
+          46,
+          79,
+          83,
+          84,
+          85,
+          86,
+          87,
+          91,
+          92,
+          96
+        ],
+        "app/storage/backends.py": [
+          13,
+          17,
+          19
+        ],
+        "app/telemetry.py": [
+          13,
+          14
+        ],
+        "app/utils/encoding.py": [
+          13
+        ],
+        "app/utils/hashing.py": [
+          7
+        ],
+        "app/utils/text.py": [
+          7,
+          8,
+          10,
+          15,
+          17,
+          22
+        ],
+        "app/utils/timeutil.py": [
+          23,
+          25
+        ],
+        "app/validators.py": [
+          11
+        ]
+      },
+      "node": "tests/test_cache_service.py::test_evict_expired_keeps_live_entries"
+    },
+    "T-0040": {
+      "lines": {
+        "app/config.py": [
+          16
+        ],
+        "app/services/cache_service.py": [
+          26,
+          27,
+          31
+        ],
+        "app/storage/backends.py": [
+          13
+        ]
+      },
+      "node": "tests/test_cache_service.py::test_storage_path_is_configurable"
+    },
+    "T-0041": {
+      "lines": {
+        "app/validators.py": [
+          11,
+          12,
+          17,
+          19
+        ]
+      },
+      "node": "tests/test_validators.py::test_require_and_identifier"
+    },
+    "T-0042": {
+      "lines": {
+        "app/services/billing_service.py": [
+          13,
+          14,
+          15,
+          16,
+          17
+        ],
+        "app/telemetry.py": [
+          13,
+          14
+        ],
+        "app/validators.py": [
+          11
+        ]
+      },
+      "node": "tests/test_billing_service.py::test_settle_returns_receipt_fields"
+    },
+    "T-0043": {
+      "lines": {
+        "app/services/billing_service.py": [
+          13,
+          14,
+          15,
+          16,
+          17
+        ],
+        "app/telemetry.py": [
+          13,
+          14
+        ],
+        "app/validators.py": [
+          11
+        ]
+      },
+      "node": "tests/test_billing_service.py::test_settle_defaults_to_eur"
+    },
+    "T-0044": {
+      "lines": {
+        "app/services/billing_service.py": [
+          13,
+          14,
+          15,
+          16,
+          17
+        ],
+        "app/telemetry.py": [
+          13,
+          14
+        ],
+        "app/validators.py": [
+          11
+        ]
+      },
+      "node": "tests/test_billing_service.py::test_settle_accepts_usd"
+    },
+    "T-0045": {
+      "lines": {
+        "app/services/billing_service.py": [
+          13,
+          14,
+          15,
+          16,
+          17
+        ],
+        "app/telemetry.py": [
+          13,
+          14
+        ],
+        "app/validators.py": [
+          11
+        ]
+      },
+      "node": "tests/test_billing_service.py::test_settle_accepts_inr"
+    },
+    "T-0046": {
+      "lines": {
+        "app/services/billing_service.py": [
+          13
+        ],
+        "app/validators.py": [
+          11,
+          12
+        ]
+      },
+      "node": "tests/test_billing_service.py::test_settle_rejects_negative_amount"
+    },
+    "T-0047": {
+      "lines": {
+        "app/services/billing_service.py": [
+          13,
+          14
+        ],
+        "app/validators.py": [
+          11,
+          12
+        ]
+      },
+      "node": "tests/test_billing_service.py::test_settle_rejects_unknown_currency"
+    },
+    "T-0048": {
+      "lines": {
+        "app/services/billing_service.py": [
+          13,
+          14,
+          15,
+          16,
+          17
+        ],
+        "app/telemetry.py": [
+          13,
+          14
+        ],
+        "app/validators.py": [
+          11
+        ]
+      },
+      "node": "tests/test_billing_service.py::test_settle_allows_zero"
+    },
+    "T-0049": {
+      "lines": {
+        "app/services/billing_service.py": [
+          13,
+          14,
+          15,
+          16,
+          17
+        ],
+        "app/telemetry.py": [
+          13,
+          14
+        ],
+        "app/validators.py": [
+          11
+        ]
+      },
+      "node": "tests/test_billing_service.py::test_settle_is_deterministic"
+    },
+    "T-0050": {
+      "lines": {
+        "app/services/billing_service.py": [
+          13,
+          14,
+          15,
+          16,
+          17
+        ],
+        "app/telemetry.py": [
+          13,
+          14,
+          19,
+          24
+        ],
+        "app/validators.py": [
+          11
+        ]
+      },
+      "node": "tests/test_billing_service.py::test_settle_records_a_counter"
+    },
+    "T-0052": {
+      "lines": {
+        "app/services/billing_service.py": [
+          13,
+          14,
+          15,
+          16,
+          17,
+          22,
+          23,
+          24,
+          25
+        ],
+        "app/telemetry.py": [
+          13,
+          14
+        ],
+        "app/validators.py": [
+          11
+        ]
+      },
+      "node": "tests/test_billing_service.py::test_refund_returns_flag"
+    },
+    "T-0053": {
+      "lines": {
+        "app/services/billing_service.py": [
+          22,
+          23,
+          24,
+          25
+        ],
+        "app/telemetry.py": [
+          13,
+          14
+        ],
+        "app/validators.py": [
+          11
+        ]
+      },
+      "node": "tests/test_billing_service.py::test_refund_keeps_amount_and_currency"
+    },
+    "T-0054": {
+      "lines": {
+        "app/services/billing_service.py": [
+          22,
+          23
+        ],
+        "app/validators.py": [
+          11,
+          12
+        ]
+      },
+      "node": "tests/test_billing_service.py::test_refund_rejects_unsettled_receipt"
+    },
+    "T-0055": {
+      "lines": {
+        "app/services/billing_service.py": [
+          22
+        ],
+        "app/validators.py": [
+          11,
+          12
+        ]
+      },
+      "node": "tests/test_billing_service.py::test_refund_rejects_non_mapping"
+    },
+    "T-0056": {
+      "lines": {
+        "app/services/billing_service.py": [
+          22,
+          23,
+          24,
+          25
+        ],
+        "app/telemetry.py": [
+          13,
+          14
+        ],
+        "app/validators.py": [
+          11
+        ]
+      },
+      "node": "tests/test_billing_service.py::test_refund_does_not_mutate_receipt"
+    },
+    "T-0057": {
+      "lines": {
+        "app/services/billing_service.py": [
+          22,
+          23,
+          24,
+          25
+        ],
+        "app/telemetry.py": [
+          13,
+          14,
+          19,
+          24
+        ],
+        "app/validators.py": [
+          11
+        ]
+      },
+      "node": "tests/test_billing_service.py::test_refund_records_a_counter"
+    },
+    "T-0058": {
+      "lines": {
+        "app/services/billing_service.py": [
+          30,
+          31
+        ],
+        "app/validators.py": [
+          11
+        ]
+      },
+      "node": "tests/test_billing_service.py::test_net_amount_subtracts_fee"
+    },
+    "T-0059": {
+      "lines": {
+        "app/services/billing_service.py": [
+          30,
+          31
+        ],
+        "app/validators.py": [
+          11
+        ]
+      },
+      "node": "tests/test_billing_service.py::test_net_amount_default_fee_is_zero"
+    },
+    "T-0060": {
+      "lines": {
+        "app/services/billing_service.py": [
+          30,
+          31
+        ],
+        "app/validators.py": [
+          11
+        ]
+      },
+      "node": "tests/test_billing_service.py::test_net_amount_can_go_negative"
+    },
+    "T-0061": {
+      "lines": {
+        "app/services/billing_service.py": [
+          30
+        ],
+        "app/validators.py": [
+          11,
+          12
+        ]
+      },
+      "node": "tests/test_billing_service.py::test_net_amount_requires_mapping"
+    },
+    "T-0062": {
+      "lines": {
+        "app/services/order_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_order_service.py::test_order_service_case_00_describes_item"
+    },
+    "T-0063": {
+      "lines": {
+        "app/services/order_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_order_service.py::test_order_service_case_01_describe_is_text"
+    },
+    "T-0064": {
+      "lines": {
+        "app/services/order_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_order_service.py::test_order_service_case_02_describe_is_prefixed"
+    },
+    "T-0065": {
+      "lines": {
+        "app/services/order_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_order_service.py::test_order_service_case_03_describe_is_distinct"
+    },
+    "T-0066": {
+      "lines": {
+        "app/services/order_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_order_service.py::test_order_service_case_04_describe_has_length"
+    },
+    "T-0067": {
+      "lines": {
+        "app/services/order_service.py": [
+          14
+        ]
+      },
+      "node": "tests/test_order_service.py::test_order_service_case_05_counts_items"
+    },
+    "T-0068": {
+      "lines": {
+        "app/services/order_service.py": [
+          14
+        ]
+      },
+      "node": "tests/test_order_service.py::test_order_service_case_06_count_is_integer"
+    },
+    "T-0069": {
+      "lines": {
+        "app/services/order_service.py": [
+          19
+        ]
+      },
+      "node": "tests/test_order_service.py::test_order_service_case_07_revision_is_marked"
+    },
+    "T-0070": {
+      "lines": {
+        "app/services/order_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_order_service.py::test_order_service_case_08_describes_item"
+    },
+    "T-0071": {
+      "lines": {
+        "app/services/order_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_order_service.py::test_order_service_case_09_describe_is_text"
+    },
+    "T-0072": {
+      "lines": {
+        "app/services/order_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_order_service.py::test_order_service_case_10_describe_is_prefixed"
+    },
+    "T-0073": {
+      "lines": {
+        "app/services/order_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_order_service.py::test_order_service_case_11_describe_is_distinct"
+    },
+    "T-0074": {
+      "lines": {
+        "app/services/order_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_order_service.py::test_order_service_case_12_describe_has_length"
+    },
+    "T-0075": {
+      "lines": {
+        "app/services/order_service.py": [
+          14
+        ]
+      },
+      "node": "tests/test_order_service.py::test_order_service_case_13_counts_items"
+    },
+    "T-0076": {
+      "lines": {
+        "app/services/order_service.py": [
+          14
+        ]
+      },
+      "node": "tests/test_order_service.py::test_order_service_case_14_count_is_integer"
+    },
+    "T-0077": {
+      "lines": {
+        "app/services/order_service.py": [
+          19
+        ]
+      },
+      "node": "tests/test_order_service.py::test_order_service_case_15_revision_is_marked"
+    },
+    "T-0078": {
+      "lines": {
+        "app/services/order_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_order_service.py::test_order_service_case_16_describes_item"
+    },
+    "T-0079": {
+      "lines": {
+        "app/services/order_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_order_service.py::test_order_service_case_17_describe_is_text"
+    },
+    "T-0080": {
+      "lines": {
+        "app/services/order_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_order_service.py::test_order_service_case_18_describe_is_prefixed"
+    },
+    "T-0081": {
+      "lines": {
+        "app/services/order_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_order_service.py::test_order_service_case_19_describe_is_distinct"
+    },
+    "T-0082": {
+      "lines": {
+        "app/services/order_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_order_service.py::test_order_service_case_20_describe_has_length"
+    },
+    "T-0083": {
+      "lines": {
+        "app/services/order_service.py": [
+          14
+        ]
+      },
+      "node": "tests/test_order_service.py::test_order_service_case_21_counts_items"
+    },
+    "T-0084": {
+      "lines": {
+        "app/services/order_service.py": [
+          14
+        ]
+      },
+      "node": "tests/test_order_service.py::test_order_service_case_22_count_is_integer"
+    },
+    "T-0085": {
+      "lines": {
+        "app/services/order_service.py": [
+          19
+        ]
+      },
+      "node": "tests/test_order_service.py::test_order_service_case_23_revision_is_marked"
+    },
+    "T-0086": {
+      "lines": {
+        "app/services/order_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_order_service.py::test_order_service_case_24_describes_item"
+    },
+    "T-0087": {
+      "lines": {
+        "app/services/order_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_order_service.py::test_order_service_case_25_describe_is_text"
+    },
+    "T-0088": {
+      "lines": {
+        "app/services/order_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_order_service.py::test_order_service_case_26_describe_is_prefixed"
+    },
+    "T-0089": {
+      "lines": {
+        "app/services/order_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_order_service.py::test_order_service_case_27_describe_is_distinct"
+    },
+    "T-0090": {
+      "lines": {
+        "app/services/order_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_order_service.py::test_order_service_case_28_describe_has_length"
+    },
+    "T-0091": {
+      "lines": {
+        "app/services/order_service.py": [
+          14
+        ]
+      },
+      "node": "tests/test_order_service.py::test_order_service_case_29_counts_items"
+    },
+    "T-0092": {
+      "lines": {
+        "app/services/order_service.py": [
+          14
+        ]
+      },
+      "node": "tests/test_order_service.py::test_order_service_case_30_count_is_integer"
+    },
+    "T-0093": {
+      "lines": {
+        "app/services/order_service.py": [
+          19
+        ]
+      },
+      "node": "tests/test_order_service.py::test_order_service_case_31_revision_is_marked"
+    },
+    "T-0094": {
+      "lines": {
+        "app/services/order_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_order_service.py::test_order_service_case_32_describes_item"
+    },
+    "T-0095": {
+      "lines": {
+        "app/services/order_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_order_service.py::test_order_service_case_33_describe_is_text"
+    },
+    "T-0096": {
+      "lines": {
+        "app/services/order_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_order_service.py::test_order_service_case_34_describe_is_prefixed"
+    },
+    "T-0097": {
+      "lines": {
+        "app/services/order_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_order_service.py::test_order_service_case_35_describe_is_distinct"
+    },
+    "T-0098": {
+      "lines": {
+        "app/services/order_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_order_service.py::test_order_service_case_36_describe_has_length"
+    },
+    "T-0099": {
+      "lines": {
+        "app/services/order_service.py": [
+          14
+        ]
+      },
+      "node": "tests/test_order_service.py::test_order_service_case_37_counts_items"
+    },
+    "T-0100": {
+      "lines": {
+        "app/services/order_service.py": [
+          14
+        ]
+      },
+      "node": "tests/test_order_service.py::test_order_service_case_38_count_is_integer"
+    },
+    "T-0101": {
+      "lines": {
+        "app/services/order_service.py": [
+          19
+        ]
+      },
+      "node": "tests/test_order_service.py::test_order_service_case_39_revision_is_marked"
+    },
+    "T-0102": {
+      "lines": {
+        "app/services/order_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_order_service.py::test_order_service_case_40_describes_item"
+    },
+    "T-0103": {
+      "lines": {
+        "app/services/order_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_order_service.py::test_order_service_case_41_describe_is_text"
+    },
+    "T-0104": {
+      "lines": {
+        "app/services/order_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_order_service.py::test_order_service_case_42_describe_is_prefixed"
+    },
+    "T-0105": {
+      "lines": {
+        "app/services/order_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_order_service.py::test_order_service_case_43_describe_is_distinct"
+    },
+    "T-0106": {
+      "lines": {
+        "app/services/order_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_order_service.py::test_order_service_case_44_describe_has_length"
+    },
+    "T-0107": {
+      "lines": {
+        "app/services/order_service.py": [
+          14
+        ]
+      },
+      "node": "tests/test_order_service.py::test_order_service_case_45_counts_items"
+    },
+    "T-0108": {
+      "lines": {
+        "app/services/order_service.py": [
+          14
+        ]
+      },
+      "node": "tests/test_order_service.py::test_order_service_case_46_count_is_integer"
+    },
+    "T-0109": {
+      "lines": {
+        "app/services/order_service.py": [
+          19
+        ]
+      },
+      "node": "tests/test_order_service.py::test_order_service_case_47_revision_is_marked"
+    },
+    "T-0110": {
+      "lines": {
+        "app/services/order_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_order_service.py::test_order_service_case_48_describes_item"
+    },
+    "T-0111": {
+      "lines": {
+        "app/services/order_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_order_service.py::test_order_service_case_49_describe_is_text"
+    },
+    "T-0112": {
+      "lines": {
+        "app/services/order_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_order_service.py::test_order_service_case_50_describe_is_prefixed"
+    },
+    "T-0113": {
+      "lines": {
+        "app/services/order_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_order_service.py::test_order_service_case_51_describe_is_distinct"
+    },
+    "T-0114": {
+      "lines": {
+        "app/services/order_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_order_service.py::test_order_service_case_52_describe_has_length"
+    },
+    "T-0115": {
+      "lines": {
+        "app/services/order_service.py": [
+          14
+        ]
+      },
+      "node": "tests/test_order_service.py::test_order_service_case_53_counts_items"
+    },
+    "T-0116": {
+      "lines": {
+        "app/services/order_service.py": [
+          14
+        ]
+      },
+      "node": "tests/test_order_service.py::test_order_service_case_54_count_is_integer"
+    },
+    "T-0117": {
+      "lines": {
+        "app/services/order_service.py": [
+          19
+        ]
+      },
+      "node": "tests/test_order_service.py::test_order_service_case_55_revision_is_marked"
+    },
+    "T-0118": {
+      "lines": {
+        "app/services/order_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_order_service.py::test_order_service_case_56_describes_item"
+    },
+    "T-0119": {
+      "lines": {
+        "app/services/order_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_order_service.py::test_order_service_case_57_describe_is_text"
+    },
+    "T-0120": {
+      "lines": {
+        "app/services/order_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_order_service.py::test_order_service_case_58_describe_is_prefixed"
+    },
+    "T-0121": {
+      "lines": {
+        "app/services/order_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_order_service.py::test_order_service_case_59_describe_is_distinct"
+    },
+    "T-0122": {
+      "lines": {
+        "app/services/order_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_order_service.py::test_order_service_case_60_describe_has_length"
+    },
+    "T-0123": {
+      "lines": {
+        "app/services/order_service.py": [
+          14
+        ]
+      },
+      "node": "tests/test_order_service.py::test_order_service_case_61_counts_items"
+    },
+    "T-0124": {
+      "lines": {
+        "app/services/order_service.py": [
+          14
+        ]
+      },
+      "node": "tests/test_order_service.py::test_order_service_case_62_count_is_integer"
+    },
+    "T-0125": {
+      "lines": {
+        "app/services/order_service.py": [
+          19
+        ]
+      },
+      "node": "tests/test_order_service.py::test_order_service_case_63_revision_is_marked"
+    },
+    "T-0126": {
+      "lines": {
+        "app/services/order_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_order_service.py::test_order_service_case_64_describes_item"
+    },
+    "T-0127": {
+      "lines": {
+        "app/services/order_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_order_service.py::test_order_service_case_65_describe_is_text"
+    },
+    "T-0128": {
+      "lines": {
+        "app/services/order_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_order_service.py::test_order_service_case_66_describe_is_prefixed"
+    },
+    "T-0129": {
+      "lines": {
+        "app/services/order_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_order_service.py::test_order_service_case_67_describe_is_distinct"
+    },
+    "T-0130": {
+      "lines": {
+        "app/services/order_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_order_service.py::test_order_service_case_68_describe_has_length"
+    },
+    "T-0131": {
+      "lines": {
+        "app/services/order_service.py": [
+          14
+        ]
+      },
+      "node": "tests/test_order_service.py::test_order_service_case_69_counts_items"
+    },
+    "T-0132": {
+      "lines": {
+        "app/workers/legacy_adapter.py": [
+          9
+        ]
+      },
+      "node": "tests/test_legacy_adapter.py::test_legacy_adapter_case_00_describes_item"
+    },
+    "T-0133": {
+      "lines": {
+        "app/workers/legacy_adapter.py": [
+          9
+        ]
+      },
+      "node": "tests/test_legacy_adapter.py::test_legacy_adapter_case_01_describe_is_text"
+    },
+    "T-0134": {
+      "lines": {
+        "app/workers/legacy_adapter.py": [
+          9
+        ]
+      },
+      "node": "tests/test_legacy_adapter.py::test_legacy_adapter_case_02_describe_is_prefixed"
+    },
+    "T-0135": {
+      "lines": {
+        "app/workers/legacy_adapter.py": [
+          9
+        ]
+      },
+      "node": "tests/test_legacy_adapter.py::test_legacy_adapter_case_03_describe_is_distinct"
+    },
+    "T-0136": {
+      "lines": {
+        "app/workers/legacy_adapter.py": [
+          9
+        ]
+      },
+      "node": "tests/test_legacy_adapter.py::test_legacy_adapter_case_04_describe_has_length"
+    },
+    "T-0137": {
+      "lines": {
+        "app/workers/legacy_adapter.py": [
+          14
+        ]
+      },
+      "node": "tests/test_legacy_adapter.py::test_legacy_adapter_case_05_counts_items"
+    },
+    "T-0138": {
+      "lines": {
+        "app/workers/legacy_adapter.py": [
+          14
+        ]
+      },
+      "node": "tests/test_legacy_adapter.py::test_legacy_adapter_case_06_count_is_integer"
+    },
+    "T-0139": {
+      "lines": {
+        "app/workers/legacy_adapter.py": [
+          19
+        ]
+      },
+      "node": "tests/test_legacy_adapter.py::test_legacy_adapter_case_07_revision_is_marked"
+    },
+    "T-0140": {
+      "lines": {
+        "app/workers/legacy_adapter.py": [
+          9
+        ]
+      },
+      "node": "tests/test_legacy_adapter.py::test_legacy_adapter_case_08_describes_item"
+    },
+    "T-0141": {
+      "lines": {
+        "app/workers/legacy_adapter.py": [
+          9
+        ]
+      },
+      "node": "tests/test_legacy_adapter.py::test_legacy_adapter_case_09_describe_is_text"
+    },
+    "T-0142": {
+      "lines": {
+        "app/workers/legacy_adapter.py": [
+          9
+        ]
+      },
+      "node": "tests/test_legacy_adapter.py::test_legacy_adapter_case_10_describe_is_prefixed"
+    },
+    "T-0143": {
+      "lines": {
+        "app/workers/legacy_adapter.py": [
+          9
+        ]
+      },
+      "node": "tests/test_legacy_adapter.py::test_legacy_adapter_case_11_describe_is_distinct"
+    },
+    "T-0144": {
+      "lines": {
+        "app/workers/legacy_adapter.py": [
+          9
+        ]
+      },
+      "node": "tests/test_legacy_adapter.py::test_legacy_adapter_case_12_describe_has_length"
+    },
+    "T-0145": {
+      "lines": {
+        "app/workers/legacy_adapter.py": [
+          14
+        ]
+      },
+      "node": "tests/test_legacy_adapter.py::test_legacy_adapter_case_13_counts_items"
+    },
+    "T-0146": {
+      "lines": {
+        "app/services/user_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_user_service.py::test_user_service_case_00_describes_item"
+    },
+    "T-0147": {
+      "lines": {
+        "app/services/user_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_user_service.py::test_user_service_case_01_describe_is_text"
+    },
+    "T-0148": {
+      "lines": {
+        "app/services/user_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_user_service.py::test_user_service_case_02_describe_is_prefixed"
+    },
+    "T-0149": {
+      "lines": {
+        "app/services/user_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_user_service.py::test_user_service_case_03_describe_is_distinct"
+    },
+    "T-0150": {
+      "lines": {
+        "app/services/user_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_user_service.py::test_user_service_case_04_describe_has_length"
+    },
+    "T-0151": {
+      "lines": {
+        "app/services/user_service.py": [
+          14
+        ]
+      },
+      "node": "tests/test_user_service.py::test_user_service_case_05_counts_items"
+    },
+    "T-0152": {
+      "lines": {
+        "app/services/user_service.py": [
+          14
+        ]
+      },
+      "node": "tests/test_user_service.py::test_user_service_case_06_count_is_integer"
+    },
+    "T-0153": {
+      "lines": {
+        "app/services/user_service.py": [
+          19
+        ]
+      },
+      "node": "tests/test_user_service.py::test_user_service_case_07_revision_is_marked"
+    },
+    "T-0154": {
+      "lines": {
+        "app/services/user_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_user_service.py::test_user_service_case_08_describes_item"
+    },
+    "T-0155": {
+      "lines": {
+        "app/services/user_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_user_service.py::test_user_service_case_09_describe_is_text"
+    },
+    "T-0156": {
+      "lines": {
+        "app/services/user_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_user_service.py::test_user_service_case_10_describe_is_prefixed"
+    },
+    "T-0157": {
+      "lines": {
+        "app/services/user_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_user_service.py::test_user_service_case_11_describe_is_distinct"
+    },
+    "T-0158": {
+      "lines": {
+        "app/services/user_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_user_service.py::test_user_service_case_12_describe_has_length"
+    },
+    "T-0159": {
+      "lines": {
+        "app/services/user_service.py": [
+          14
+        ]
+      },
+      "node": "tests/test_user_service.py::test_user_service_case_13_counts_items"
+    },
+    "T-0160": {
+      "lines": {
+        "app/services/user_service.py": [
+          14
+        ]
+      },
+      "node": "tests/test_user_service.py::test_user_service_case_14_count_is_integer"
+    },
+    "T-0161": {
+      "lines": {
+        "app/services/user_service.py": [
+          19
+        ]
+      },
+      "node": "tests/test_user_service.py::test_user_service_case_15_revision_is_marked"
+    },
+    "T-0162": {
+      "lines": {
+        "app/services/user_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_user_service.py::test_user_service_case_16_describes_item"
+    },
+    "T-0163": {
+      "lines": {
+        "app/services/user_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_user_service.py::test_user_service_case_17_describe_is_text"
+    },
+    "T-0164": {
+      "lines": {
+        "app/services/user_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_user_service.py::test_user_service_case_18_describe_is_prefixed"
+    },
+    "T-0165": {
+      "lines": {
+        "app/services/user_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_user_service.py::test_user_service_case_19_describe_is_distinct"
+    },
+    "T-0166": {
+      "lines": {
+        "app/services/user_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_user_service.py::test_user_service_case_20_describe_has_length"
+    },
+    "T-0167": {
+      "lines": {
+        "app/services/user_service.py": [
+          14
+        ]
+      },
+      "node": "tests/test_user_service.py::test_user_service_case_21_counts_items"
+    },
+    "T-0168": {
+      "lines": {
+        "app/services/user_service.py": [
+          14
+        ]
+      },
+      "node": "tests/test_user_service.py::test_user_service_case_22_count_is_integer"
+    },
+    "T-0169": {
+      "lines": {
+        "app/services/user_service.py": [
+          19
+        ]
+      },
+      "node": "tests/test_user_service.py::test_user_service_case_23_revision_is_marked"
+    },
+    "T-0170": {
+      "lines": {
+        "app/services/user_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_user_service.py::test_user_service_case_24_describes_item"
+    },
+    "T-0171": {
+      "lines": {
+        "app/services/pricing_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_pricing_service.py::test_pricing_service_case_00_describes_item"
+    },
+    "T-0172": {
+      "lines": {
+        "app/services/pricing_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_pricing_service.py::test_pricing_service_case_01_describe_is_text"
+    },
+    "T-0173": {
+      "lines": {
+        "app/services/pricing_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_pricing_service.py::test_pricing_service_case_02_describe_is_prefixed"
+    },
+    "T-0174": {
+      "lines": {
+        "app/services/pricing_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_pricing_service.py::test_pricing_service_case_03_describe_is_distinct"
+    },
+    "T-0175": {
+      "lines": {
+        "app/services/pricing_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_pricing_service.py::test_pricing_service_case_04_describe_has_length"
+    },
+    "T-0176": {
+      "lines": {
+        "app/services/pricing_service.py": [
+          14
+        ]
+      },
+      "node": "tests/test_pricing_service.py::test_pricing_service_case_05_counts_items"
+    },
+    "T-0177": {
+      "lines": {
+        "app/services/pricing_service.py": [
+          14
+        ]
+      },
+      "node": "tests/test_pricing_service.py::test_pricing_service_case_06_count_is_integer"
+    },
+    "T-0178": {
+      "lines": {
+        "app/services/pricing_service.py": [
+          19
+        ]
+      },
+      "node": "tests/test_pricing_service.py::test_pricing_service_case_07_revision_is_marked"
+    },
+    "T-0179": {
+      "lines": {
+        "app/services/pricing_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_pricing_service.py::test_pricing_service_case_08_describes_item"
+    },
+    "T-0180": {
+      "lines": {
+        "app/services/pricing_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_pricing_service.py::test_pricing_service_case_09_describe_is_text"
+    },
+    "T-0181": {
+      "lines": {
+        "app/services/pricing_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_pricing_service.py::test_pricing_service_case_10_describe_is_prefixed"
+    },
+    "T-0182": {
+      "lines": {
+        "app/services/pricing_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_pricing_service.py::test_pricing_service_case_11_describe_is_distinct"
+    },
+    "T-0183": {
+      "lines": {
+        "app/services/pricing_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_pricing_service.py::test_pricing_service_case_12_describe_has_length"
+    },
+    "T-0184": {
+      "lines": {
+        "app/services/pricing_service.py": [
+          14
+        ]
+      },
+      "node": "tests/test_pricing_service.py::test_pricing_service_case_13_counts_items"
+    },
+    "T-0185": {
+      "lines": {
+        "app/services/pricing_service.py": [
+          14
+        ]
+      },
+      "node": "tests/test_pricing_service.py::test_pricing_service_case_14_count_is_integer"
+    },
+    "T-0186": {
+      "lines": {
+        "app/services/pricing_service.py": [
+          19
+        ]
+      },
+      "node": "tests/test_pricing_service.py::test_pricing_service_case_15_revision_is_marked"
+    },
+    "T-0187": {
+      "lines": {
+        "app/services/pricing_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_pricing_service.py::test_pricing_service_case_16_describes_item"
+    },
+    "T-0188": {
+      "lines": {
+        "app/services/pricing_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_pricing_service.py::test_pricing_service_case_17_describe_is_text"
+    },
+    "T-0189": {
+      "lines": {
+        "app/services/pricing_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_pricing_service.py::test_pricing_service_case_18_describe_is_prefixed"
+    },
+    "T-0190": {
+      "lines": {
+        "app/services/pricing_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_pricing_service.py::test_pricing_service_case_19_describe_is_distinct"
+    },
+    "T-0191": {
+      "lines": {
+        "app/services/pricing_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_pricing_service.py::test_pricing_service_case_20_describe_has_length"
+    },
+    "T-0192": {
+      "lines": {
+        "app/services/pricing_service.py": [
+          14
+        ]
+      },
+      "node": "tests/test_pricing_service.py::test_pricing_service_case_21_counts_items"
+    },
+    "T-0193": {
+      "lines": {
+        "app/services/pricing_service.py": [
+          14
+        ]
+      },
+      "node": "tests/test_pricing_service.py::test_pricing_service_case_22_count_is_integer"
+    },
+    "T-0194": {
+      "lines": {
+        "app/services/pricing_service.py": [
+          19
+        ]
+      },
+      "node": "tests/test_pricing_service.py::test_pricing_service_case_23_revision_is_marked"
+    },
+    "T-0195": {
+      "lines": {
+        "app/services/pricing_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_pricing_service.py::test_pricing_service_case_24_describes_item"
+    },
+    "T-0196": {
+      "lines": {
+        "app/services/notification_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_notification_service.py::test_notification_service_case_00_describes_item"
+    },
+    "T-0197": {
+      "lines": {
+        "app/services/notification_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_notification_service.py::test_notification_service_case_01_describe_is_text"
+    },
+    "T-0198": {
+      "lines": {
+        "app/services/notification_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_notification_service.py::test_notification_service_case_02_describe_is_prefixed"
+    },
+    "T-0199": {
+      "lines": {
+        "app/services/notification_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_notification_service.py::test_notification_service_case_03_describe_is_distinct"
+    },
+    "T-0200": {
+      "lines": {
+        "app/services/notification_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_notification_service.py::test_notification_service_case_04_describe_has_length"
+    },
+    "T-0201": {
+      "lines": {
+        "app/services/notification_service.py": [
+          14
+        ]
+      },
+      "node": "tests/test_notification_service.py::test_notification_service_case_05_counts_items"
+    },
+    "T-0202": {
+      "lines": {
+        "app/services/notification_service.py": [
+          14
+        ]
+      },
+      "node": "tests/test_notification_service.py::test_notification_service_case_06_count_is_integer"
+    },
+    "T-0203": {
+      "lines": {
+        "app/services/notification_service.py": [
+          19
+        ]
+      },
+      "node": "tests/test_notification_service.py::test_notification_service_case_07_revision_is_marked"
+    },
+    "T-0204": {
+      "lines": {
+        "app/services/notification_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_notification_service.py::test_notification_service_case_08_describes_item"
+    },
+    "T-0205": {
+      "lines": {
+        "app/services/notification_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_notification_service.py::test_notification_service_case_09_describe_is_text"
+    },
+    "T-0206": {
+      "lines": {
+        "app/services/notification_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_notification_service.py::test_notification_service_case_10_describe_is_prefixed"
+    },
+    "T-0207": {
+      "lines": {
+        "app/services/notification_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_notification_service.py::test_notification_service_case_11_describe_is_distinct"
+    },
+    "T-0208": {
+      "lines": {
+        "app/services/notification_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_notification_service.py::test_notification_service_case_12_describe_has_length"
+    },
+    "T-0209": {
+      "lines": {
+        "app/services/notification_service.py": [
+          14
+        ]
+      },
+      "node": "tests/test_notification_service.py::test_notification_service_case_13_counts_items"
+    },
+    "T-0210": {
+      "lines": {
+        "app/services/notification_service.py": [
+          14
+        ]
+      },
+      "node": "tests/test_notification_service.py::test_notification_service_case_14_count_is_integer"
+    },
+    "T-0211": {
+      "lines": {
+        "app/services/notification_service.py": [
+          19
+        ]
+      },
+      "node": "tests/test_notification_service.py::test_notification_service_case_15_revision_is_marked"
+    },
+    "T-0212": {
+      "lines": {
+        "app/services/notification_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_notification_service.py::test_notification_service_case_16_describes_item"
+    },
+    "T-0213": {
+      "lines": {
+        "app/services/notification_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_notification_service.py::test_notification_service_case_17_describe_is_text"
+    },
+    "T-0214": {
+      "lines": {
+        "app/services/notification_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_notification_service.py::test_notification_service_case_18_describe_is_prefixed"
+    },
+    "T-0215": {
+      "lines": {
+        "app/services/notification_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_notification_service.py::test_notification_service_case_19_describe_is_distinct"
+    },
+    "T-0216": {
+      "lines": {
+        "app/services/inventory_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_inventory_service.py::test_inventory_service_case_00_describes_item"
+    },
+    "T-0217": {
+      "lines": {
+        "app/services/inventory_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_inventory_service.py::test_inventory_service_case_01_describe_is_text"
+    },
+    "T-0218": {
+      "lines": {
+        "app/services/inventory_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_inventory_service.py::test_inventory_service_case_02_describe_is_prefixed"
+    },
+    "T-0219": {
+      "lines": {
+        "app/services/inventory_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_inventory_service.py::test_inventory_service_case_03_describe_is_distinct"
+    },
+    "T-0220": {
+      "lines": {
+        "app/services/inventory_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_inventory_service.py::test_inventory_service_case_04_describe_has_length"
+    },
+    "T-0221": {
+      "lines": {
+        "app/services/inventory_service.py": [
+          14
+        ]
+      },
+      "node": "tests/test_inventory_service.py::test_inventory_service_case_05_counts_items"
+    },
+    "T-0222": {
+      "lines": {
+        "app/services/inventory_service.py": [
+          14
+        ]
+      },
+      "node": "tests/test_inventory_service.py::test_inventory_service_case_06_count_is_integer"
+    },
+    "T-0223": {
+      "lines": {
+        "app/services/inventory_service.py": [
+          19
+        ]
+      },
+      "node": "tests/test_inventory_service.py::test_inventory_service_case_07_revision_is_marked"
+    },
+    "T-0224": {
+      "lines": {
+        "app/services/inventory_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_inventory_service.py::test_inventory_service_case_08_describes_item"
+    },
+    "T-0225": {
+      "lines": {
+        "app/services/inventory_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_inventory_service.py::test_inventory_service_case_09_describe_is_text"
+    },
+    "T-0226": {
+      "lines": {
+        "app/services/inventory_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_inventory_service.py::test_inventory_service_case_10_describe_is_prefixed"
+    },
+    "T-0227": {
+      "lines": {
+        "app/services/inventory_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_inventory_service.py::test_inventory_service_case_11_describe_is_distinct"
+    },
+    "T-0228": {
+      "lines": {
+        "app/services/inventory_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_inventory_service.py::test_inventory_service_case_12_describe_has_length"
+    },
+    "T-0229": {
+      "lines": {
+        "app/services/inventory_service.py": [
+          14
+        ]
+      },
+      "node": "tests/test_inventory_service.py::test_inventory_service_case_13_counts_items"
+    },
+    "T-0230": {
+      "lines": {
+        "app/services/inventory_service.py": [
+          14
+        ]
+      },
+      "node": "tests/test_inventory_service.py::test_inventory_service_case_14_count_is_integer"
+    },
+    "T-0231": {
+      "lines": {
+        "app/services/inventory_service.py": [
+          19
+        ]
+      },
+      "node": "tests/test_inventory_service.py::test_inventory_service_case_15_revision_is_marked"
+    },
+    "T-0232": {
+      "lines": {
+        "app/services/inventory_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_inventory_service.py::test_inventory_service_case_16_describes_item"
+    },
+    "T-0233": {
+      "lines": {
+        "app/services/inventory_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_inventory_service.py::test_inventory_service_case_17_describe_is_text"
+    },
+    "T-0234": {
+      "lines": {
+        "app/services/inventory_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_inventory_service.py::test_inventory_service_case_18_describe_is_prefixed"
+    },
+    "T-0235": {
+      "lines": {
+        "app/services/inventory_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_inventory_service.py::test_inventory_service_case_19_describe_is_distinct"
+    },
+    "T-0236": {
+      "lines": {
+        "app/workers/batch_worker.py": [
+          9
+        ]
+      },
+      "node": "tests/test_batch_worker.py::test_batch_worker_case_00_describes_item"
+    },
+    "T-0237": {
+      "lines": {
+        "app/workers/batch_worker.py": [
+          9
+        ]
+      },
+      "node": "tests/test_batch_worker.py::test_batch_worker_case_01_describe_is_text"
+    },
+    "T-0238": {
+      "lines": {
+        "app/workers/batch_worker.py": [
+          9
+        ]
+      },
+      "node": "tests/test_batch_worker.py::test_batch_worker_case_02_describe_is_prefixed"
+    },
+    "T-0239": {
+      "lines": {
+        "app/workers/batch_worker.py": [
+          9
+        ]
+      },
+      "node": "tests/test_batch_worker.py::test_batch_worker_case_03_describe_is_distinct"
+    },
+    "T-0240": {
+      "lines": {
+        "app/workers/batch_worker.py": [
+          9
+        ]
+      },
+      "node": "tests/test_batch_worker.py::test_batch_worker_case_04_describe_has_length"
+    },
+    "T-0241": {
+      "lines": {
+        "app/workers/batch_worker.py": [
+          14
+        ]
+      },
+      "node": "tests/test_batch_worker.py::test_batch_worker_case_05_counts_items"
+    },
+    "T-0242": {
+      "lines": {
+        "app/workers/batch_worker.py": [
+          14
+        ]
+      },
+      "node": "tests/test_batch_worker.py::test_batch_worker_case_06_count_is_integer"
+    },
+    "T-0243": {
+      "lines": {
+        "app/workers/batch_worker.py": [
+          19
+        ]
+      },
+      "node": "tests/test_batch_worker.py::test_batch_worker_case_07_revision_is_marked"
+    },
+    "T-0244": {
+      "lines": {
+        "app/workers/batch_worker.py": [
+          9
+        ]
+      },
+      "node": "tests/test_batch_worker.py::test_batch_worker_case_08_describes_item"
+    },
+    "T-0245": {
+      "lines": {
+        "app/workers/batch_worker.py": [
+          9
+        ]
+      },
+      "node": "tests/test_batch_worker.py::test_batch_worker_case_09_describe_is_text"
+    },
+    "T-0246": {
+      "lines": {
+        "app/workers/batch_worker.py": [
+          9
+        ]
+      },
+      "node": "tests/test_batch_worker.py::test_batch_worker_case_10_describe_is_prefixed"
+    },
+    "T-0247": {
+      "lines": {
+        "app/workers/batch_worker.py": [
+          9
+        ]
+      },
+      "node": "tests/test_batch_worker.py::test_batch_worker_case_11_describe_is_distinct"
+    },
+    "T-0248": {
+      "lines": {
+        "app/workers/batch_worker.py": [
+          9
+        ]
+      },
+      "node": "tests/test_batch_worker.py::test_batch_worker_case_12_describe_has_length"
+    },
+    "T-0249": {
+      "lines": {
+        "app/workers/batch_worker.py": [
+          14
+        ]
+      },
+      "node": "tests/test_batch_worker.py::test_batch_worker_case_13_counts_items"
+    },
+    "T-0250": {
+      "lines": {
+        "app/workers/batch_worker.py": [
+          14
+        ]
+      },
+      "node": "tests/test_batch_worker.py::test_batch_worker_case_14_count_is_integer"
+    },
+    "T-0251": {
+      "lines": {
+        "app/workers/batch_worker.py": [
+          19
+        ]
+      },
+      "node": "tests/test_batch_worker.py::test_batch_worker_case_15_revision_is_marked"
+    },
+    "T-0252": {
+      "lines": {
+        "app/workers/batch_worker.py": [
+          9
+        ]
+      },
+      "node": "tests/test_batch_worker.py::test_batch_worker_case_16_describes_item"
+    },
+    "T-0253": {
+      "lines": {
+        "app/workers/batch_worker.py": [
+          9
+        ]
+      },
+      "node": "tests/test_batch_worker.py::test_batch_worker_case_17_describe_is_text"
+    },
+    "T-0254": {
+      "lines": {
+        "app/workers/batch_worker.py": [
+          9
+        ]
+      },
+      "node": "tests/test_batch_worker.py::test_batch_worker_case_18_describe_is_prefixed"
+    },
+    "T-0255": {
+      "lines": {
+        "app/workers/batch_worker.py": [
+          9
+        ]
+      },
+      "node": "tests/test_batch_worker.py::test_batch_worker_case_19_describe_is_distinct"
+    },
+    "T-0256": {
+      "lines": {
+        "app/workers/batch_worker.py": [
+          9
+        ]
+      },
+      "node": "tests/test_batch_worker.py::test_batch_worker_case_20_describe_has_length"
+    },
+    "T-0257": {
+      "lines": {
+        "app/workers/batch_worker.py": [
+          14
+        ]
+      },
+      "node": "tests/test_batch_worker.py::test_batch_worker_case_21_counts_items"
+    },
+    "T-0258": {
+      "lines": {
+        "app/workers/sync_worker.py": [
+          9
+        ]
+      },
+      "node": "tests/test_sync_worker.py::test_sync_worker_case_00_describes_item"
+    },
+    "T-0259": {
+      "lines": {
+        "app/workers/sync_worker.py": [
+          9
+        ]
+      },
+      "node": "tests/test_sync_worker.py::test_sync_worker_case_01_describe_is_text"
+    },
+    "T-0260": {
+      "lines": {
+        "app/workers/sync_worker.py": [
+          9
+        ]
+      },
+      "node": "tests/test_sync_worker.py::test_sync_worker_case_02_describe_is_prefixed"
+    },
+    "T-0261": {
+      "lines": {
+        "app/workers/sync_worker.py": [
+          9
+        ]
+      },
+      "node": "tests/test_sync_worker.py::test_sync_worker_case_03_describe_is_distinct"
+    },
+    "T-0262": {
+      "lines": {
+        "app/workers/sync_worker.py": [
+          9
+        ]
+      },
+      "node": "tests/test_sync_worker.py::test_sync_worker_case_04_describe_has_length"
+    },
+    "T-0263": {
+      "lines": {
+        "app/workers/sync_worker.py": [
+          14
+        ]
+      },
+      "node": "tests/test_sync_worker.py::test_sync_worker_case_05_counts_items"
+    },
+    "T-0264": {
+      "lines": {
+        "app/workers/sync_worker.py": [
+          14
+        ]
+      },
+      "node": "tests/test_sync_worker.py::test_sync_worker_case_06_count_is_integer"
+    },
+    "T-0265": {
+      "lines": {
+        "app/workers/sync_worker.py": [
+          19
+        ]
+      },
+      "node": "tests/test_sync_worker.py::test_sync_worker_case_07_revision_is_marked"
+    },
+    "T-0266": {
+      "lines": {
+        "app/workers/sync_worker.py": [
+          9
+        ]
+      },
+      "node": "tests/test_sync_worker.py::test_sync_worker_case_08_describes_item"
+    },
+    "T-0267": {
+      "lines": {
+        "app/workers/sync_worker.py": [
+          9
+        ]
+      },
+      "node": "tests/test_sync_worker.py::test_sync_worker_case_09_describe_is_text"
+    },
+    "T-0268": {
+      "lines": {
+        "app/workers/sync_worker.py": [
+          9
+        ]
+      },
+      "node": "tests/test_sync_worker.py::test_sync_worker_case_10_describe_is_prefixed"
+    },
+    "T-0269": {
+      "lines": {
+        "app/workers/sync_worker.py": [
+          9
+        ]
+      },
+      "node": "tests/test_sync_worker.py::test_sync_worker_case_11_describe_is_distinct"
+    },
+    "T-0270": {
+      "lines": {
+        "app/workers/sync_worker.py": [
+          9
+        ]
+      },
+      "node": "tests/test_sync_worker.py::test_sync_worker_case_12_describe_has_length"
+    },
+    "T-0271": {
+      "lines": {
+        "app/workers/sync_worker.py": [
+          14
+        ]
+      },
+      "node": "tests/test_sync_worker.py::test_sync_worker_case_13_counts_items"
+    },
+    "T-0272": {
+      "lines": {
+        "app/workers/sync_worker.py": [
+          14
+        ]
+      },
+      "node": "tests/test_sync_worker.py::test_sync_worker_case_14_count_is_integer"
+    },
+    "T-0273": {
+      "lines": {
+        "app/workers/sync_worker.py": [
+          19
+        ]
+      },
+      "node": "tests/test_sync_worker.py::test_sync_worker_case_15_revision_is_marked"
+    },
+    "T-0274": {
+      "lines": {
+        "app/workers/sync_worker.py": [
+          9
+        ]
+      },
+      "node": "tests/test_sync_worker.py::test_sync_worker_case_16_describes_item"
+    },
+    "T-0275": {
+      "lines": {
+        "app/workers/sync_worker.py": [
+          9
+        ]
+      },
+      "node": "tests/test_sync_worker.py::test_sync_worker_case_17_describe_is_text"
+    },
+    "T-0276": {
+      "lines": {
+        "app/workers/sync_worker.py": [
+          9
+        ]
+      },
+      "node": "tests/test_sync_worker.py::test_sync_worker_case_18_describe_is_prefixed"
+    },
+    "T-0277": {
+      "lines": {
+        "app/workers/sync_worker.py": [
+          9
+        ]
+      },
+      "node": "tests/test_sync_worker.py::test_sync_worker_case_19_describe_is_distinct"
+    },
+    "T-0278": {
+      "lines": {
+        "app/workers/sync_worker.py": [
+          9
+        ]
+      },
+      "node": "tests/test_sync_worker.py::test_sync_worker_case_20_describe_has_length"
+    },
+    "T-0279": {
+      "lines": {
+        "app/workers/sync_worker.py": [
+          14
+        ]
+      },
+      "node": "tests/test_sync_worker.py::test_sync_worker_case_21_counts_items"
+    },
+    "T-0280": {
+      "lines": {
+        "app/workers/ingest_worker.py": [
+          9
+        ]
+      },
+      "node": "tests/test_ingest_worker.py::test_ingest_worker_case_00_describes_item"
+    },
+    "T-0281": {
+      "lines": {
+        "app/workers/ingest_worker.py": [
+          9
+        ]
+      },
+      "node": "tests/test_ingest_worker.py::test_ingest_worker_case_01_describe_is_text"
+    },
+    "T-0282": {
+      "lines": {
+        "app/workers/ingest_worker.py": [
+          9
+        ]
+      },
+      "node": "tests/test_ingest_worker.py::test_ingest_worker_case_02_describe_is_prefixed"
+    },
+    "T-0283": {
+      "lines": {
+        "app/workers/ingest_worker.py": [
+          9
+        ]
+      },
+      "node": "tests/test_ingest_worker.py::test_ingest_worker_case_03_describe_is_distinct"
+    },
+    "T-0284": {
+      "lines": {
+        "app/workers/ingest_worker.py": [
+          9
+        ]
+      },
+      "node": "tests/test_ingest_worker.py::test_ingest_worker_case_04_describe_has_length"
+    },
+    "T-0285": {
+      "lines": {
+        "app/workers/ingest_worker.py": [
+          14
+        ]
+      },
+      "node": "tests/test_ingest_worker.py::test_ingest_worker_case_05_counts_items"
+    },
+    "T-0286": {
+      "lines": {
+        "app/workers/ingest_worker.py": [
+          14
+        ]
+      },
+      "node": "tests/test_ingest_worker.py::test_ingest_worker_case_06_count_is_integer"
+    },
+    "T-0287": {
+      "lines": {
+        "app/workers/ingest_worker.py": [
+          19
+        ]
+      },
+      "node": "tests/test_ingest_worker.py::test_ingest_worker_case_07_revision_is_marked"
+    },
+    "T-0288": {
+      "lines": {
+        "app/workers/ingest_worker.py": [
+          9
+        ]
+      },
+      "node": "tests/test_ingest_worker.py::test_ingest_worker_case_08_describes_item"
+    },
+    "T-0289": {
+      "lines": {
+        "app/workers/ingest_worker.py": [
+          9
+        ]
+      },
+      "node": "tests/test_ingest_worker.py::test_ingest_worker_case_09_describe_is_text"
+    },
+    "T-0290": {
+      "lines": {
+        "app/workers/ingest_worker.py": [
+          9
+        ]
+      },
+      "node": "tests/test_ingest_worker.py::test_ingest_worker_case_10_describe_is_prefixed"
+    },
+    "T-0291": {
+      "lines": {
+        "app/workers/ingest_worker.py": [
+          9
+        ]
+      },
+      "node": "tests/test_ingest_worker.py::test_ingest_worker_case_11_describe_is_distinct"
+    },
+    "T-0292": {
+      "lines": {
+        "app/workers/ingest_worker.py": [
+          9
+        ]
+      },
+      "node": "tests/test_ingest_worker.py::test_ingest_worker_case_12_describe_has_length"
+    },
+    "T-0293": {
+      "lines": {
+        "app/workers/ingest_worker.py": [
+          14
+        ]
+      },
+      "node": "tests/test_ingest_worker.py::test_ingest_worker_case_13_counts_items"
+    },
+    "T-0294": {
+      "lines": {
+        "app/workers/ingest_worker.py": [
+          14
+        ]
+      },
+      "node": "tests/test_ingest_worker.py::test_ingest_worker_case_14_count_is_integer"
+    },
+    "T-0295": {
+      "lines": {
+        "app/workers/ingest_worker.py": [
+          19
+        ]
+      },
+      "node": "tests/test_ingest_worker.py::test_ingest_worker_case_15_revision_is_marked"
+    },
+    "T-0296": {
+      "lines": {
+        "app/workers/ingest_worker.py": [
+          9
+        ]
+      },
+      "node": "tests/test_ingest_worker.py::test_ingest_worker_case_16_describes_item"
+    },
+    "T-0297": {
+      "lines": {
+        "app/workers/ingest_worker.py": [
+          9
+        ]
+      },
+      "node": "tests/test_ingest_worker.py::test_ingest_worker_case_17_describe_is_text"
+    },
+    "T-0298": {
+      "lines": {
+        "app/workers/ingest_worker.py": [
+          9
+        ]
+      },
+      "node": "tests/test_ingest_worker.py::test_ingest_worker_case_18_describe_is_prefixed"
+    },
+    "T-0299": {
+      "lines": {
+        "app/workers/ingest_worker.py": [
+          9
+        ]
+      },
+      "node": "tests/test_ingest_worker.py::test_ingest_worker_case_19_describe_is_distinct"
+    },
+    "T-0300": {
+      "lines": {
+        "app/utils/formatting.py": [
+          9
+        ]
+      },
+      "node": "tests/test_formatting.py::test_formatting_case_00_describes_item"
+    },
+    "T-0301": {
+      "lines": {
+        "app/utils/formatting.py": [
+          9
+        ]
+      },
+      "node": "tests/test_formatting.py::test_formatting_case_01_describe_is_text"
+    },
+    "T-0302": {
+      "lines": {
+        "app/utils/formatting.py": [
+          9
+        ]
+      },
+      "node": "tests/test_formatting.py::test_formatting_case_02_describe_is_prefixed"
+    },
+    "T-0303": {
+      "lines": {
+        "app/utils/formatting.py": [
+          9
+        ]
+      },
+      "node": "tests/test_formatting.py::test_formatting_case_03_describe_is_distinct"
+    },
+    "T-0304": {
+      "lines": {
+        "app/utils/formatting.py": [
+          9
+        ]
+      },
+      "node": "tests/test_formatting.py::test_formatting_case_04_describe_has_length"
+    },
+    "T-0305": {
+      "lines": {
+        "app/utils/formatting.py": [
+          14
+        ]
+      },
+      "node": "tests/test_formatting.py::test_formatting_case_05_counts_items"
+    },
+    "T-0306": {
+      "lines": {
+        "app/utils/formatting.py": [
+          14
+        ]
+      },
+      "node": "tests/test_formatting.py::test_formatting_case_06_count_is_integer"
+    },
+    "T-0307": {
+      "lines": {
+        "app/utils/formatting.py": [
+          19
+        ]
+      },
+      "node": "tests/test_formatting.py::test_formatting_case_07_revision_is_marked"
+    },
+    "T-0308": {
+      "lines": {
+        "app/utils/formatting.py": [
+          9
+        ]
+      },
+      "node": "tests/test_formatting.py::test_formatting_case_08_describes_item"
+    },
+    "T-0309": {
+      "lines": {
+        "app/utils/formatting.py": [
+          9
+        ]
+      },
+      "node": "tests/test_formatting.py::test_formatting_case_09_describe_is_text"
+    },
+    "T-0310": {
+      "lines": {
+        "app/utils/formatting.py": [
+          9
+        ]
+      },
+      "node": "tests/test_formatting.py::test_formatting_case_10_describe_is_prefixed"
+    },
+    "T-0311": {
+      "lines": {
+        "app/utils/formatting.py": [
+          9
+        ]
+      },
+      "node": "tests/test_formatting.py::test_formatting_case_11_describe_is_distinct"
+    },
+    "T-0312": {
+      "lines": {
+        "app/utils/formatting.py": [
+          9
+        ]
+      },
+      "node": "tests/test_formatting.py::test_formatting_case_12_describe_has_length"
+    },
+    "T-0313": {
+      "lines": {
+        "app/utils/formatting.py": [
+          14
+        ]
+      },
+      "node": "tests/test_formatting.py::test_formatting_case_13_counts_items"
+    },
+    "T-0314": {
+      "lines": {
+        "app/utils/formatting.py": [
+          14
+        ]
+      },
+      "node": "tests/test_formatting.py::test_formatting_case_14_count_is_integer"
+    },
+    "T-0315": {
+      "lines": {
+        "app/utils/formatting.py": [
+          19
+        ]
+      },
+      "node": "tests/test_formatting.py::test_formatting_case_15_revision_is_marked"
+    },
+    "T-0316": {
+      "lines": {
+        "app/utils/formatting.py": [
+          9
+        ]
+      },
+      "node": "tests/test_formatting.py::test_formatting_case_16_describes_item"
+    },
+    "T-0317": {
+      "lines": {
+        "app/utils/formatting.py": [
+          9
+        ]
+      },
+      "node": "tests/test_formatting.py::test_formatting_case_17_describe_is_text"
+    },
+    "T-0318": {
+      "lines": {
+        "app/utils/formatting.py": [
+          9
+        ]
+      },
+      "node": "tests/test_formatting.py::test_formatting_case_18_describe_is_prefixed"
+    },
+    "T-0319": {
+      "lines": {
+        "app/utils/formatting.py": [
+          9
+        ]
+      },
+      "node": "tests/test_formatting.py::test_formatting_case_19_describe_is_distinct"
+    },
+    "T-0320": {
+      "lines": {
+        "app/utils/formatting.py": [
+          9
+        ]
+      },
+      "node": "tests/test_formatting.py::test_formatting_case_20_describe_has_length"
+    },
+    "T-0321": {
+      "lines": {
+        "app/utils/formatting.py": [
+          14
+        ]
+      },
+      "node": "tests/test_formatting.py::test_formatting_case_21_counts_items"
+    },
+    "T-0322": {
+      "lines": {
+        "app/utils/metrics.py": [
+          9
+        ]
+      },
+      "node": "tests/test_metrics.py::test_metrics_case_00_describes_item"
+    },
+    "T-0323": {
+      "lines": {
+        "app/utils/metrics.py": [
+          9
+        ]
+      },
+      "node": "tests/test_metrics.py::test_metrics_case_01_describe_is_text"
+    },
+    "T-0324": {
+      "lines": {
+        "app/utils/metrics.py": [
+          9
+        ]
+      },
+      "node": "tests/test_metrics.py::test_metrics_case_02_describe_is_prefixed"
+    },
+    "T-0325": {
+      "lines": {
+        "app/utils/metrics.py": [
+          9
+        ]
+      },
+      "node": "tests/test_metrics.py::test_metrics_case_03_describe_is_distinct"
+    },
+    "T-0326": {
+      "lines": {
+        "app/utils/metrics.py": [
+          9
+        ]
+      },
+      "node": "tests/test_metrics.py::test_metrics_case_04_describe_has_length"
+    },
+    "T-0327": {
+      "lines": {
+        "app/utils/metrics.py": [
+          14
+        ]
+      },
+      "node": "tests/test_metrics.py::test_metrics_case_05_counts_items"
+    },
+    "T-0328": {
+      "lines": {
+        "app/utils/metrics.py": [
+          14
+        ]
+      },
+      "node": "tests/test_metrics.py::test_metrics_case_06_count_is_integer"
+    },
+    "T-0329": {
+      "lines": {
+        "app/utils/metrics.py": [
+          19
+        ]
+      },
+      "node": "tests/test_metrics.py::test_metrics_case_07_revision_is_marked"
+    },
+    "T-0330": {
+      "lines": {
+        "app/utils/metrics.py": [
+          9
+        ]
+      },
+      "node": "tests/test_metrics.py::test_metrics_case_08_describes_item"
+    },
+    "T-0331": {
+      "lines": {
+        "app/utils/metrics.py": [
+          9
+        ]
+      },
+      "node": "tests/test_metrics.py::test_metrics_case_09_describe_is_text"
+    },
+    "T-0332": {
+      "lines": {
+        "app/utils/metrics.py": [
+          9
+        ]
+      },
+      "node": "tests/test_metrics.py::test_metrics_case_10_describe_is_prefixed"
+    },
+    "T-0333": {
+      "lines": {
+        "app/utils/metrics.py": [
+          9
+        ]
+      },
+      "node": "tests/test_metrics.py::test_metrics_case_11_describe_is_distinct"
+    },
+    "T-0334": {
+      "lines": {
+        "app/utils/metrics.py": [
+          9
+        ]
+      },
+      "node": "tests/test_metrics.py::test_metrics_case_12_describe_has_length"
+    },
+    "T-0335": {
+      "lines": {
+        "app/utils/metrics.py": [
+          14
+        ]
+      },
+      "node": "tests/test_metrics.py::test_metrics_case_13_counts_items"
+    },
+    "T-0336": {
+      "lines": {
+        "app/utils/metrics.py": [
+          14
+        ]
+      },
+      "node": "tests/test_metrics.py::test_metrics_case_14_count_is_integer"
+    },
+    "T-0337": {
+      "lines": {
+        "app/utils/metrics.py": [
+          19
+        ]
+      },
+      "node": "tests/test_metrics.py::test_metrics_case_15_revision_is_marked"
+    },
+    "T-0338": {
+      "lines": {
+        "app/utils/metrics.py": [
+          9
+        ]
+      },
+      "node": "tests/test_metrics.py::test_metrics_case_16_describes_item"
+    },
+    "T-0339": {
+      "lines": {
+        "app/utils/metrics.py": [
+          9
+        ]
+      },
+      "node": "tests/test_metrics.py::test_metrics_case_17_describe_is_text"
+    },
+    "T-0340": {
+      "lines": {
+        "app/utils/metrics.py": [
+          9
+        ]
+      },
+      "node": "tests/test_metrics.py::test_metrics_case_18_describe_is_prefixed"
+    },
+    "T-0341": {
+      "lines": {
+        "app/workers/report_worker.py": [
+          21,
+          23,
+          24,
+          26,
+          27
+        ]
+      },
+      "node": "tests/test_ops_smoke.py::test_ops_smoke_parses_cache_dump"
+    },
+    "T-0342": {
+      "lines": {
+        "app/config.py": [
+          21
+        ],
+        "app/services/cache_service.py": [
+          26,
+          27,
+          34,
+          38,
+          39,
+          40,
+          42,
+          43,
+          44,
+          45,
+          46
+        ],
+        "app/storage/backends.py": [
+          13,
+          17,
+          19
+        ],
+        "app/telemetry.py": [
+          13,
+          14
+        ],
+        "app/utils/encoding.py": [
+          13
+        ],
+        "app/utils/hashing.py": [
+          7
+        ],
+        "app/utils/text.py": [
+          7,
+          8,
+          10,
+          15,
+          17,
+          22
+        ],
+        "app/validators.py": [
+          11
+        ],
+        "app/workers/report_worker.py": [
+          21,
+          23,
+          24,
+          25
+        ]
+      },
+      "node": "tests/test_report_worker.py::test_cache_roundtrip_contract"
+    },
+    "T-0343": {
+      "lines": {
+        "app/config.py": [
+          21
+        ],
+        "app/services/cache_service.py": [
+          26,
+          27,
+          34,
+          38,
+          39,
+          40,
+          42,
+          43,
+          44,
+          45,
+          46
+        ],
+        "app/storage/backends.py": [
+          13,
+          17,
+          19
+        ],
+        "app/telemetry.py": [
+          13,
+          14
+        ],
+        "app/utils/encoding.py": [
+          13
+        ],
+        "app/utils/hashing.py": [
+          7
+        ],
+        "app/utils/text.py": [
+          7,
+          8,
+          10,
+          15,
+          17,
+          22
+        ],
+        "app/validators.py": [
+          11
+        ],
+        "app/workers/report_worker.py": [
+          21,
+          23,
+          24,
+          25,
+          34,
+          35,
+          36,
+          37,
+          38,
+          45,
+          46
+        ]
+      },
+      "node": "tests/test_report_worker.py::test_summary_counts_contract"
+    },
+    "T-0344": {
+      "lines": {
+        "app/config.py": [
+          21
+        ],
+        "app/services/cache_service.py": [
+          26,
+          27,
+          34,
+          38,
+          39,
+          40,
+          42,
+          43,
+          44,
+          45,
+          46
+        ],
+        "app/storage/backends.py": [
+          13,
+          17,
+          19
+        ],
+        "app/telemetry.py": [
+          13,
+          14
+        ],
+        "app/utils/encoding.py": [
+          13
+        ],
+        "app/utils/hashing.py": [
+          7
+        ],
+        "app/utils/text.py": [
+          7,
+          8,
+          10,
+          15,
+          17,
+          22
+        ],
+        "app/validators.py": [
+          11
+        ],
+        "app/workers/report_worker.py": [
+          21,
+          23,
+          24,
+          25,
+          34,
+          35,
+          36,
+          37,
+          38,
+          45,
+          46
+        ]
+      },
+      "node": "tests/test_report_worker.py::test_amount_totals_contract"
+    },
+    "T-0345": {
+      "lines": {
+        "app/workers/report_worker.py": [
+          21,
+          23,
+          24,
+          26,
+          27
+        ]
+      },
+      "node": "tests/test_report_worker.py::test_parses_legacy_pipe_payload"
+    },
+    "T-0346": {
+      "lines": {
+        "app/workers/report_worker.py": [
+          21,
+          22
+        ]
+      },
+      "node": "tests/test_report_worker.py::test_skips_blank_lines"
+    },
+    "T-0347": {
+      "lines": {
+        "app/workers/report_worker.py": [
+          21,
+          23,
+          24,
+          26,
+          27
+        ]
+      },
+      "node": "tests/test_report_worker.py::test_legacy_field_order"
+    },
+    "T-0348": {
+      "lines": {
+        "app/utils/paginate.py": [
+          9
+        ]
+      },
+      "node": "tests/test_paginate.py::test_paginate_case_00_describes_item"
+    },
+    "T-0349": {
+      "lines": {
+        "app/utils/paginate.py": [
+          9
+        ]
+      },
+      "node": "tests/test_paginate.py::test_paginate_case_01_describe_is_text"
+    },
+    "T-0350": {
+      "lines": {
+        "app/utils/paginate.py": [
+          9
+        ]
+      },
+      "node": "tests/test_paginate.py::test_paginate_case_02_describe_is_prefixed"
+    },
+    "T-0351": {
+      "lines": {
+        "app/utils/paginate.py": [
+          9
+        ]
+      },
+      "node": "tests/test_paginate.py::test_paginate_case_03_describe_is_distinct"
+    },
+    "T-0352": {
+      "lines": {
+        "app/utils/paginate.py": [
+          9
+        ]
+      },
+      "node": "tests/test_paginate.py::test_paginate_case_04_describe_has_length"
+    },
+    "T-0353": {
+      "lines": {
+        "app/utils/paginate.py": [
+          14
+        ]
+      },
+      "node": "tests/test_paginate.py::test_paginate_case_05_counts_items"
+    },
+    "T-0354": {
+      "lines": {
+        "app/utils/paginate.py": [
+          14
+        ]
+      },
+      "node": "tests/test_paginate.py::test_paginate_case_06_count_is_integer"
+    },
+    "T-0355": {
+      "lines": {
+        "app/utils/paginate.py": [
+          19
+        ]
+      },
+      "node": "tests/test_paginate.py::test_paginate_case_07_revision_is_marked"
+    },
+    "T-0356": {
+      "lines": {
+        "app/utils/paginate.py": [
+          9
+        ]
+      },
+      "node": "tests/test_paginate.py::test_paginate_case_08_describes_item"
+    },
+    "T-0357": {
+      "lines": {
+        "app/utils/paginate.py": [
+          9
+        ]
+      },
+      "node": "tests/test_paginate.py::test_paginate_case_09_describe_is_text"
+    },
+    "T-0358": {
+      "lines": {
+        "app/utils/paginate.py": [
+          9
+        ]
+      },
+      "node": "tests/test_paginate.py::test_paginate_case_10_describe_is_prefixed"
+    },
+    "T-0359": {
+      "lines": {
+        "app/utils/paginate.py": [
+          9
+        ]
+      },
+      "node": "tests/test_paginate.py::test_paginate_case_11_describe_is_distinct"
+    },
+    "T-0360": {
+      "lines": {
+        "app/utils/paginate.py": [
+          9
+        ]
+      },
+      "node": "tests/test_paginate.py::test_paginate_case_12_describe_has_length"
+    },
+    "T-0361": {
+      "lines": {
+        "app/utils/paginate.py": [
+          14
+        ]
+      },
+      "node": "tests/test_paginate.py::test_paginate_case_13_counts_items"
+    },
+    "T-0362": {
+      "lines": {
+        "app/utils/paginate.py": [
+          14
+        ]
+      },
+      "node": "tests/test_paginate.py::test_paginate_case_14_count_is_integer"
+    },
+    "T-0363": {
+      "lines": {
+        "app/utils/paginate.py": [
+          19
+        ]
+      },
+      "node": "tests/test_paginate.py::test_paginate_case_15_revision_is_marked"
+    },
+    "T-0364": {
+      "lines": {
+        "app/utils/paginate.py": [
+          9
+        ]
+      },
+      "node": "tests/test_paginate.py::test_paginate_case_16_describes_item"
+    },
+    "T-0365": {
+      "lines": {
+        "app/utils/paginate.py": [
+          9
+        ]
+      },
+      "node": "tests/test_paginate.py::test_paginate_case_17_describe_is_text"
+    },
+    "T-0366": {
+      "lines": {
+        "app/utils/paginate.py": [
+          9
+        ]
+      },
+      "node": "tests/test_paginate.py::test_paginate_case_18_describe_is_prefixed"
+    },
+    "T-0367": {
+      "lines": {
+        "app/utils/paginate.py": [
+          9
+        ]
+      },
+      "node": "tests/test_paginate.py::test_paginate_case_19_describe_is_distinct"
+    },
+    "T-0368": {
+      "lines": {
+        "app/api/handlers.py": [
+          9
+        ]
+      },
+      "node": "tests/test_handlers.py::test_handlers_case_00_describes_item"
+    },
+    "T-0369": {
+      "lines": {
+        "app/api/handlers.py": [
+          9
+        ]
+      },
+      "node": "tests/test_handlers.py::test_handlers_case_01_describe_is_text"
+    },
+    "T-0370": {
+      "lines": {
+        "app/api/handlers.py": [
+          9
+        ]
+      },
+      "node": "tests/test_handlers.py::test_handlers_case_02_describe_is_prefixed"
+    },
+    "T-0371": {
+      "lines": {
+        "app/api/handlers.py": [
+          9
+        ]
+      },
+      "node": "tests/test_handlers.py::test_handlers_case_03_describe_is_distinct"
+    },
+    "T-0372": {
+      "lines": {
+        "app/api/handlers.py": [
+          9
+        ]
+      },
+      "node": "tests/test_handlers.py::test_handlers_case_04_describe_has_length"
+    },
+    "T-0373": {
+      "lines": {
+        "app/api/handlers.py": [
+          14
+        ]
+      },
+      "node": "tests/test_handlers.py::test_handlers_case_05_counts_items"
+    },
+    "T-0374": {
+      "lines": {
+        "app/api/handlers.py": [
+          14
+        ]
+      },
+      "node": "tests/test_handlers.py::test_handlers_case_06_count_is_integer"
+    },
+    "T-0375": {
+      "lines": {
+        "app/api/handlers.py": [
+          19
+        ]
+      },
+      "node": "tests/test_handlers.py::test_handlers_case_07_revision_is_marked"
+    },
+    "T-0376": {
+      "lines": {
+        "app/api/handlers.py": [
+          9
+        ]
+      },
+      "node": "tests/test_handlers.py::test_handlers_case_08_describes_item"
+    },
+    "T-0377": {
+      "lines": {
+        "app/api/handlers.py": [
+          9
+        ]
+      },
+      "node": "tests/test_handlers.py::test_handlers_case_09_describe_is_text"
+    },
+    "T-0378": {
+      "lines": {
+        "app/api/handlers.py": [
+          9
+        ]
+      },
+      "node": "tests/test_handlers.py::test_handlers_case_10_describe_is_prefixed"
+    },
+    "T-0379": {
+      "lines": {
+        "app/api/handlers.py": [
+          9
+        ]
+      },
+      "node": "tests/test_handlers.py::test_handlers_case_11_describe_is_distinct"
+    },
+    "T-0380": {
+      "lines": {
+        "app/api/handlers.py": [
+          9
+        ]
+      },
+      "node": "tests/test_handlers.py::test_handlers_case_12_describe_has_length"
+    },
+    "T-0381": {
+      "lines": {
+        "app/api/handlers.py": [
+          14
+        ]
+      },
+      "node": "tests/test_handlers.py::test_handlers_case_13_counts_items"
+    },
+    "T-0382": {
+      "lines": {
+        "app/api/handlers.py": [
+          14
+        ]
+      },
+      "node": "tests/test_handlers.py::test_handlers_case_14_count_is_integer"
+    },
+    "T-0383": {
+      "lines": {
+        "app/api/handlers.py": [
+          19
+        ]
+      },
+      "node": "tests/test_handlers.py::test_handlers_case_15_revision_is_marked"
+    },
+    "T-0384": {
+      "lines": {
+        "app/api/handlers.py": [
+          9
+        ]
+      },
+      "node": "tests/test_handlers.py::test_handlers_case_16_describes_item"
+    },
+    "T-0385": {
+      "lines": {
+        "app/api/handlers.py": [
+          9
+        ]
+      },
+      "node": "tests/test_handlers.py::test_handlers_case_17_describe_is_text"
+    },
+    "T-0386": {
+      "lines": {
+        "app/api/routes.py": [
+          9
+        ]
+      },
+      "node": "tests/test_routes.py::test_routes_case_00_describes_item"
+    },
+    "T-0387": {
+      "lines": {
+        "app/api/routes.py": [
+          9
+        ]
+      },
+      "node": "tests/test_routes.py::test_routes_case_01_describe_is_text"
+    },
+    "T-0388": {
+      "lines": {
+        "app/api/routes.py": [
+          9
+        ]
+      },
+      "node": "tests/test_routes.py::test_routes_case_02_describe_is_prefixed"
+    },
+    "T-0389": {
+      "lines": {
+        "app/api/routes.py": [
+          9
+        ]
+      },
+      "node": "tests/test_routes.py::test_routes_case_03_describe_is_distinct"
+    },
+    "T-0390": {
+      "lines": {
+        "app/api/routes.py": [
+          9
+        ]
+      },
+      "node": "tests/test_routes.py::test_routes_case_04_describe_has_length"
+    },
+    "T-0391": {
+      "lines": {
+        "app/api/routes.py": [
+          14
+        ]
+      },
+      "node": "tests/test_routes.py::test_routes_case_05_counts_items"
+    },
+    "T-0392": {
+      "lines": {
+        "app/api/routes.py": [
+          14
+        ]
+      },
+      "node": "tests/test_routes.py::test_routes_case_06_count_is_integer"
+    },
+    "T-0393": {
+      "lines": {
+        "app/api/routes.py": [
+          19
+        ]
+      },
+      "node": "tests/test_routes.py::test_routes_case_07_revision_is_marked"
+    },
+    "T-0394": {
+      "lines": {
+        "app/api/routes.py": [
+          9
+        ]
+      },
+      "node": "tests/test_routes.py::test_routes_case_08_describes_item"
+    },
+    "T-0395": {
+      "lines": {
+        "app/api/routes.py": [
+          9
+        ]
+      },
+      "node": "tests/test_routes.py::test_routes_case_09_describe_is_text"
+    },
+    "T-0396": {
+      "lines": {
+        "app/api/routes.py": [
+          9
+        ]
+      },
+      "node": "tests/test_routes.py::test_routes_case_10_describe_is_prefixed"
+    },
+    "T-0397": {
+      "lines": {
+        "app/api/routes.py": [
+          9
+        ]
+      },
+      "node": "tests/test_routes.py::test_routes_case_11_describe_is_distinct"
+    },
+    "T-0398": {
+      "lines": {
+        "app/clients/http_client.py": [
+          9
+        ]
+      },
+      "node": "tests/test_http_client.py::test_http_client_case_00_describes_item"
+    },
+    "T-0399": {
+      "lines": {
+        "app/clients/http_client.py": [
+          9
+        ]
+      },
+      "node": "tests/test_http_client.py::test_http_client_case_01_describe_is_text"
+    },
+    "T-0400": {
+      "lines": {
+        "app/clients/http_client.py": [
+          9
+        ]
+      },
+      "node": "tests/test_http_client.py::test_http_client_case_02_describe_is_prefixed"
+    },
+    "T-0401": {
+      "lines": {
+        "app/clients/http_client.py": [
+          9
+        ]
+      },
+      "node": "tests/test_http_client.py::test_http_client_case_03_describe_is_distinct"
+    },
+    "T-0402": {
+      "lines": {
+        "app/clients/http_client.py": [
+          9
+        ]
+      },
+      "node": "tests/test_http_client.py::test_http_client_case_04_describe_has_length"
+    },
+    "T-0403": {
+      "lines": {
+        "app/clients/http_client.py": [
+          14
+        ]
+      },
+      "node": "tests/test_http_client.py::test_http_client_case_05_counts_items"
+    },
+    "T-0404": {
+      "lines": {
+        "app/clients/http_client.py": [
+          14
+        ]
+      },
+      "node": "tests/test_http_client.py::test_http_client_case_06_count_is_integer"
+    },
+    "T-0405": {
+      "lines": {
+        "app/clients/http_client.py": [
+          19
+        ]
+      },
+      "node": "tests/test_http_client.py::test_http_client_case_07_revision_is_marked"
+    },
+    "T-0406": {
+      "lines": {
+        "app/clients/http_client.py": [
+          9
+        ]
+      },
+      "node": "tests/test_http_client.py::test_http_client_case_08_describes_item"
+    },
+    "T-0407": {
+      "lines": {
+        "app/clients/http_client.py": [
+          9
+        ]
+      },
+      "node": "tests/test_http_client.py::test_http_client_case_09_describe_is_text"
+    },
+    "T-0408": {
+      "lines": {
+        "app/clients/db_client.py": [
+          9
+        ]
+      },
+      "node": "tests/test_db_client.py::test_db_client_case_00_describes_item"
+    },
+    "T-0409": {
+      "lines": {
+        "app/clients/db_client.py": [
+          9
+        ]
+      },
+      "node": "tests/test_db_client.py::test_db_client_case_01_describe_is_text"
+    },
+    "T-0410": {
+      "lines": {
+        "app/clients/db_client.py": [
+          9
+        ]
+      },
+      "node": "tests/test_db_client.py::test_db_client_case_02_describe_is_prefixed"
+    },
+    "T-0411": {
+      "lines": {
+        "app/clients/db_client.py": [
+          9
+        ]
+      },
+      "node": "tests/test_db_client.py::test_db_client_case_03_describe_is_distinct"
+    },
+    "T-0412": {
+      "lines": {
+        "app/clients/db_client.py": [
+          9
+        ]
+      },
+      "node": "tests/test_db_client.py::test_db_client_case_04_describe_has_length"
+    },
+    "T-0413": {
+      "lines": {
+        "app/clients/db_client.py": [
+          14
+        ]
+      },
+      "node": "tests/test_db_client.py::test_db_client_case_05_counts_items"
+    },
+    "T-0414": {
+      "lines": {
+        "app/clients/db_client.py": [
+          14
+        ]
+      },
+      "node": "tests/test_db_client.py::test_db_client_case_06_count_is_integer"
+    },
+    "T-0415": {
+      "lines": {
+        "app/clients/db_client.py": [
+          19
+        ]
+      },
+      "node": "tests/test_db_client.py::test_db_client_case_07_revision_is_marked"
+    },
+    "T-0416": {
+      "lines": {
+        "app/clients/db_client.py": [
+          9
+        ]
+      },
+      "node": "tests/test_db_client.py::test_db_client_case_08_describes_item"
+    },
+    "T-0417": {
+      "lines": {
+        "app/clients/db_client.py": [
+          9
+        ]
+      },
+      "node": "tests/test_db_client.py::test_db_client_case_09_describe_is_text"
+    },
+    "T-0418": {
+      "lines": {
+        "app/services/audit_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_audit_service.py::test_audit_service_case_00_describes_item"
+    },
+    "T-0419": {
+      "lines": {
+        "app/services/audit_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_audit_service.py::test_audit_service_case_01_describe_is_text"
+    },
+    "T-0420": {
+      "lines": {
+        "app/services/audit_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_audit_service.py::test_audit_service_case_02_describe_is_prefixed"
+    },
+    "T-0421": {
+      "lines": {
+        "app/services/audit_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_audit_service.py::test_audit_service_case_03_describe_is_distinct"
+    },
+    "T-0422": {
+      "lines": {
+        "app/services/audit_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_audit_service.py::test_audit_service_case_04_describe_has_length"
+    },
+    "T-0423": {
+      "lines": {
+        "app/services/audit_service.py": [
+          14
+        ]
+      },
+      "node": "tests/test_audit_service.py::test_audit_service_case_05_counts_items"
+    },
+    "T-0424": {
+      "lines": {
+        "app/services/audit_service.py": [
+          14
+        ]
+      },
+      "node": "tests/test_audit_service.py::test_audit_service_case_06_count_is_integer"
+    },
+    "T-0425": {
+      "lines": {
+        "app/services/audit_service.py": [
+          19
+        ]
+      },
+      "node": "tests/test_audit_service.py::test_audit_service_case_07_revision_is_marked"
+    },
+    "T-0426": {
+      "lines": {
+        "app/workers/cleanup_worker.py": [
+          9
+        ]
+      },
+      "node": "tests/test_cleanup_worker.py::test_cleanup_worker_case_00_describes_item"
+    },
+    "T-0427": {
+      "lines": {
+        "app/workers/cleanup_worker.py": [
+          9
+        ]
+      },
+      "node": "tests/test_cleanup_worker.py::test_cleanup_worker_case_01_describe_is_text"
+    },
+    "T-0428": {
+      "lines": {
+        "app/workers/cleanup_worker.py": [
+          9
+        ]
+      },
+      "node": "tests/test_cleanup_worker.py::test_cleanup_worker_case_02_describe_is_prefixed"
+    },
+    "T-0429": {
+      "lines": {
+        "app/workers/cleanup_worker.py": [
+          9
+        ]
+      },
+      "node": "tests/test_cleanup_worker.py::test_cleanup_worker_case_03_describe_is_distinct"
+    },
+    "T-0430": {
+      "lines": {
+        "app/workers/cleanup_worker.py": [
+          9
+        ]
+      },
+      "node": "tests/test_cleanup_worker.py::test_cleanup_worker_case_04_describe_has_length"
+    },
+    "T-0431": {
+      "lines": {
+        "app/workers/cleanup_worker.py": [
+          14
+        ]
+      },
+      "node": "tests/test_cleanup_worker.py::test_cleanup_worker_case_05_counts_items"
+    },
+    "T-0432": {
+      "lines": {
+        "app/workers/cleanup_worker.py": [
+          14
+        ]
+      },
+      "node": "tests/test_cleanup_worker.py::test_cleanup_worker_case_06_count_is_integer"
+    },
+    "T-0433": {
+      "lines": {
+        "app/workers/cleanup_worker.py": [
+          19
+        ]
+      },
+      "node": "tests/test_cleanup_worker.py::test_cleanup_worker_case_07_revision_is_marked"
+    },
+    "T-0434": {
+      "lines": {
+        "app/utils/cron.py": [
+          9
+        ]
+      },
+      "node": "tests/test_cron.py::test_cron_case_00_describes_item"
+    },
+    "T-0435": {
+      "lines": {
+        "app/utils/cron.py": [
+          9
+        ]
+      },
+      "node": "tests/test_cron.py::test_cron_case_01_describe_is_text"
+    },
+    "T-0436": {
+      "lines": {
+        "app/utils/cron.py": [
+          9
+        ]
+      },
+      "node": "tests/test_cron.py::test_cron_case_02_describe_is_prefixed"
+    },
+    "T-0437": {
+      "lines": {
+        "app/utils/cron.py": [
+          9
+        ]
+      },
+      "node": "tests/test_cron.py::test_cron_case_03_describe_is_distinct"
+    },
+    "T-0438": {
+      "lines": {
+        "app/utils/cron.py": [
+          9
+        ]
+      },
+      "node": "tests/test_cron.py::test_cron_case_04_describe_has_length"
+    },
+    "T-0439": {
+      "lines": {
+        "app/utils/cron.py": [
+          14
+        ]
+      },
+      "node": "tests/test_cron.py::test_cron_case_05_counts_items"
+    },
+    "T-0440": {
+      "lines": {
+        "app/utils/cron.py": [
+          14
+        ]
+      },
+      "node": "tests/test_cron.py::test_cron_case_06_count_is_integer"
+    },
+    "T-0441": {
+      "lines": {
+        "app/utils/cron.py": [
+          19
+        ]
+      },
+      "node": "tests/test_cron.py::test_cron_case_07_revision_is_marked"
+    },
+    "T-0442": {
+      "lines": {
+        "app/utils/cron.py": [
+          9
+        ]
+      },
+      "node": "tests/test_cron.py::test_cron_case_08_describes_item"
+    },
+    "T-0443": {
+      "lines": {
+        "app/utils/cron.py": [
+          9
+        ]
+      },
+      "node": "tests/test_cron.py::test_cron_case_09_describe_is_text"
+    },
+    "T-0444": {
+      "lines": {
+        "app/utils/redaction.py": [
+          9
+        ]
+      },
+      "node": "tests/test_redaction.py::test_redaction_case_00_describes_item"
+    },
+    "T-0445": {
+      "lines": {
+        "app/utils/redaction.py": [
+          9
+        ]
+      },
+      "node": "tests/test_redaction.py::test_redaction_case_01_describe_is_text"
+    },
+    "T-0446": {
+      "lines": {
+        "app/utils/redaction.py": [
+          9
+        ]
+      },
+      "node": "tests/test_redaction.py::test_redaction_case_02_describe_is_prefixed"
+    },
+    "T-0447": {
+      "lines": {
+        "app/utils/redaction.py": [
+          9
+        ]
+      },
+      "node": "tests/test_redaction.py::test_redaction_case_03_describe_is_distinct"
+    },
+    "T-0448": {
+      "lines": {
+        "app/utils/redaction.py": [
+          9
+        ]
+      },
+      "node": "tests/test_redaction.py::test_redaction_case_04_describe_has_length"
+    },
+    "T-0449": {
+      "lines": {
+        "app/utils/redaction.py": [
+          14
+        ]
+      },
+      "node": "tests/test_redaction.py::test_redaction_case_05_counts_items"
+    },
+    "T-0450": {
+      "lines": {
+        "app/api/serializers.py": [
+          9
+        ]
+      },
+      "node": "tests/test_serializers.py::test_serializers_case_00_describes_item"
+    },
+    "T-0451": {
+      "lines": {
+        "app/api/serializers.py": [
+          9
+        ]
+      },
+      "node": "tests/test_serializers.py::test_serializers_case_01_describe_is_text"
+    },
+    "T-0452": {
+      "lines": {
+        "app/api/serializers.py": [
+          9
+        ]
+      },
+      "node": "tests/test_serializers.py::test_serializers_case_02_describe_is_prefixed"
+    },
+    "T-0453": {
+      "lines": {
+        "app/api/serializers.py": [
+          9
+        ]
+      },
+      "node": "tests/test_serializers.py::test_serializers_case_03_describe_is_distinct"
+    },
+    "T-0454": {
+      "lines": {
+        "app/api/serializers.py": [
+          9
+        ]
+      },
+      "node": "tests/test_serializers.py::test_serializers_case_04_describe_has_length"
+    },
+    "T-0455": {
+      "lines": {
+        "app/api/serializers.py": [
+          14
+        ]
+      },
+      "node": "tests/test_serializers.py::test_serializers_case_05_counts_items"
+    },
+    "T-0456": {
+      "lines": {
+        "app/api/serializers.py": [
+          14
+        ]
+      },
+      "node": "tests/test_serializers.py::test_serializers_case_06_count_is_integer"
+    },
+    "T-0457": {
+      "lines": {
+        "app/api/serializers.py": [
+          19
+        ]
+      },
+      "node": "tests/test_serializers.py::test_serializers_case_07_revision_is_marked"
+    },
+    "T-0458": {
+      "lines": {
+        "app/api/serializers.py": [
+          9
+        ]
+      },
+      "node": "tests/test_serializers.py::test_serializers_case_08_describes_item"
+    },
+    "T-0459": {
+      "lines": {
+        "app/api/serializers.py": [
+          9
+        ]
+      },
+      "node": "tests/test_serializers.py::test_serializers_case_09_describe_is_text"
+    },
+    "T-0460": {
+      "lines": {
+        "app/services/currency_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_currency_service.py::test_currency_service_case_00_describes_item"
+    },
+    "T-0461": {
+      "lines": {
+        "app/services/currency_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_currency_service.py::test_currency_service_case_01_describe_is_text"
+    },
+    "T-0462": {
+      "lines": {
+        "app/services/currency_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_currency_service.py::test_currency_service_case_02_describe_is_prefixed"
+    },
+    "T-0463": {
+      "lines": {
+        "app/services/currency_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_currency_service.py::test_currency_service_case_03_describe_is_distinct"
+    },
+    "T-0464": {
+      "lines": {
+        "app/services/currency_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_currency_service.py::test_currency_service_case_04_describe_has_length"
+    },
+    "T-0465": {
+      "lines": {
+        "app/services/currency_service.py": [
+          14
+        ]
+      },
+      "node": "tests/test_currency_service.py::test_currency_service_case_05_counts_items"
+    },
+    "T-0466": {
+      "lines": {
+        "app/services/currency_service.py": [
+          14
+        ]
+      },
+      "node": "tests/test_currency_service.py::test_currency_service_case_06_count_is_integer"
+    },
+    "T-0467": {
+      "lines": {
+        "app/services/currency_service.py": [
+          19
+        ]
+      },
+      "node": "tests/test_currency_service.py::test_currency_service_case_07_revision_is_marked"
+    },
+    "T-0468": {
+      "lines": {
+        "app/services/currency_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_currency_service.py::test_currency_service_case_08_describes_item"
+    },
+    "T-0469": {
+      "lines": {
+        "app/services/currency_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_currency_service.py::test_currency_service_case_09_describe_is_text"
+    },
+    "T-0470": {
+      "lines": {
+        "app/services/tax_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_tax_service.py::test_tax_service_case_00_describes_item"
+    },
+    "T-0471": {
+      "lines": {
+        "app/services/tax_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_tax_service.py::test_tax_service_case_01_describe_is_text"
+    },
+    "T-0472": {
+      "lines": {
+        "app/services/tax_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_tax_service.py::test_tax_service_case_02_describe_is_prefixed"
+    },
+    "T-0473": {
+      "lines": {
+        "app/services/tax_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_tax_service.py::test_tax_service_case_03_describe_is_distinct"
+    },
+    "T-0474": {
+      "lines": {
+        "app/services/tax_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_tax_service.py::test_tax_service_case_04_describe_has_length"
+    },
+    "T-0475": {
+      "lines": {
+        "app/services/tax_service.py": [
+          14
+        ]
+      },
+      "node": "tests/test_tax_service.py::test_tax_service_case_05_counts_items"
+    },
+    "T-0476": {
+      "lines": {
+        "app/services/tax_service.py": [
+          14
+        ]
+      },
+      "node": "tests/test_tax_service.py::test_tax_service_case_06_count_is_integer"
+    },
+    "T-0477": {
+      "lines": {
+        "app/services/tax_service.py": [
+          19
+        ]
+      },
+      "node": "tests/test_tax_service.py::test_tax_service_case_07_revision_is_marked"
+    },
+    "T-0478": {
+      "lines": {
+        "app/services/tax_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_tax_service.py::test_tax_service_case_08_describes_item"
+    },
+    "T-0479": {
+      "lines": {
+        "app/services/tax_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_tax_service.py::test_tax_service_case_09_describe_is_text"
+    },
+    "T-0480": {
+      "lines": {
+        "app/services/receipt_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_receipt_service.py::test_receipt_service_case_00_describes_item"
+    },
+    "T-0481": {
+      "lines": {
+        "app/services/receipt_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_receipt_service.py::test_receipt_service_case_01_describe_is_text"
+    },
+    "T-0482": {
+      "lines": {
+        "app/services/receipt_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_receipt_service.py::test_receipt_service_case_02_describe_is_prefixed"
+    },
+    "T-0483": {
+      "lines": {
+        "app/services/receipt_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_receipt_service.py::test_receipt_service_case_03_describe_is_distinct"
+    },
+    "T-0484": {
+      "lines": {
+        "app/services/receipt_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_receipt_service.py::test_receipt_service_case_04_describe_has_length"
+    },
+    "T-0485": {
+      "lines": {
+        "app/services/receipt_service.py": [
+          14
+        ]
+      },
+      "node": "tests/test_receipt_service.py::test_receipt_service_case_05_counts_items"
+    },
+    "T-0486": {
+      "lines": {
+        "app/services/receipt_service.py": [
+          14
+        ]
+      },
+      "node": "tests/test_receipt_service.py::test_receipt_service_case_06_count_is_integer"
+    },
+    "T-0487": {
+      "lines": {
+        "app/services/receipt_service.py": [
+          19
+        ]
+      },
+      "node": "tests/test_receipt_service.py::test_receipt_service_case_07_revision_is_marked"
+    },
+    "T-0488": {
+      "lines": {
+        "app/services/receipt_service.py": [
+          9
+        ]
+      },
+      "node": "tests/test_receipt_service.py::test_receipt_service_case_08_describes_item"
+    },
+    "T-0490": {
+      "lines": {
+        "app/workers/digest_worker.py": [
+          9
+        ]
+      },
+      "node": "tests/test_digest_worker.py::test_digest_worker_case_00_describes_item"
+    },
+    "T-0491": {
+      "lines": {
+        "app/workers/digest_worker.py": [
+          9
+        ]
+      },
+      "node": "tests/test_digest_worker.py::test_digest_worker_case_01_describe_is_text"
+    },
+    "T-0492": {
+      "lines": {
+        "app/workers/digest_worker.py": [
+          9
+        ]
+      },
+      "node": "tests/test_digest_worker.py::test_digest_worker_case_02_describe_is_prefixed"
+    },
+    "T-0493": {
+      "lines": {
+        "app/workers/digest_worker.py": [
+          9
+        ]
+      },
+      "node": "tests/test_digest_worker.py::test_digest_worker_case_03_describe_is_distinct"
+    },
+    "T-0494": {
+      "lines": {
+        "app/workers/digest_worker.py": [
+          9
+        ]
+      },
+      "node": "tests/test_digest_worker.py::test_digest_worker_case_04_describe_has_length"
+    },
+    "T-0495": {
+      "lines": {
+        "app/workers/digest_worker.py": [
+          14
+        ]
+      },
+      "node": "tests/test_digest_worker.py::test_digest_worker_case_05_counts_items"
+    },
+    "T-0496": {
+      "lines": {
+        "app/workers/digest_worker.py": [
+          14
+        ]
+      },
+      "node": "tests/test_digest_worker.py::test_digest_worker_case_06_count_is_integer"
+    },
+    "T-0497": {
+      "lines": {
+        "app/workers/digest_worker.py": [
+          19
+        ]
+      },
+      "node": "tests/test_digest_worker.py::test_digest_worker_case_07_revision_is_marked"
+    },
+    "T-0498": {
+      "lines": {
+        "app/workers/digest_worker.py": [
+          9
+        ]
+      },
+      "node": "tests/test_digest_worker.py::test_digest_worker_case_08_describes_item"
+    },
+    "T-0499": {
+      "lines": {
+        "app/workers/digest_worker.py": [
+          9
+        ]
+      },
+      "node": "tests/test_digest_worker.py::test_digest_worker_case_09_describe_is_text"
+    },
+    "T-0500": {
+      "lines": {
+        "app/workers/digest_worker.py": [
+          9
+        ]
+      },
+      "node": "tests/test_digest_worker.py::test_digest_worker_case_10_describe_is_prefixed"
+    }
+  }
+}
